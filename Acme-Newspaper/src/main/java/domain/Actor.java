@@ -3,16 +3,20 @@ package domain;
 
 
 
+import java.util.Collection;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import security.UserAccount;
 
@@ -26,6 +30,10 @@ public class Actor extends DomainEntity {
 	private String		phone;
 	private String		postalAddress;
 	private UserAccount	userAccount;
+	private Collection<Message>			sentMessages;
+	private Collection<Message>			receivedMessages;
+	private Collection<Folder>			folders;
+
 
 
 
@@ -81,5 +89,35 @@ public class Actor extends DomainEntity {
 
 	public void setUserAccount(final UserAccount userAccount) {
 		this.userAccount = userAccount;
+	}
+	
+	@NotNull
+	@OneToMany(mappedBy = "sender")
+	public Collection<Message> getSentMessages() {
+		return this.sentMessages;
+	}
+
+	public void setSentMessages(final Collection<Message> sentMessages) {
+		this.sentMessages = sentMessages;
+	}
+
+	@NotNull
+	@OneToMany(mappedBy = "recipient")
+	public Collection<Message> getReceivedMessages() {
+		return this.receivedMessages;
+	}
+
+	public void setReceivedMessages(final Collection<Message> receivedMessages) {
+		this.receivedMessages = receivedMessages;
+	}
+	
+	@NotEmpty
+	@OneToMany(mappedBy = "owner")
+	public Collection<Folder> getFolders() {
+		return this.folders;
+	}
+
+	public void setFolders(final Collection<Folder> folders) {
+		this.folders = folders;
 	}
 }

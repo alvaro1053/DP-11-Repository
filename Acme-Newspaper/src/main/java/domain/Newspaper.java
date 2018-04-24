@@ -9,11 +9,13 @@ import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Index;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -31,11 +33,13 @@ public class Newspaper extends DomainEntity {
 	private String						description;
 	private String						pictureURL;
 	private Boolean						isPrivate;
-
 	private Collection<Article>			articles;
 	private User						user;
 	private Collection<Subscription>	subscriptions;
 	private Boolean						tabooWords;
+	
+	private Volume					volumen;
+	private Collection<Adversiment> adverts;
 
 
 	@NotBlank
@@ -110,4 +114,22 @@ public class Newspaper extends DomainEntity {
 	public void setSubscriptions(final Collection<Subscription> subscriptions) {
 		this.subscriptions = subscriptions;
 	}
+	
+	@Valid
+	@ManyToOne(optional = false)
+	public Volume getVolumen() {
+		return volumen;
+	}
+	public void setVolumen(Volume volumen) {
+		this.volumen = volumen;
+	}
+	@ManyToMany
+	public Collection<Adversiment> getAdverts() {
+		return adverts;
+	}
+	public void setAdverts(Collection<Adversiment> adverts) {
+		this.adverts = adverts;
+	}
+	
+	
 }
