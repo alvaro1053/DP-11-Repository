@@ -116,7 +116,7 @@ public class Newspaper extends DomainEntity {
 	}
 	
 	@Valid
-	@ManyToOne(optional = false)
+	@ManyToMany
 	public Volume getVolumen() {
 		return volumen;
 	}
