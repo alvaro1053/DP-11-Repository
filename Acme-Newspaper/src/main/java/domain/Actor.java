@@ -112,7 +112,7 @@ public class Actor extends DomainEntity {
 	}
 	
 	@NotEmpty
-	@OneToMany(mappedBy = "owner")
+	@OneToMany
 	public Collection<Folder> getFolders() {
 		return this.folders;
 	}

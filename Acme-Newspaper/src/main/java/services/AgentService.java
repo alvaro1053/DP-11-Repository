@@ -11,7 +11,7 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import domain.Adversiment;
+import domain.Advertisement;
 import domain.Agent;
 import domain.Folder;
 import domain.Message;
@@ -38,12 +38,12 @@ public class AgentService {
 	public Agent create(){
 		Agent result;
 		result = new Agent();
-		Collection<Adversiment> adverts = new ArrayList<Adversiment>();
+		Collection<Advertisement> adverts = new ArrayList<Advertisement>();
 		Collection<Message> sentMessages = new ArrayList<Message>();
 		Collection<Message> receivedMessages = new ArrayList<Message>();
 		Collection<Folder> folders = new ArrayList<Folder>();
 		
-		result.setAdversiments(adverts);
+		result.setAdvertisements(adverts);
 		result.setReceivedMessages(receivedMessages);
 		result.setSentMessages(sentMessages);
 		result.setFolders(folders);

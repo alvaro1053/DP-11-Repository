@@ -38,8 +38,8 @@ public class Newspaper extends DomainEntity {
 	private Collection<Subscription>	subscriptions;
 	private Boolean						tabooWords;
 	
-	private Volume					volumen;
-	private Collection<Adversiment> adverts;
+	private Collection<Volume>	volumen;
+	private Collection<Advertisement> adverts;
 
 
 	@NotBlank
@@ -117,17 +117,17 @@ public class Newspaper extends DomainEntity {
 	
 	@Valid
 	@ManyToMany
-	public Volume getVolumen() {
+	public Collection<Volume> getVolumen() {
 		return volumen;
 	}
-	public void setVolumen(Volume volumen) {
+	public void setVolumen(Collection<Volume> volumen) {
 		this.volumen = volumen;
 	}
 	@ManyToMany
-	public Collection<Adversiment> getAdverts() {
+	public Collection<Advertisement> getAdverts() {
 		return adverts;
 	}
-	public void setAdverts(Collection<Adversiment> adverts) {
+	public void setAdverts(Collection<Advertisement> adverts) {
 		this.adverts = adverts;
 	}
 	

@@ -15,8 +15,9 @@ import org.hibernate.validator.constraints.URL;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Adversiment extends DomainEntity {
+public class Advertisement extends DomainEntity {
 
+	private String 				title;
 	private String				bannerURL;
 	private String				targetPageURL;
 	private CreditCard			creditCard;
@@ -24,6 +25,14 @@ public class Adversiment extends DomainEntity {
 	private Collection<Newspaper>	newspapers;
 
 
+	@NotBlank
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
 	@NotBlank
 	@URL
 	public String getBannerURL() {
@@ -59,7 +68,11 @@ public class Adversiment extends DomainEntity {
 		return this.agent;
 	}
 
-
+	public void setAgent(Agent agent) {
+		this.agent = agent;
+	}
+	
+	
 	@ManyToMany
 	public Collection<Newspaper> getNewspapers() {
 		return this.newspapers;

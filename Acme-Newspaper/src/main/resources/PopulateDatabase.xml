@@ -88,9 +88,33 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="userAccount7" class="security.UserAccount">
+		<property name="username" value="agent1" />
+		<property name="password" value="83a87fd756ab57199c0bb6d5e11168cb" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="AGENT" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount8" class="security.UserAccount">
+		<property name="username" value="agent2" />
+		<property name="password" value="b1a4a6b01cc297d4677c4ca6656e14d7" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="AGENT" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 
 	
-	<!-- Admins -->
+	<!-- Admin -->
 	
 	<bean class="domain.Admin" id="admin1">
 	<property name="name" value="Manuel" />
@@ -100,6 +124,26 @@
 	<property name="postalAddress" value=""/>
 	
 	<property name="userAccount" ref="userAccount1"/>
+	
+		<property name="folders">
+	<list>
+	<ref bean="folder1"/>
+	<ref bean="folder9"/>
+	<ref bean="folder10"/>
+	<ref bean="folder11"/>
+	<ref bean="folder19"/>
+	<ref bean="folder27"/>
+	<ref bean="folder35"/>
+	</list>
+	</property>
+	<property name="sentMessages">
+	<list>
+	</list>
+	</property>
+	<property name="receivedMessages">
+	<list>
+	</list>
+	</property>
 	
 	</bean>
 	
@@ -115,6 +159,24 @@
 	<property name="phone" value="902242526"/>	
 	<property name="postalAddress" value="Avenida séptima nº5"/>
 	<property name="userAccount" ref="userAccount2"/>
+	
+	<property name="folders">
+	<list>
+	<ref bean="folder2"/>
+	<ref bean="folder12"/>
+	<ref bean="folder20"/>
+	<ref bean="folder28"/>
+	<ref bean="folder36"/>
+	</list>
+	</property>
+	<property name="sentMessages">
+	<list>
+	</list>
+	</property>
+	<property name="receivedMessages">
+	<list>
+	</list>
+	</property>
 	
 	<property name="chirps">
 	<list>
@@ -160,6 +222,24 @@
 	<property name="postalAddress" value="C/Infierno nº4"/>
 	<property name="userAccount" ref="userAccount3"/>
 	
+	<property name="folders">
+	<list>
+	<ref bean="folder3"/>
+	<ref bean="folder13"/>
+	<ref bean="folder21"/>
+	<ref bean="folder29"/>
+	<ref bean="folder37"/>
+	</list>
+	</property>
+	<property name="sentMessages">
+	<list>
+	</list>
+	</property>
+	<property name="receivedMessages">
+	<list>
+	</list>
+	</property>
+	
 	<property name="chirps">
 	<list>
 	<ref bean="chirp3"/>
@@ -199,6 +279,24 @@
 	<property name="postalAddress" value=""/>   
 	<property name="userAccount" ref="userAccount4"/>
 	
+	<property name="folders">
+	<list>
+	<ref bean="folder4"/>
+	<ref bean="folder14"/>
+	<ref bean="folder22"/>
+	<ref bean="folder30"/>
+	<ref bean="folder38"/>
+	</list>
+	</property>
+	<property name="sentMessages">
+	<list>
+	</list>
+	</property>
+	<property name="receivedMessages">
+	<list>
+	</list>
+	</property>
+	
 	<property name="chirps">
 	<list>
 	</list>
@@ -236,6 +334,24 @@
 	<property name="postalAddress" value="Desengaño nº21"/>
 	<property name="userAccount" ref="userAccount5"/>
 	
+	<property name="folders">
+	<list>
+	<ref bean="folder5"/>
+	<ref bean="folder15"/>
+	<ref bean="folder23"/>
+	<ref bean="folder31"/>
+	<ref bean="folder39"/>
+	</list>
+	</property>
+	<property name="sentMessages">
+	<list>
+	</list>
+	</property>
+	<property name="receivedMessages">
+	<list>
+	</list>
+	</property>
+	
 	<property name="subscriptions">
 	<list>
 	<ref bean="subscription1"/>
@@ -253,6 +369,24 @@
 	<property name="postalAddress" value="Desengaño nº21"/>
 	<property name="userAccount" ref="userAccount6"/>
 	
+	<property name="folders">
+	<list>
+	<ref bean="folder6"/>
+	<ref bean="folder16"/>
+	<ref bean="folder24"/>
+	<ref bean="folder32"/>
+	<ref bean="folder40"/>
+	</list>
+	</property>
+	<property name="sentMessages">
+	<list>
+	</list>
+	</property>
+	<property name="receivedMessages">
+	<list>
+	</list>
+	</property>
+	
 	<property name="subscriptions">
 	<list>
 	</list>
@@ -260,6 +394,76 @@
 
 </bean>
 
+<!-- AGENTS -->
+<!-- Agent 1 -->
+<bean class="domain.Agent" id="agent1">
+	<property name="name" value="Adrian" />
+	<property name="surname" value="López" />
+	<property name="email" value="adrianLopez@email.com"/>
+	<property name="phone" value="988456674"/>	
+	<property name="postalAddress" value="Calle Trinidad"/>
+	<property name="userAccount" ref="userAccount7"/>
+	
+	<property name="folders">
+	<list>
+	<ref bean="folder7"/>
+	<ref bean="folder17"/>
+	<ref bean="folder25"/>
+	<ref bean="folder33"/>
+	<ref bean="folder41"/>
+	</list>
+	</property>
+	<property name="sentMessages">
+	<list>
+	</list>
+	</property>
+	<property name="receivedMessages">
+	<list>
+	</list>
+	</property>
+	
+	<property name="advertisements">
+	<list>
+	</list>
+	</property>
+	
+
+
+</bean>
+<!-- Agent 2 -->
+<bean class="domain.Agent" id="agent2">
+	<property name="name" value="Penélope" />
+	<property name="surname" value="Bardem" />
+	<property name="email" value="PenelopeBardem@email.com"/>
+	<property name="phone" value="943456666"/>	
+	<property name="postalAddress" value="Las Vegas 115"/>
+	<property name="userAccount" ref="userAccount8"/>
+	
+	<property name="folders">
+	<list>
+	<ref bean="folder8"/>
+	<ref bean="folder18"/>
+	<ref bean="folder26"/>
+	<ref bean="folder34"/>
+	<ref bean="folder42"/>
+	</list>
+	</property>
+	<property name="sentMessages">
+	<list>
+	</list>
+	</property>
+	<property name="receivedMessages">
+	<list>
+	</list>
+	</property>
+	
+	<property name="advertisements">
+	<list>
+	</list>
+	</property>
+
+
+</bean>
 
 <!-- Newspapers -->
 	<!-- Newspaper1 -->
@@ -330,6 +534,38 @@
 	</list>
 	</property>
 </bean>
+
+<!-- VOLUME -->
+	<!-- Volume1 -->
+<bean class="domain.Volume" id="volume1">
+	<property name="title" value="Volume 1" />
+	<property name="description" value="Esta es la descripción del volumen 1"/>
+	<property name="year" value="2018/08/12 12:21"/>	
+	<property name="user" ref="user1"/>
+	<property name="newspapers">
+	<list>
+		<ref bean="newspaper1"/>
+		<ref bean="newspaper2"/>
+	</list>
+	</property>
+
+</bean>
+
+	<!-- Volume2 -->
+<bean class="domain.Volume" id="volume2">
+	<property name="title" value="Volume 2" />
+	<property name="description" value="Esta es la descripción del volumen 2"/>
+	<property name="year" value="2019/08/12 12:21"/>	
+	<property name="user" ref="user1"/>
+	<property name="newspapers">
+	<list>
+		<ref bean="newspaper3"/>
+	</list>
+	</property>
+
+</bean>
+
+
 
 <!-- Articles -->
 	<!-- Article1 -->
@@ -506,6 +742,20 @@
 	</list>
 	</property>
 </bean>
+
+
+<!-- ADVERTISEMENTS -->
+<!-- Advertisement1 -->
+<bean class="domain.Advertisement" id="advertisement1">
+	<property name="title" value="anuncio" />
+	<property name="bannerURL" value="https://images.telepizza.com/vol/es/images/content/productos/pule_c.png"/>
+	<property name="targetPageURL" value="https://www.telepizza.es/productos/pizzas"/>
+	<property name="creditCard" ref="creditCard1"/>
+	<property name="agent" ref="agent1"/>
+	
+</bean>
+
+
 <!-- CreditCards -->
 <!-- CreditCard1 -->
 <bean class="domain.CreditCard" id="creditCard1">
@@ -537,5 +787,606 @@
 
 </bean>
 
+<!-- Folders -->
+
+<bean class="domain.Folder" id="folder1">
+<property name="name" value="in box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder2">
+<property name="name" value="in box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder3">
+<property name="name" value="in box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+
+</bean>
+
+<bean class="domain.Folder" id="folder4">
+<property name="name" value="in box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder5">
+<property name="name" value="in box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder6">
+<property name="name" value="in box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder7">
+<property name="name" value="in box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder8">
+<property name="name" value="in box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder9">
+<property name="name" value="New Folder" />
+<property name="isSystem" value="false" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	<ref bean="folder6" />
+	</list>
+</property>
+</bean>
+
+
+<bean class="domain.Folder" id="folder10">
+<property name="name" value="Subfolder" />
+<property name="isSystem" value="false" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder" ref="folder5"/>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+
+<bean class="domain.Folder" id="folder11">
+<property name="name" value="out box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder12">
+<property name="name" value="out box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder13">
+<property name="name" value="out box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+
+</bean>
+
+<bean class="domain.Folder" id="folder14">
+<property name="name" value="out box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+
+</bean>
+
+<bean class="domain.Folder" id="folder15">
+<property name="name" value="out box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+
+</bean>
+
+<bean class="domain.Folder" id="folder16">
+<property name="name" value="out box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+
+</bean>
+
+<bean class="domain.Folder" id="folder17">
+<property name="name" value="out box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+
+</bean>
+
+<bean class="domain.Folder" id="folder18">
+<property name="name" value="out box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+
+</bean>
+
+
+<bean class="domain.Folder" id="folder19">
+<property name="name" value="notification box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder20">
+<property name="name" value="notification box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder21">
+<property name="name" value="notification box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder22">
+<property name="name" value="notification box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder23">
+<property name="name" value="notification box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder24">
+<property name="name" value="notification box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder25">
+<property name="name" value="notification box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder26">
+<property name="name" value="notification box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder27">
+<property name="name" value="trash box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder28">
+<property name="name" value="trash box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+
+</bean>
+
+<bean class="domain.Folder" id="folder29">
+<property name="name" value="trash box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder30">
+<property name="name" value="trash box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder31">
+<property name="name" value="trash box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder32">
+<property name="name" value="trash box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder33">
+<property name="name" value="trash box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder34">
+<property name="name" value="trash box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder35">
+<property name="name" value="spam box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder36">
+<property name="name" value="spam box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder37">
+<property name="name" value="spam box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder38">
+<property name="name" value="spam box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder39">
+<property name="name" value="spam box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder40">
+<property name="name" value="spam box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder41">
+<property name="name" value="spam box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder42">
+<property name="name" value="spam box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
 
 </beans>

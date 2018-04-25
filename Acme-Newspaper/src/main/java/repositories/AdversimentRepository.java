@@ -3,10 +3,10 @@ package repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import domain.Adversiment;
+import domain.Advertisement;
 
 @Repository
-public interface AdversimentRepository extends JpaRepository<Adversiment, Integer> {
+public interface AdversimentRepository extends JpaRepository<Advertisement, Integer> {
 
 	
 	
