@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import domain.Advertisement;
 
 @Repository
-public interface AdversimentRepository extends JpaRepository<Advertisement, Integer> {
+public interface AdvertisementRepository extends JpaRepository<Advertisement, Integer> {
 
 	
 	

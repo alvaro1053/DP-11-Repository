@@ -43,7 +43,6 @@ public class CustomerService {
 	// Simple CRUD methods
 	public Customer create() {
 		Customer result;
-
 		result = new Customer();
 		result.setSubscriptions(new ArrayList<Subscription>());
 		

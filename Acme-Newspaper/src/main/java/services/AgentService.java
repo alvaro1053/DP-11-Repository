@@ -19,6 +19,8 @@ import forms.ActorForm;
 
 import repositories.AgentRepository;
 import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 
 
 @Transactional
@@ -88,6 +90,26 @@ public class AgentService {
 			binding.rejectValue("check", "agent.uncheck");
 		
 		return agent;
+	}
+
+	public Agent findByPrincipal() {
+		Agent result;
+		UserAccount userAccount;
+		
+		userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+		result = this.findByUserAccount(userAccount);
+		Assert.notNull(result);
+	
+		return result;
+	}
+
+	public Agent findByUserAccount(UserAccount userAccount) {
+		Agent result;
+		
+		result = this.agentRepository.findByUserAccount(userAccount.getId());
+		
+		return result;
 	}
 	
 	
