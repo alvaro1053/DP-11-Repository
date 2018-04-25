@@ -8,9 +8,12 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -18,7 +21,7 @@ public class Volume extends DomainEntity {
 
 	private String	title;
 	private String	description;
-	private Date	moment;
+	private Date	year;
 	private User					user;
 	private Collection<Newspaper>	newspapers;
 
@@ -28,15 +31,30 @@ public class Volume extends DomainEntity {
 		return this.title;
 	}
 
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	@NotBlank
 	public String getDescription() {
 		return this.description;
 	}
-
-	@NotNull
-	public Date getYear() {
-		return this.moment;
+	
+	public void setDescription(String description) {
+		this.description = description;
 	}
+	
+	@NotNull
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	public Date getYear() {
+		return year;
+	}
+
+	public void setYear(Date year) {
+		this.year = year;
+	}
+
 
 
 	//Relationships

@@ -7,23 +7,20 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 @Entity
 @Access(AccessType.PROPERTY)
 public class Agent extends Actor {
 	
-	private Collection<Adversiment>	adverts;
+	private Collection<Advertisement>	advertisements;
 
 
-	@NotEmpty
 	@OneToMany(mappedBy = "agent")
-	public Collection<Adversiment> getAdversiments() {
-		return this.adverts;
+	public Collection<Advertisement> getAdvertisements() {
+		return this.advertisements;
 	}
 
-	public void setAdversiments(final Collection<Adversiment> sponsorships) {
-		this.adverts = sponsorships;
+	public void setAdvertisements(Collection<Advertisement> advertisements) {
+		this.advertisements = advertisements;
 	}
 
 }

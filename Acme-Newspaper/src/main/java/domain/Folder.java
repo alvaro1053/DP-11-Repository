@@ -21,7 +21,6 @@ public class Folder extends DomainEntity {
 	private Collection<Message>	messages;
 	private Folder				parentFolder;
 	private Collection<Folder>	childFolders;
-	private Actor				owner;
 
 
 	@NotBlank
@@ -66,14 +65,6 @@ public class Folder extends DomainEntity {
 		this.childFolders = childFolders;
 	}
 
-	@NotNull
-	@Valid
-	@ManyToOne(optional = false)
-	public Actor getOwner() {
-		return this.owner;
-	}
-	public void setOwner(final Actor owner) {
-		this.owner = owner;
-	}
+
 
 }
