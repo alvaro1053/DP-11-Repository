@@ -32,6 +32,8 @@
 		<value>/views/subscription/tiles.xml</value>
 		<value>/views/followUp/tiles.xml</value>
 
+		<value>/views/volume/tiles.xml</value>
+	
 	</util:list>
 
 </beans>

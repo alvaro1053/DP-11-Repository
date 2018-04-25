@@ -19,6 +19,7 @@ public class User extends Actor {
 	private Collection<User> 		followers;
 	private Collection<Newspaper> 	newspapers;
 	private Collection<Article>		articles;
+	private Collection<Volume>		volumes;
 	
 	
 	
@@ -59,5 +60,14 @@ public class User extends Actor {
 	public void setArticles(Collection<Article> articles) {
 		this.articles = articles;
 	}
+	
+	@OneToMany(mappedBy="user")
+	public Collection<Volume> getVolumes() {
+		return volumes;
+	}
+	public void setVolumes(Collection<Volume> volumes) {
+		this.volumes = volumes;
+	}
+	
 	
 }

@@ -110,6 +110,9 @@
 		<security:intercept-url pattern="/followUp/user/create.do" access="hasRole('USER')" />
 		<security:intercept-url pattern="/followUp/display.do" access="permitAll" /> 
 		
+		<!-- Volume -->
+		<security:intercept-url pattern="/volume/list.do" access="permitAll" /> 
+		
 		
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 
