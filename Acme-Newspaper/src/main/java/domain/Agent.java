@@ -22,8 +22,8 @@ public class Agent extends Actor {
 		return this.adverts;
 	}
 
-	public void setAdversiments(final Collection<Adversiment> sponsorships) {
-		this.adverts = sponsorships;
+	public void setAdversiments(final Collection<Adversiment> adverts) {
+		this.adverts = adverts;
 	}
 
 }
