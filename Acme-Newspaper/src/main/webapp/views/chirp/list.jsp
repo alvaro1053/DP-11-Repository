@@ -11,7 +11,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<display:table pagesize="5" class="displaytag" 
+<display:table class="displaytag" 
 	name="followingChirps" requestURI="chirp/user/followingChirps.do" id="row">
 
 
@@ -19,14 +19,14 @@
 	<spring:message code="chirp.title"
 		var="titleHeader" />
 	<display:column property="title" title="${titleHeader}"
-		sortable="true" />
+		 />
 
 
 	<!-- description -->
 	<spring:message code="chirp.description"
 		var="descriptionHeader" />
 	<display:column property="description" title="${descriptionHeader}"
-		sortable="true" />
+		 />
 		
 	
 	<!-- moment --> <!-- format para internacionalizacion -->
@@ -35,13 +35,22 @@
  	<spring:message code="chirp.moment"
   	var="momentHeader" />
  	<display:column property="moment" title="${momentHeader}"
-  	sortable="true" format = "${format}"/>
+  	 format = "${format}"/>
   	
   	
   		<!-- description -->
 	<spring:message code="chirp.user"
 		var="userHeader" />
-	<display:column property="user.userAccount.username" title="${userHeader}"
-		sortable="true" />
+	<display:column property="user.userAccount.username" title="${userHeader}" />
 
 </display:table>
+
+<script>
+$(document).ready( function () {
+    $('#row').DataTable();
+} );
+
+$('#row').dataTable( {
+  "lengthMenu": [ 5, 10, 25, 50, 100 ]
+} );
+</script>

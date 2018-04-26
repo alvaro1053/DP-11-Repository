@@ -26,7 +26,7 @@
 
  
 
-<display:table pagesize="5" class="displaytag" name="articles"  requestURI="admin/admin/listArticles.do" id="row">
+<display:table class="displaytag" name="articles"  requestURI="admin/admin/listArticles.do" id="row">
 	
 	<spring:message code="article.title" var="titleHeader" />
 	<display:column title="${titleHeader}"><a href="article/display.do?articleId=${row.id}"><jstl:out value="${row.title}"></jstl:out></a></display:column>
@@ -42,3 +42,13 @@
 	<display:column property="moment" format="{0,date,${dateFormat}}" title="${moment}"/>
 	
 </display:table>
+
+<script>
+$(document).ready( function () {
+    $('#row').DataTable();
+} );
+
+$('#row').dataTable( {
+  "lengthMenu": [ 5, 10, 25, 50, 100 ]
+} );
+</script>

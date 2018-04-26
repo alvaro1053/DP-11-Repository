@@ -23,12 +23,13 @@
 		value="${search}" />
 
 </form>
+<br>
 
 
 
 
 
-<display:table pagesize="5" class="displaytag" 
+<display:table class="displaytag" 
 	name="newspapers" requestURI="newspaper${uri}/list.do" id="row">
 	
 
@@ -37,7 +38,7 @@
 	<spring:message code="newspaper.title"
 		var="titleHeader" />
 	<display:column property="title" title="${titleHeader}"
-		sortable="true" />
+		 />
 		
 	
 	
@@ -47,7 +48,7 @@
 	<spring:message code="newspaper.publicationDate"
 		var="publicationDateHeader" />
 	<display:column property="publicationDate" title="${publicationDateHeader}"
-		sortable="true" />		
+		 />		
 	
 	
 	
@@ -57,14 +58,14 @@
 	<spring:message code="newspaper.description"
 		var="descriptionHeader" />
 	<display:column property="description" title="${descriptionHeader}"
-		sortable="true" />
+		 />
 
 		
 	<!-- pictureURL -->
 	<spring:message code="newspaper.pictureURL" var="pictureHeader" />
 	<spring:message code="newspaper.pictureError" var="pictureError" />
 
-	<display:column title="${pictureHeader}" sortable="true" > 
+	<display:column title="${pictureHeader}"  > 
 	<img src="${row.pictureURL}" alt="${pictureError}"  width="200" height="200"> 
 	</display:column>
 	</security:authorize>
@@ -131,7 +132,7 @@
 	<!-- Publisher -->
 	<spring:message code="newspaper.user"
 		var="userHeader" />
-	<display:column title="${userHeader}" sortable="true" > 
+	<display:column title="${userHeader}"  > 
 		<a href="user${uri}/display.do?userId=${row.user.id}">
 			<jstl:out value="${row.user.name} ${row.user.surname}"/>
 		</a>
@@ -185,6 +186,17 @@
 </security:authorize>
 		
 </display:table>
+
+<script>
+$(document).ready( function () {
+    $('#row').DataTable();
+} );
+
+$('#row').dataTable( {
+  "searching": false,
+  "lengthMenu": [ 5, 10, 25, 50, 100 ]
+} );
+</script>
 
 <security:authorize access="hasRole('USER')">
 <a href="newspaper/user/create.do"> <spring:message

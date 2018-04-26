@@ -26,7 +26,7 @@
 
 
 
-<display:table pagesize="5" class="displaytag" name="chirps"  requestURI="admin/admin/listChirps.do" id="row">
+<display:table class="displaytag" name="chirps"  requestURI="admin/admin/listChirps.do" id="row">
 	
 	
 	<display:column>
@@ -41,3 +41,13 @@
 	<display:column property="description" title="${description}"/>
 	
 </display:table>
+
+<script>
+$(document).ready( function () {
+    $('#row').DataTable();
+} );
+
+$('#row').dataTable( {
+  "lengthMenu": [ 5, 10, 25, 50, 100 ]
+} );
+</script>

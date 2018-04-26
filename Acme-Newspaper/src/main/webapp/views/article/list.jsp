@@ -34,11 +34,12 @@
 		value="${search}" />
 
 </form>
+<br>
 
 
 <!-- Listing grid -->
 
-<display:table pagesize="5" class="displaytag" name="articles"  requestURI="article${uri}/list.do" id="row">
+<display:table class="displaytag" name="articles"  requestURI="article${uri}/list.do" id="row">
 
 
 	<security:authorize access="hasRole('USER')">
@@ -82,6 +83,16 @@
 
 
 </display:table>
+
+<script>
+$(document).ready( function () {
+    $('#row').DataTable();
+} );
+
+$('#row').dataTable( {
+  "lengthMenu": [ 5, 10, 25, 50, 100 ]
+} );
+</script>
 
 	<security:authorize access="hasRole('USER')">
 		<a href="article/user/create.do"> <spring:message code="article.create" /> </a>
