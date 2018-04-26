@@ -17,6 +17,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Customer;
+import domain.Message;
 import domain.Subscription;
 import forms.ActorForm;
 
@@ -27,12 +28,13 @@ public class CustomerService {
 	// Managed Repository
 	@Autowired
 	private CustomerRepository	customerRepository;
+
+	// Supporting services
+	@Autowired
+	private FolderService folderService;
 	
 	@Autowired
 	private Validator		validator;
-
-
-	// Supporting services
 
 	// Constructors
 
@@ -44,8 +46,11 @@ public class CustomerService {
 	public Customer create() {
 		Customer result;
 		result = new Customer();
-		result.setSubscriptions(new ArrayList<Subscription>());
 		
+		result.setSubscriptions(new ArrayList<Subscription>());
+		result.setReceivedMessages(new ArrayList<Message>());
+		result.setSentMessages(new ArrayList<Message>());
+		result.setFolders(this.folderService.createSystemFolders());
 		
 		return result;
 	}

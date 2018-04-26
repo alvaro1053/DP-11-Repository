@@ -37,7 +37,7 @@ public class CustomerRegisterController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(final ActorForm actorForm, final BindingResult binding){
 		ModelAndView result;
-		Customer customer = new Customer();
+		Customer customer = this.customerService.create();
 		customer = this.customerService.reconstruct(actorForm, binding);
 		if(binding.hasErrors()){
 			result = this.createEditModelAndView(actorForm);
