@@ -1,4 +1,4 @@
-package controllers.customer;
+package controllers.agent;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -8,62 +8,58 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Customer;
+import domain.Agent;
+
 import forms.ActorForm;
 
-import services.CustomerService;
+import services.AgentService;
 
 
 @Controller
-@RequestMapping("/customer")
-public class CustomerRegisterController {
+@RequestMapping("/agent")
+public class AgentRegisterController {
 	
 	@Autowired
-	private CustomerService customerService;
-	
+	AgentService 	agentService;
 	
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public ModelAndView list(){
+	public ModelAndView register(){
 		ModelAndView result;
+		ActorForm actorForm;
 		
-		final ActorForm actorForm = new ActorForm();
+		actorForm = new ActorForm();
+		
 		result = this.createEditModelAndView(actorForm);
 		result.addObject("permiso", true);
-	
-		return result;	
+		
+		
+		return result;
 	}
+
 	
-	
-	@RequestMapping(value = "/register", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(final ActorForm actorForm, final BindingResult binding){
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public ModelAndView save(ActorForm actorForm, BindingResult binding){
 		ModelAndView result;
-		Customer customer = new Customer();
-		customer = this.customerService.reconstruct(actorForm, binding);
+		
+		Agent agent = this.agentService.create();
+		agent = this.agentService.reconstruct(actorForm, binding);
 		if(binding.hasErrors()){
 			result = this.createEditModelAndView(actorForm);
 			result.addObject("permiso", true);
 		}else{
 			try{
-				this.customerService.save(customer);
+				this.agentService.save(agent);
 				result = new ModelAndView("redirect:../");
-			}catch(final DataIntegrityViolationException error){	
-				binding.rejectValue("userAccount.username", "customer.username.error");
+			}catch(DataIntegrityViolationException error){
+				binding.rejectValue("userAccount.username", "agent.username.error");
 				result = this.createEditModelAndView(actorForm);
 				result.addObject("permiso", true);
-			}catch(final Throwable oops){
-				result = this.createEditModelAndView(actorForm, "customer.commit.error");
+			}catch(Throwable oops){
+				result = this.createEditModelAndView(actorForm, "agent.commit.error");
 			}
-		}
-		
-		
-		return result;	
+		}	
+		return result;
 	}
-
-
-	
-	
-	
-// Ancillary methods -------------------------------------------------------------
 	protected ModelAndView createEditModelAndView(ActorForm actorForm) {
 		ModelAndView result;
 		
@@ -72,14 +68,13 @@ public class CustomerRegisterController {
 		return result;
 	}
 
-
 	protected ModelAndView createEditModelAndView(ActorForm actorForm,
 			String message) {
 		ModelAndView result;
 		
-		result = new ModelAndView("customer/register");
+		result = new ModelAndView("agent/register");
 		result.addObject("actorForm", actorForm);
-		result.addObject("message", message);
+		result.addObject("messsage", message);
 		
 		return result;
 	}
