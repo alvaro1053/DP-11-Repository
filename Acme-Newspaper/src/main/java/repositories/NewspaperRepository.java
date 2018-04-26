@@ -25,5 +25,5 @@ public interface NewspaperRepository extends JpaRepository<Newspaper, Integer> {
 
 	@Query("select n from Newspaper n where n.tabooWords = true")
 	Collection<Newspaper> findNewspapersWithTabooWords();
-
+	
 }

@@ -211,6 +211,13 @@
 	<ref bean="article4"/>
 	</list>
 	</property>
+	
+	<property name="volumes">
+	<list>
+	<ref bean="volume1"/>
+	<ref bean="volume2"/>
+	</list>
+	</property>
 	</bean>
 	
 			<!-- User2 -->
@@ -486,6 +493,12 @@
 	<list>
 	</list>
 	</property>
+	
+	<property name="volumen">
+	<list>
+	<ref bean="volume1"/>
+	</list>
+	</property>
 
 </bean>
 
@@ -508,6 +521,12 @@
 	<property name="subscriptions">
 	<list>
 	<ref bean="subscription1"/>
+	</list>
+	</property>
+	
+	<property name="volumen">
+	<list>
+	<ref bean="volume1"/>
 	</list>
 	</property>
 
@@ -533,6 +552,13 @@
 	<list>
 	</list>
 	</property>
+	
+	<property name="volumen">
+	<list>
+	<ref bean="volume2"/>
+	</list>
+	</property>
+	
 </bean>
 
 <!-- VOLUME -->

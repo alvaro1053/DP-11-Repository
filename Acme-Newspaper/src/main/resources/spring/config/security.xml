@@ -115,6 +115,9 @@
 		<security:intercept-url pattern="/message/actor/**" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/message/admin/**" access="hasRole('ADMIN')" /> 
 		
+		<!-- Volume -->
+		<security:intercept-url pattern="/volume/list.do" access="permitAll" /> 
+		
 		
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 
