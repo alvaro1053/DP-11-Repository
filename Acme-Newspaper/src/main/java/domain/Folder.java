@@ -21,6 +21,7 @@ public class Folder extends DomainEntity {
 	private Collection<Message>	messages;
 	private Folder				parentFolder;
 	private Collection<Folder>	childFolders;
+	
 
 
 	@NotBlank

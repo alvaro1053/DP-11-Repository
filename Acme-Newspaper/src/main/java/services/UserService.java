@@ -18,6 +18,7 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Article;
 import domain.Chirp;
+import domain.Message;
 import domain.Newspaper;
 import domain.User;
 import forms.ActorForm;
@@ -29,6 +30,9 @@ public class UserService {
 	// Managed Repository
 	@Autowired
 	private UserRepository	UserRepository;
+	
+	@Autowired
+	private FolderService folderService;
 
 	@Autowired
 	private Validator		validator;
@@ -52,7 +56,10 @@ public class UserService {
 		result.setFollowers(new ArrayList<User>());
 		result.setFollows(new ArrayList<User>());
 		result.setNewspapers(new ArrayList<Newspaper>());
-
+		result.setReceivedMessages(new ArrayList<Message>());
+		result.setSentMessages(new ArrayList<Message>());
+		result.setFolders(this.folderService.createSystemFolders());
+		
 		return result;
 	}
 

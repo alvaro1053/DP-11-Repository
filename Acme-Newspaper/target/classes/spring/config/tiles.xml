@@ -31,7 +31,12 @@
 		<value>/views/admin/tiles.xml</value>
 		<value>/views/subscription/tiles.xml</value>
 		<value>/views/followUp/tiles.xml</value>
+		<value>/views/folder/tiles.xml</value>
+		<value>/views/message/tiles.xml</value>
+		<value>/views/agent/tiles.xml</value>
 
+		<value>/views/volume/tiles.xml</value>
+	
 	</util:list>
 
 </beans>

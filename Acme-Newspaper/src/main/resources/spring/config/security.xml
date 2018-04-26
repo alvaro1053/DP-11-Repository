@@ -43,6 +43,8 @@
 
 		<security:intercept-url pattern="/user/register.do" access="isAnonymous()" /> 
 		<security:intercept-url pattern="/customer/register.do" access="isAnonymous()" /> 
+		<security:intercept-url pattern="/agent/register.do" access="isAnonymous()" /> 
+
 	
 		<!-- Chirp -->
 		<security:intercept-url pattern="/chirp/user/create.do" access = "hasRole('USER')"/>
@@ -109,6 +111,14 @@
 		<security:intercept-url pattern="/followUp/user/list.do" access="hasRole('USER')" /> 
 		<security:intercept-url pattern="/followUp/user/create.do" access="hasRole('USER')" />
 		<security:intercept-url pattern="/followUp/display.do" access="permitAll" /> 
+		<!-- Folder -->
+		<security:intercept-url pattern="/folder/actor/**" access="isAuthenticated()" /> 
+		<!-- Message -->
+		<security:intercept-url pattern="/message/actor/**" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/message/admin/**" access="hasRole('ADMIN')" /> 
+		
+		<!-- Volume -->
+		<security:intercept-url pattern="/volume/list.do" access="permitAll" /> 
 		
 		
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />

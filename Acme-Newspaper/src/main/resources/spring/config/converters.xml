@@ -23,6 +23,9 @@
 			<bean class="converters.Class1ToClass2" /> 
 		-->
 		
+		<!-- Actor -->
+		<bean class="converters.StringToActorConverter" />
+		<bean class="converters.ActorToStringConverter" />
 		<!-- User -->
 		<bean class="converters.StringToUserConverter" />
 		<bean class="converters.UserToStringConverter" />
@@ -38,6 +41,13 @@
 		<!-- FollowUp -->
 		<bean class="converters.StringToFollowUpConverter" />
 		<bean class="converters.FollowUpToStringConverter" />
+		<!-- Folder -->
+		<bean class="converters.StringToFolderConverter" />
+		<bean class="converters.FolderToStringConverter" />
+		<!-- Message -->
+		<bean class="converters.StringToMessageConverter" />
+		<bean class="converters.MessageToStringConverter" />
+		
 	</util:list>
 	
 </beans>

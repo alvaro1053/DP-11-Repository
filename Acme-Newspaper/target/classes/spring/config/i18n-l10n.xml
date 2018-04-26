@@ -32,6 +32,11 @@
 		<value>/views/customisation/messages</value>
 		<value>/views/admin/messages</value>
 		<value>/views/followUp/messages</value>
+		<value>/views/message/messages</value>
+		<value>/views/folder/messages</value>
+		<value>/views/agent/messages</value>
+		<value>/views/volume/messages</value>
+		
 		
 	</util:list>
 

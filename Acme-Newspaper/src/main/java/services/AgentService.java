@@ -13,7 +13,6 @@ import org.springframework.validation.Validator;
 
 import domain.Advertisement;
 import domain.Agent;
-import domain.Folder;
 import domain.Message;
 import forms.ActorForm;
 
@@ -31,6 +30,9 @@ public class AgentService {
 	AgentRepository agentRepository;
 	
 	@Autowired
+	FolderService	folderService;
+	
+	@Autowired
 	Validator 		validator;
 	
 	public AgentService(){
@@ -40,21 +42,19 @@ public class AgentService {
 	public Agent create(){
 		Agent result;
 		result = new Agent();
-		Collection<Advertisement> adverts = new ArrayList<Advertisement>();
-		Collection<Message> sentMessages = new ArrayList<Message>();
-		Collection<Message> receivedMessages = new ArrayList<Message>();
-		Collection<Folder> folders = new ArrayList<Folder>();
 		
-		result.setAdvertisements(adverts);
-		result.setReceivedMessages(receivedMessages);
-		result.setSentMessages(sentMessages);
-		result.setFolders(folders);
+		
+		result.setAdvertisements(new ArrayList<Advertisement>());
+		result.setReceivedMessages(new ArrayList<Message>());
+		result.setSentMessages(new ArrayList<Message>());
+		result.setFolders(this.folderService.createSystemFolders());
 		
 		
 		return result;
 	}
 	
-	public void save(final Agent agent){
+	public Agent save(final Agent agent){
+		Agent saved;
 		Assert.notNull(agent);
 		
 		if(agent.getId() == 0){
@@ -62,7 +62,9 @@ public class AgentService {
 			agent.getUserAccount().setPassword(passwordEncoder.encodePassword(agent.getUserAccount().getPassword(), null));
 		}
 		
-		this.agentRepository.save(agent);
+		saved = this.agentRepository.save(agent);
+		
+		return saved;
 	}
 
 	public Agent reconstruct(ActorForm actorForm, BindingResult binding){
