@@ -56,6 +56,9 @@
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="volume/list.do"><spring:message code="master.page.volume" /></a></li>
 		</security:authorize>
+		<security:authorize access="isAuthenticated()">
+			<li><a class="fNiv" href="volume/list.do"><spring:message code="master.page.volume" /></a></li>
+		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="newspaper/list.do"><spring:message code="master.page.newspaper" /></a></li>

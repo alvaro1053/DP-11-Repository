@@ -20,30 +20,21 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-	<form:form action="newspaper/user/edit.do" modelAttribute="newspaper">
+	<form:form action="volume/user/edit.do" modelAttribute="volumeForm">
 	<form:hidden path="id" />
 	<form:hidden path="version" /> 
 	
 	
-	<acme:textarea code="newspaper.title" path="title"/>
+	<acme:textbox code="volume.title" path="title"/>
 	
-	<acme:textbox code="newspaper.description" path="description"/>
+	<acme:textarea code="volume.description" path="description"/>
 	
-	<acme:textbox code="newspaper.pictureURL" path="pictureURL"/>
+	<acme:textbox code="volume.year" path="year"/>
 	
-	<spring:message code="newspaper.publicationDate" var="publicationDate"/>
-	<form:label path="publicationDate">${moment}</form:label>
-	<form:input path="publicationDate" placeholder="dd/mm/yyyy"/>
-	<form:errors cssClass="error" path="publicationDate"/>
-	<br />
-	
-	<spring:message code="newspaper.isPrivate"/>
-	<form:checkbox path="isPrivate" name="isPrivate" value="true"/>
-	
-	
+	<acme:selectMultiple items="${newspapers}" itemLabel="title" code="volume.newspapers" path="newspapers"/>
 	
 	<acme:submit name="save" code="master.page.save"/>
 	
-	<acme:cancel url="newspaper/list.do" code="master.page.cancel"/>
+	<acme:cancel url="volume/list.do" code="master.page.cancel"/>
 	
 	</form:form>

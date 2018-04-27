@@ -1,4 +1,4 @@
-package domain;
+package forms;
 
 import java.util.Collection;
 
@@ -6,21 +6,25 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
+
+import domain.DomainEntity;
+import domain.Newspaper;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Volume extends DomainEntity {
+public class VolumeForm extends DomainEntity {
 
 	private String	title;
 	private String	description;
 	private int	year;
-	private User					user;
 	private Collection<Newspaper>	newspapers;
 
 
+	@NotBlank
 	public String getTitle() {
 		return this.title;
 	}
@@ -29,6 +33,7 @@ public class Volume extends DomainEntity {
 		this.title = title;
 	}
 
+	@NotBlank
 	public String getDescription() {
 		return this.description;
 	}
@@ -37,7 +42,8 @@ public class Volume extends DomainEntity {
 		this.description = description;
 	}
 	
-
+	@NotNull
+	@Range(min = 1900, max = 3000)
 	public int getYear() {
 		return year;
 	}
@@ -46,18 +52,7 @@ public class Volume extends DomainEntity {
 		this.year = year;
 	}
 
-
-
 	//Relationships
-	@NotNull
-	@ManyToOne(optional = true)
-	public User getUser() {
-		return this.user;
-	}
-
-	public void setUser(final User user) {
-		this.user = user;
-	}
 
 	@ManyToMany
 	public Collection<Newspaper> getNewspapers() {

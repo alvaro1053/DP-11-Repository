@@ -566,7 +566,7 @@
 <bean class="domain.Volume" id="volume1">
 	<property name="title" value="Volume 1" />
 	<property name="description" value="Esta es la descripción del volumen 1"/>
-	<property name="year" value="2018/08/12 12:21"/>	
+	<property name="year" value="2018"/>	
 	<property name="user" ref="user1"/>
 	<property name="newspapers">
 	<list>
@@ -581,7 +581,7 @@
 <bean class="domain.Volume" id="volume2">
 	<property name="title" value="Volume 2" />
 	<property name="description" value="Esta es la descripción del volumen 2"/>
-	<property name="year" value="2019/08/12 12:21"/>	
+	<property name="year" value="2019"/>	
 	<property name="user" ref="user1"/>
 	<property name="newspapers">
 	<list>
@@ -938,7 +938,7 @@
 <property name="parentFolder"> <null/> </property>
 <property name="childFolders">
 	<list>
-	<ref bean="folder6" />
+	<ref bean="folder10" />
 	</list>
 </property>
 </bean>
@@ -951,7 +951,7 @@
 	<list>
 	</list>
 </property>
-<property name="parentFolder" ref="folder5"/>
+<property name="parentFolder" ref="folder9"/>
 <property name="childFolders">
 	<list>
 	</list>

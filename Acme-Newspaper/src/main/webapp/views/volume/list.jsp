@@ -15,8 +15,13 @@
 
 
 <display:table pagesize="5" class="displaytag" 
-	name="volumes" requestURI="volume${uri}/list.do" id="row">
+	name="volumes" requestURI="volume/list.do" id="row">
 	
+	<security:authorize access="hasRole('USER')">
+		<display:column>
+			<a href="volume/user/edit.do?volumeId=${row.id}"><spring:message code ="volume.edit"/></a>
+		</display:column>
+	</security:authorize>
 
 	
 	<!-- title -->
