@@ -44,6 +44,8 @@
 	<a href="user/register.do"> <spring:message code="security.login.registerUser" /></a>
 	<br />
 	<a href="customer/register.do"> <spring:message code="security.login.registerCustomer" /></a>
+	<br />
+	<a href="agent/register.do"> <spring:message code="security.login.registerAgent" /></a>
 	
 	
 </form:form>

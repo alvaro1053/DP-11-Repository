@@ -24,7 +24,7 @@
 
 <!-- Listing grid -->
 
-<display:table pagesize="5" class="displaytag" name="articles"  requestURI="followUp/user/list.do" id="row">
+<display:table class="displaytag" name="articles"  requestURI="followUp/user/list.do" id="row">
 	
 	<spring:message code="followUp.article.title" var="titleHeader" />
 	<display:column title="${titleHeader}"><a href="article/display.do?articleId=${row.id}"><jstl:out value="${row.title}"></jstl:out></a></display:column>
@@ -40,5 +40,15 @@
 	<display:column  title="${picture}"> <jstl:forEach var="picture" items="${row.photosURL}"><img src="${picture}" height="150" width=auto /> </jstl:forEach></display:column>
 
 </display:table>
+
+<script>
+$(document).ready( function () {
+    $('#row').DataTable();
+} );
+
+$('#row').dataTable( {
+  "lengthMenu": [ 5, 10, 25, 50, 100 ]
+} );
+</script>
 
 <a href = "followUp/user/create.do"><spring:message code="followUp.create"/></a>

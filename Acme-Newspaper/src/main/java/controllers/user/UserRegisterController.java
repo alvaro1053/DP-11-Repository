@@ -36,7 +36,7 @@ public class UserRegisterController extends AbstractController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(final ActorForm actorForm, final BindingResult binding) {
 		ModelAndView result;
-		User user = new User();
+		User user = this.userService.create();
 		user = this.userService.reconstruct(actorForm, binding);
 		if (binding.hasErrors()) {
 			result = this.createEditModelAndView(actorForm);

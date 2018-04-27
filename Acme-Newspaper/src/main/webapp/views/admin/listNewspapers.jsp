@@ -26,7 +26,7 @@
 
 
 
-<display:table pagesize="5" class="displaytag" name="newspapers"  requestURI="admin/admin/listNewspapers.do" id="row">
+<display:table class="displaytag" name="newspapers"  requestURI="admin/admin/listNewspapers.do" id="row">
 	
 	<spring:message code="newspaper.title" var="title" />
 	<display:column property="title" title="${title}"/>
@@ -35,3 +35,13 @@
 	<display:column property="description" title="${description}"/>
 	
 </display:table>
+
+<script>
+$(document).ready( function () {
+    $('#row').DataTable();
+} );
+
+$('#row').dataTable( {
+  "lengthMenu": [ 5, 10, 25, 50, 100 ]
+} );
+</script>

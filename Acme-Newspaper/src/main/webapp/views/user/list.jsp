@@ -22,7 +22,7 @@
 
 
 
-<display:table pagesize="5" class="displaytag" 
+<display:table class="displaytag"
 	name="users" requestURI="user${uri}/list.do" id="row">
 	
 		<!-- Follow -->
@@ -47,40 +47,39 @@
 	<!-- userAccount -->
 	<spring:message code="user.username"
 		var="usernameHeader" />
-	<display:column property="userAccount.username" title="${usernameHeader}"
-		sortable="true" />
+	<display:column property="userAccount.username" title="${usernameHeader}"/>
 		
 		
 	<!-- name -->
 	<spring:message code="user.name"
 		var="nameHeader" />
 	<display:column property="name" title="${nameHeader}"
-		sortable="true" />
+		  />
 
 	<!-- surname -->
 	<spring:message code="user.surname"
 		var="surnameHeader" />
 	<display:column property="surname" title="${surnameHeader}"
-		sortable="true" />
+		  />
 		
 	<!-- email -->
 	<spring:message code="user.email"
 		var="emailHeader" />
 	<display:column property="email" title="${emailHeader}"
-		sortable="true" />
+		  />
 		
 	<!-- phone -->
 	<spring:message code="user.phone"
 		var="phoneHeader" />
 	<display:column property="phone" title="${phoneHeader}"
-		sortable="true" />
+		  />
 		
 	<!-- address -->
 	<spring:message code="user.address"
 			var="addressHeader" />
 	<security:authorize access="hasRole('USER')">
 			<display:column title="${addressHeader}"
-			sortable="true">
+			 >
 		<jstl:if test="${principal==row}">
 			<jstl:out value ="${row.postalAddress}"/>
 		</jstl:if>
@@ -89,7 +88,7 @@
 	
 	<security:authorize access="hasRole('ADMIN')">
 			<display:column title="${addressHeader}"
-			sortable="true">
+			 >
 			<jstl:out value ="${row.postalAddress}"/>
 			</display:column>
 	</security:authorize>
@@ -103,3 +102,13 @@
 	</display:column>
 		
 </display:table>
+
+<script>
+$(document).ready( function () {
+    $('#row').DataTable();
+} );
+
+$('#row').dataTable( {
+  "lengthMenu": [ 5, 10, 25, 50, 100 ]
+} );
+</script>
