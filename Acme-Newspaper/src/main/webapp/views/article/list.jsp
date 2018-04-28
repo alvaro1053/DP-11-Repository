@@ -74,7 +74,7 @@
 	<display:column property="summary" title="${summary}"/>
 	
 	<spring:message code="article.moment" var="moment" />
-	<spring:message code="master.page.date.format" var="dateFormat" />
+	<spring:message code="article.moment.format" var="dateFormat" />
 	<display:column property="moment" format="{0,date,${dateFormat}}" title="${moment}"/>
 	
 	<spring:message code="article.photosURL.failed" var="failed" />
@@ -84,13 +84,19 @@
 
 </display:table>
 
+<spring:message code="datatables.locale.lang" var="tableLang"/>
+<spring:message code="datatables.moment.format" var="tableFormatMoment"/>
 <script>
-$(document).ready( function () {
-    $('#row').DataTable();
-} );
-
-$('#row').dataTable( {
-  "lengthMenu": [ 5, 10, 25, 50, 100 ]
+$(document).ready( function () {	
+	$.fn.dataTable.moment('${tableFormatMoment}');
+	
+    $('#row').dataTable( {
+    	"language": {
+        	"url": '${tableLang}'
+    	},
+	    "searching": false,
+		"lengthMenu": [ 5, 10, 25, 50, 100 ]
+    } );
 } );
 </script>
 

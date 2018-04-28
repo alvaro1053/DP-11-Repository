@@ -41,7 +41,7 @@
 <h3> <spring:message code="folder.listFolders" /></h3>
 
 <jstl:if test="${empty currentFolder.name}">
-<display:table pagesize="7" class="displaytag" 
+<display:table class="displaytag" 
 	name="folders" requestURI="folder/actor/list.do" id="folder">
 	
 	<display:column>
@@ -49,7 +49,7 @@
 	</display:column>
 	
 	<spring:message code="folder.folder.name" var="name" />
-	<display:column property="name" title="${name}" sortable="true" />
+	<display:column property="name" title="${name}"  />
 	
 	<spring:message code="folder.folder.subFolders" var="subFolders" />
 	<display:column  title="${subFolders}" sortable="false" >
@@ -92,7 +92,7 @@
 
 
 <jstl:if test="${not empty folders}">
-<display:table pagesize="5" class="displaytag" 
+<display:table class="displaytag" 
 	name="folders" requestURI="folder/actor/list.do" id="folder">
 	
 	<display:column>
@@ -100,7 +100,7 @@
 	</display:column>
 	
 	<spring:message code="folder.folder.name" var="name" />
-	<display:column property="name" title="${name}" sortable="true" />
+	<display:column property="name" title="${name}"  />
 	
 	<spring:message code="folder.folder.subFolders" var="subFolders" />
 	<display:column  title="${subFolders}" sortable="false" >
@@ -138,13 +138,13 @@
 </jstl:if>
 
 <jstl:if test="${not empty messages}">
-<display:table pagesize="5" class="displaytag" 
+<display:table class="displaytag" 
 	name="messages" requestURI="folder/actor/list.do" id="message">
 	
 	<jstl:if test="${currentFolder.name != 'out box'}">
 	
 	<spring:message code="folder.message.sender" var="sender" />
-	<display:column title="${sender}" sortable="true" >
+	<display:column title="${sender}"  >
 		
 		<%-- Caso normal, se muestra el username del sender --%>
 		<jstl:if test="${message.sender != message.recipient }">
@@ -165,7 +165,7 @@
 	<jstl:if test="${(currentFolder.name == 'out box')||(!currentFolder.isSystem)}">
 	
 		<spring:message code="folder.message.recipient" var="recipient" />
-		<display:column title="${recipient}" sortable="true">
+		<display:column title="${recipient}" >
 		
 		<%-- Caso normal en el que es un mensaje de una actor a otro actor diferente --%>
 		<jstl:if test="${message.sender != message.recipient }">
@@ -186,7 +186,8 @@
 	</jstl:if>
 	
 	<spring:message code="folder.message.moment" var="moment" />
-	<display:column property="moment" title="${moment}" sortable="true" format = "{0,date,dd/MM/yyyy HH:mm}"/>
+	<spring:message code="folder.moment.format" var="momentFormat" />
+	<display:column property="moment" title="${moment}"  format = "{0,date,${momentFormat}}"/>
 	
 	<spring:message code="folder.message.subject" var="subject" />
 	<display:column property="subject" title="${subject}" sortable="false" />
@@ -195,7 +196,7 @@
 	<display:column property="body" title="${body}" sortable="false" />
 	
 	<spring:message code="folder.message.priority" var="priority" />
-	<display:column property="priority" title="${priority}" sortable="true" />
+	<display:column property="priority" title="${priority}"  />
 	
 	<display:column>
 	<a href="message/actor/edit.do?messageId=${message.id}"><spring:message code="folder.message.edit"/></a>
@@ -206,6 +207,29 @@
 
 </jstl:if>
 
+<spring:message code="datatables.locale.lang" var="tableLang"/>
+<spring:message code="datatables.moment.format" var="tableFormatMoment"/>
+<script>
+$(document).ready( function () {
+    $('#folder').dataTable( {
+    	"language": {
+        	"url": '${tableLang}'
+    	},
+		"lengthMenu": [ 5, 10, 25, 50, 100 ]
+    } );
+} );
+
+$(document).ready( function () {	
+	$.fn.dataTable.moment('${tableFormatMoment}');
+	
+    $('#message').dataTable( {
+    	"language": {
+        	"url": '${tableLang}'
+    	},
+		"lengthMenu": [ 5, 10, 25, 50, 100 ]
+    } );
+} );
+</script>
 
 
 

@@ -33,7 +33,7 @@
 	<display:column property="summary" title="${summary}"/>
 	
 	<spring:message code="followUp.article.moment" var="moment" />
-	<spring:message code="master.page.date.format" var="dateFormat" />
+	<spring:message code="followUp.date.format" var="dateFormat" />
 	<display:column property="moment" format="{0,date,${dateFormat}}" title="${moment}"/>
 	
 	<spring:message code="followUp.article.photosURL" var="picture" />
@@ -41,13 +41,18 @@
 
 </display:table>
 
+<spring:message code="datatables.locale.lang" var="tableLang"/>
+<spring:message code="datatables.moment.format" var="tableFormatMoment"/>
 <script>
-$(document).ready( function () {
-    $('#row').DataTable();
-} );
-
-$('#row').dataTable( {
-  "lengthMenu": [ 5, 10, 25, 50, 100 ]
+$(document).ready( function () {	
+	$.fn.dataTable.moment('${tableFormatMoment}');
+	
+    $('#row').dataTable( {
+    	"language": {
+        	"url": '${tableLang}'
+    	},
+		"lengthMenu": [ 5, 10, 25, 50, 100 ]
+    } );
 } );
 </script>
 

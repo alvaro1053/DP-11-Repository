@@ -47,8 +47,8 @@
 	<!-- publicationDate -->
 	<spring:message code="newspaper.publicationDate"
 		var="publicationDateHeader" />
-	<display:column property="publicationDate" title="${publicationDateHeader}"
-		 />		
+	<spring:message code="newspaper.date.format" var="dateFormat"/>
+	<display:column property="publicationDate" format="{0,date,${dateFormat}}" title="${publicationDateHeader}"/>		
 	
 	
 	
@@ -187,14 +187,19 @@
 		
 </display:table>
 
+<spring:message code="datatables.locale.lang" var="tableLang"/>
+<spring:message code="datatables.date.format" var="tableFormatDate"/>
 <script>
-$(document).ready( function () {
-    $('#row').DataTable();
-} );
-
-$('#row').dataTable( {
-  "searching": false,
-  "lengthMenu": [ 5, 10, 25, 50, 100 ]
+$(document).ready( function () {	
+	$.fn.dataTable.moment('${tableFormatDate}');
+	
+    $('#row').dataTable( {
+    	"language": {
+        	"url": '${tableLang}'
+    	},
+	    "searching": false,
+		"lengthMenu": [ 5, 10, 25, 50, 100 ]
+    } );
 } );
 </script>
 

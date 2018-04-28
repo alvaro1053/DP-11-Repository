@@ -11,7 +11,10 @@ import org.springframework.validation.Validator;
 
 import services.UserService;
 import repositories.VolumeRepository;
+import domain.CreditCard;
+import domain.Customer;
 import domain.Newspaper;
+import domain.Subscription;
 import domain.User;
 import domain.Volume;
 import forms.VolumeForm;
@@ -28,6 +31,10 @@ public class VolumeService {
 	//Services
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private CustomerService customerService;
+	@Autowired
+	private SubscriptionService subscriptionService;
 
 	@Autowired
 	private Validator validator;
@@ -133,6 +140,26 @@ public class VolumeService {
 	public void flush() {
 		this.volumeRepository.flush();
 	}
+	
+	public void subscribe(Volume volume, CreditCard creditCard){
+		Customer principal = this.customerService.findByPrincipal();
+		Collection<Newspaper> newspapers = volume.getNewspapers();
+		Collection<Subscription> subscriptions = principal.getSubscriptions();
+		for (Subscription s : subscriptions){
+			if(newspapers.contains(s.getNewspaper())){
+				newspapers.remove(s.getNewspaper());
+			}
+			}
+		for(Newspaper n : newspapers){
+			Subscription subscription = this.subscriptionService.create();
+			subscription.setCreditCard(creditCard);
+			subscription.setNewspaper(n);
+			subscription.setCustomer(principal);
+			if(n.getIsPrivate() == true){
+			this.subscriptionService.save(subscription);
+			}
+		}
+		}
+	}
 
 
-}
