@@ -38,17 +38,22 @@
 	<display:column property="body" title="${body}"/>
 	
 	<spring:message code="article.moment" var="moment" />
-	<spring:message code="master.page.date.format" var="dateFormat" />
+	<spring:message code="article.moment.format" var="dateFormat" />
 	<display:column property="moment" format="{0,date,${dateFormat}}" title="${moment}"/>
 	
 </display:table>
 
+<spring:message code="datatables.locale.lang" var="tableLang"/>
+<spring:message code="datatables.moment.format" var="tableFormatMoment"/>
 <script>
-$(document).ready( function () {
-    $('#row').DataTable();
-} );
-
-$('#row').dataTable( {
-  "lengthMenu": [ 5, 10, 25, 50, 100 ]
+$(document).ready( function () {	
+	$.fn.dataTable.moment('${tableFormatMoment}');
+	
+    $('#row').dataTable( {
+    	"language": {
+        	"url": '${tableLang}'
+    	},
+		"lengthMenu": [ 5, 10, 25, 50, 100 ]
+    } );
 } );
 </script>
