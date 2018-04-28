@@ -14,7 +14,7 @@
 
 
 
-<display:table pagesize="5" class="displaytag" 
+<display:table class="displaytag" 
 	name="volumes" requestURI="volume/list.do" id="row">
 	
 	<security:authorize access="hasRole('USER')">
@@ -27,22 +27,19 @@
 	<!-- title -->
 	<spring:message code="volume.title"
 		var="titleHeader" />
-	<display:column property="title" title="${titleHeader}"
-		sortable="true" />
+	<display:column property="title" title="${titleHeader}"/>
 		
 	
 	<!-- description -->
 	<spring:message code="volume.description"
 		var="descriptionHeader" />
-	<display:column property="description" title="${descriptionHeader}"
-		sortable="true" />
+	<display:column property="description" title="${descriptionHeader}"/>
 	
 	
 	<!-- Year -->
 	<spring:message code="volume.year"
 		var="yearHeader" />
-	<display:column property="year" title="${yearHeader}"
-		sortable="true" />		
+	<display:column property="year" title="${yearHeader}" />		
 	
 	
 	<!-- newspapers -->
@@ -64,7 +61,7 @@
 	<!-- Publisher -->
 	<spring:message code="volume.user"
 		var="userHeader" />
-	<display:column title="${userHeader}" sortable="true" > 
+	<display:column title="${userHeader}"  > 
 		<a href="user${uri}/display.do?userId=${row.user.id}">
 			<jstl:out value="${row.user.name} ${row.user.surname}"/>
 		</a>
@@ -100,6 +97,18 @@
 
 		
 </display:table>
+
+<spring:message code="datatables.locale.lang" var="tableLang"/>
+<script>
+$(document).ready( function () {
+    $('#row').dataTable( {
+    	"language": {
+        	"url": '${tableLang}'
+    	},
+		"lengthMenu": [ 5, 10, 25, 50, 100 ]
+    } );
+} );
+</script>
 
 <security:authorize access="hasRole('USER')">
 <a href="volume/user/create.do"> <spring:message
