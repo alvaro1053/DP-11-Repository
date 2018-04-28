@@ -128,7 +128,7 @@
 		<jstl:forEach items="${row.articles}" var="article"> 
 			 <li>
 			 <jstl:choose>
-				<jstl:when test="${suscrito == true}">
+				<jstl:when test="${suscrito == true|| row.isPrivate == false}">
 					<a href="article/display.do?articleId=${article.id}">
 						<jstl:out value="${article.title}"/>
 					</a>
@@ -177,13 +177,15 @@
 </jstl:if>
 </jstl:forEach>
 
+		<jsp:useBean id="now" class="java.util.Date"/>
+		<jstl:if test="${!(subscrito == true) and (row.isPrivate == true) and (row.publicationDate < now)}">
 		<display:column>
-		<jstl:if test="${!(subscrito == true) and (row.isPrivate == true)}">
 		<a href="subscription/customer/create.do?newspaperId=${row.id}"> <spring:message
 			code="article.subscribe" />
 		</a>
-		</jstl:if>
 		
-	</display:column>
+		</display:column>
+		</jstl:if>
+	
 </security:authorize>
 </display:table>
