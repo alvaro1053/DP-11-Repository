@@ -106,6 +106,8 @@
 		<!-- Subscription -->
 		<security:intercept-url pattern="/subscription/customer/create.do" access="hasRole('CUSTOMER')" /> 
 		<security:intercept-url pattern="/subscription/customer/edit.do" access="hasRole('CUSTOMER')" /> 
+			<security:intercept-url pattern="/subscription/customer/createVolume.do" access="hasRole('CUSTOMER')" /> 
+		<security:intercept-url pattern="/subscription/customer/editVolume.do" access="hasRole('CUSTOMER')" /> 
 		
 		<!-- Follow up -->
 		<security:intercept-url pattern="/followUp/user/list.do" access="hasRole('USER')" /> 

@@ -80,16 +80,18 @@
 
 <security:authorize access="hasRole('CUSTOMER')">
 
-<jstl:set var="subscrito" value="${false}"/>
-<jstl:forEach var="subscription" items="${principal.subscriptions}">
-<jstl:if test="${subscription.newspaper.id == row.id}">
 <jstl:set var="subscrito" value="${true}"/>
+<jstl:forEach var="newspaper" items="${row.newspapers}">
+<jstl:forEach var="subscription" items="${principal.subscriptions}">
+<jstl:if test="${newspaper.id != subscription.newspaper.id and newspaper.isPrivate == true }">
+<jstl:set var="subscrito" value="${false}"/>
 </jstl:if>
+</jstl:forEach>
 </jstl:forEach>
 
 		<display:column>
-		<jstl:if test="${!(subscrito == true)}">
-		<a href="subscription/customer/create.do?volumeId=${row.id}"> <spring:message
+		<jstl:if test="${(subscrito == false)}">
+		<a href="subscription/customer/createVolume.do?volumeId=${row.id}"> <spring:message
 			code="article.subscribe" />
 		</a>
 		</jstl:if>

@@ -1,10 +1,13 @@
 
 package services;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,7 +52,6 @@ public class SubscriptionService {
 		principal = this.customerService.findByPrincipal();
 		Assert.notNull(principal);
 		subscription.setCustomer(principal);
-		subscription = new Subscription();
 
 		return subscription;
 	}
@@ -162,6 +164,21 @@ public class SubscriptionService {
 	
 	public void flush() {
 	this.subscriptionRepository.flush();
+		
+	}
+	
+	public void checkDate(CreditCard creditCard, BindingResult binding){
+		try{
+		LocalDate date = new LocalDate();
+		Integer year = date.getYearOfCentury();
+		Integer moth = date.getMonthOfYear();
+		if (year <= creditCard.getExpirationYear()){
+			if(creditCard.getExpirationMonth()< moth){
+				binding.rejectValue("creditCard.expirationMonth", "subscription.expirationMonth");
+			}
+		}} catch (Throwable oops){
+			binding.rejectValue("creditCard.expirationMonth", "subscription.expirationMonth");
+		}
 		
 	}
 }
