@@ -119,8 +119,11 @@
 		
 		<!-- Volume -->
 		<security:intercept-url pattern="/volume/list.do" access="permitAll" /> 
+		<security:intercept-url pattern="/volume/display.do" access="permitAll" /> 
 		<security:intercept-url pattern="/volume/user/create.do" access="hasRole('USER')" /> 
 		<security:intercept-url pattern="/volume/user/edit.do" access="hasRole('USER')" /> 
+		<security:intercept-url pattern="/volume/user/display.do" access="hasRole('USER')" /> 
+		
 		
 		
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
