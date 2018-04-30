@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
 
 
 import javax.transaction.Transactional;
@@ -17,6 +19,7 @@ import org.springframework.validation.Validator;
 import repositories.ArticleRepository;
 import domain.Actor;
 import domain.Admin;
+import domain.Advertisement;
 import domain.Article;
 import domain.Customer;
 import domain.Newspaper;
@@ -276,5 +279,23 @@ public class ArticleService {
 
 	public void flush() {
 		this.articleRepository.flush();
+	}
+
+	public Advertisement findRandomAdvert(Article article) {
+		Advertisement result = null;
+		List<Advertisement> adverts = new ArrayList<Advertisement>();
+		adverts = (List<Advertisement>) article.getNewspaper().getAdverts();
+		
+		if(adverts.size() >= 2){
+			int selectedOne;
+			int limit = adverts.size();
+			Random rand = new Random();
+			selectedOne = rand.nextInt(limit);
+			result = adverts.get(selectedOne);
+		}else if(adverts.size() == 1){
+			result = adverts.get(0);
+		}
+		
+		return result;
 	}
 }

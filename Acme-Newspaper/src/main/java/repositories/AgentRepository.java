@@ -9,7 +9,7 @@ import domain.Agent;
 @Repository
 public interface AgentRepository extends JpaRepository<Agent, Integer> {
 
-	@Query("select u from UserAccount u where u.id = ?1")
+	@Query("select a from Agent a where a.userAccount.id = ?1")
 	public Agent findByUserAccount(int userAccountId);
 	
 }

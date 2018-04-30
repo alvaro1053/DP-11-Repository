@@ -1,8 +1,8 @@
 
 package controllers;
 
-
 import java.util.Collection;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ArticleService;
+import domain.Advertisement;
 import domain.Article;
 
 @Controller
@@ -31,18 +32,24 @@ public class ArticleController extends AbstractController {
 
 
 	//Display
+	
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam final int articleId) {
 		final ModelAndView result;
 		Article article;
 		final String uri = "";
-
+		Advertisement advertChoosen = null;
+		
 		article = this.articleService.findOne(articleId);
+	
+		
+		advertChoosen = this.articleService.findRandomAdvert(article);
 		
 		result = new ModelAndView("article/display");
 		result.addObject("article", article);
 		result.addObject("uri", uri);
 		result.addObject("principal", null);
+		result.addObject("advert", advertChoosen);
 		return result;
 
 	}

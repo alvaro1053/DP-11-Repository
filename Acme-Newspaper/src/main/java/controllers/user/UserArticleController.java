@@ -4,6 +4,7 @@ package controllers.user;
 
 import java.util.Collection;
 
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,7 +90,7 @@ public class UserArticleController extends AbstractController{
 		Article article;
 		final User principal = this.userService.findByPrincipal();
 		final String uri = "/user";
-
+		
 		article = this.articleService.findOne(articleId);
 
 		result = new ModelAndView("article/display");

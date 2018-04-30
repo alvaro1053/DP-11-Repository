@@ -47,6 +47,12 @@
 		<!-- Message -->
 		<bean class="converters.StringToMessageConverter" />
 		<bean class="converters.MessageToStringConverter" />
+		<!-- Advertisement -->
+		<bean class="converters.StringToAdvertisementConverter" />
+		<bean class="converters.AdvertisementToStringConverter" />
+		<!-- Agent -->
+		<bean class="converters.StringToAgentConverter" />
+		<bean class="converters.AgentToStringConverter" />
 		
 	</util:list>
 	

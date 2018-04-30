@@ -431,6 +431,7 @@
 	
 	<property name="advertisements">
 	<list>
+		<ref bean = "advertisement1"></ref>
 	</list>
 	</property>
 	
@@ -499,6 +500,11 @@
 	<ref bean="volume1"/>
 	</list>
 	</property>
+	<property name="adverts">
+		<list>
+			<ref bean = "advertisement1"></ref>
+		</list>
+	</property>
 
 </bean>
 
@@ -529,6 +535,11 @@
 	<ref bean="volume1"/>
 	</list>
 	</property>
+	
+		<property name="adverts">
+		<list>
+		</list>
+	</property>
 
 </bean>
 
@@ -557,6 +568,11 @@
 	<list>
 	<ref bean="volume2"/>
 	</list>
+	</property>
+	
+	<property name="adverts">
+		<list>
+		</list>
 	</property>
 	
 </bean>
@@ -778,7 +794,12 @@
 	<property name="targetPageURL" value="https://www.telepizza.es/productos/pizzas"/>
 	<property name="creditCard" ref="creditCard1"/>
 	<property name="agent" ref="agent1"/>
-	
+	<property name="newspapers">
+		<list>
+			<ref bean="newspaper1"/>
+		</list>
+	</property>
+	<property name="tabooWords" value="false"/>
 </bean>
 
 

@@ -113,6 +113,10 @@ public class AgentService {
 		
 		return result;
 	}
+
+	public Agent findOne(int agentId) {
+		return this.agentRepository.findOne(agentId);
+	}
 	
 	
 }
