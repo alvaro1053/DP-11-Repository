@@ -35,8 +35,8 @@ import services.VolumeService;
 @RequestMapping("/subscription/customer")
 public class CustomerSubscriptionController extends AbstractController{
 
+
 	// Services
-	
 	@Autowired
 	private NewspaperService	newspaperService;
 
@@ -51,8 +51,8 @@ public class CustomerSubscriptionController extends AbstractController{
 	private SubscriptionService	subscriptionService;
 
 
-	// Constructors
 
+	//Constructors
 	public CustomerSubscriptionController() {
 		super();
 	}

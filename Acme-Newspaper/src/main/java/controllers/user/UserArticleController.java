@@ -4,7 +4,6 @@ package controllers.user;
 
 import java.util.Collection;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -88,7 +87,7 @@ public class UserArticleController extends AbstractController{
 		Article article;
 		final User principal = this.userService.findByPrincipal();
 		final String uri = "/user";
-
+		
 		article = this.articleService.findOne(articleId);
 
 		result = new ModelAndView("article/display");

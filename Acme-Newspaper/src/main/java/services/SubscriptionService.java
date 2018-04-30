@@ -1,6 +1,7 @@
 
 package services;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -178,7 +179,7 @@ public class SubscriptionService {
 			binding.rejectValue("creditCard.expirationMonth", "subscription.creditCard.expired");
 		}
 		else if(ccYear == actualYear){
-			if(ccMonth <actualMonth){
+			if(ccMonth <actualMonth || ccMonth == actualMonth){
 				binding.rejectValue("creditCard.expirationMonth", "subscription.creditCard.expired");
 			}
 		}} catch (Throwable oops){

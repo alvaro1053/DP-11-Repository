@@ -76,7 +76,9 @@
 		<security:intercept-url pattern="/admin/admin/listArticles.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/admin/listNewspapers.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/admin/listChirps.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/admin/listAdverts.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/admin/delete.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/admin/deleteAdvert.do" access="hasRole('ADMIN')" />
 
 		<security:intercept-url pattern="/dashboard/admin/display.do" access="hasRole('ADMIN')" /> 
 		
@@ -126,6 +128,9 @@
 		<security:intercept-url pattern="/volume/user/edit.do" access="hasRole('USER')" /> 
 		<security:intercept-url pattern="/volume/user/display.do" access="hasRole('USER')" /> 
 		
+		
+		<!-- Advertisement -->
+		<security:intercept-url pattern="/advertisement/agent/**" access="hasRole('AGENT')" />
 		
 		
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />

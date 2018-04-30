@@ -1,5 +1,9 @@
 #./src/main/resources/Entities.map
+<<<<<<< HEAD
 #Mon Apr 30 18:10:43 CEST 2018
+=======
+#Mon Apr 30 16:42:11 CEST 2018
+>>>>>>> e64768a3f7d04ee2e726bf2056ae27aee5463fab
 user3=88
 user2=87
 user1=86

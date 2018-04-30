@@ -23,7 +23,7 @@ public class Advertisement extends DomainEntity {
 	private CreditCard			creditCard;
 	private Agent				agent;
 	private Collection<Newspaper>	newspapers;
-
+	private Boolean				tabooWords;
 
 	@NotBlank
 	public String getTitle() {
@@ -59,6 +59,13 @@ public class Advertisement extends DomainEntity {
 		this.creditCard = creditCard;
 	}
 	
+	public Boolean getTabooWords() {
+		return tabooWords;
+	}
+	public void setTabooWords(Boolean tabooWords) {
+		this.tabooWords = tabooWords;
+	}
+	
 	// Relationships
 
 	@NotNull
@@ -74,6 +81,7 @@ public class Advertisement extends DomainEntity {
 	
 	
 	@ManyToMany
+	@NotNull
 	public Collection<Newspaper> getNewspapers() {
 		return this.newspapers;
 	}

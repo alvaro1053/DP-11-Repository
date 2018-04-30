@@ -230,5 +230,21 @@ public class NewspaperService {
 		this.newspaperRepository.flush();
 	}
 
+	public Collection<Newspaper> findPlacedAdsByAgent(int agentId) {
+		Collection<Newspaper> result;
+		
+		result = this.newspaperRepository.findPlacedAdsByAgent(agentId);
+		
+		return result;
+	}
+
+	public Collection<Newspaper> findNotPlacedAdsByAgent(int agentId) {
+		Collection<Newspaper> result;
+		
+		result = this.newspaperRepository.findNotPlacedAdsByAgent(agentId);
+		
+		return result;
+	}
+
 
 }

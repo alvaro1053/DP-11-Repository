@@ -13,7 +13,11 @@
 
 
 
+<jstl:if test="${location != null}">
+	<h3><spring:message code="${location}"></spring:message></h3>
+</jstl:if>
 
+<br>
 <form action="newspaper${uri}/list.do" method="get">
 	<spring:message code="newspaper.search.placeholder" var="placeholder" />
 	<input name="filter" placeholder="${placeholder}"/>
@@ -24,9 +28,6 @@
 
 </form>
 <br>
-
-
-
 
 
 <display:table class="displaytag" 
@@ -190,8 +191,23 @@
 		
 </display:table>
 
+<security:authorize access="hasRole('AGENT')">
+		<h3>
+			<a href="advertisement/agent/create.do">
+				<spring:message code="advertisement.create" />
+			</a>
+		</h3>
+</security:authorize>
+
+<security:authorize access="hasRole('USER')">
+<a href="newspaper/user/create.do"> <spring:message
+			code="newspaper.create" /> </a>
+</security:authorize>
+
+
 <spring:message code="datatables.locale.lang" var="tableLang"/>
 <spring:message code="datatables.date.format" var="tableFormatDate"/>
+
 <script>
 $(document).ready( function () {	
 	$.fn.dataTable.moment('${tableFormatDate}');
@@ -206,9 +222,6 @@ $(document).ready( function () {
 } );
 </script>
 
-<security:authorize access="hasRole('USER')">
-<a href="newspaper/user/create.do"> <spring:message
-			code="newspaper.create" /> </a>
-</security:authorize>
+
 
 

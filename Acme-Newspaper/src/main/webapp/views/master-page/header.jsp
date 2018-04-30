@@ -117,7 +117,18 @@
 					<li><a href="admin/admin/listArticles.do"><spring:message code="master.page.articlesTaboo" /></a></li>
 					<li><a href="admin/admin/listNewspapers.do"><spring:message code="master.page.newspapersWithTaboo" /></a></li>
 					<li><a href="admin/admin/listChirps.do"><spring:message code="master.page.chirpsWithTaboo" /></a></li>
+					<li><a href="admin/admin/listAdverts.do"><spring:message code="master.page.AdvertsWithTaboo" /></a></li>
 			</ul>
+		</li>
+		</security:authorize>
+		
+		<security:authorize access="hasRole('AGENT')">
+		<li><a class = "fNiv"><spring:message code = "master.page.advertisement"/></a>
+			<ul>
+				<li class="arrow"></li>
+					<li><a href="advertisement/agent/listPlacedAds.do"><spring:message code="master.page.advertisement.listPlacedAds" /></a></li>
+					<li><a href="advertisement/agent/listNotPlacedAds.do"><spring:message code="master.page.advertisement.listNotPlacedAds" /></a></li>
+			</ul>	
 		</li>
 		</security:authorize>
 
