@@ -117,6 +117,7 @@ public class SubscriptionService {
 			result.setNewspaper(subscription.getNewspaper());
 			
 		this.validator.validate(result, binding);
+		this.checkDate(subscription.getCreditCard(), binding);
 		return result;
 		
 		
@@ -170,14 +171,20 @@ public class SubscriptionService {
 	public void checkDate(CreditCard creditCard, BindingResult binding){
 		try{
 		LocalDate date = new LocalDate();
-		Integer year = date.getYearOfCentury();
-		Integer moth = date.getMonthOfYear();
-		if (year <= creditCard.getExpirationYear()){
-			if(creditCard.getExpirationMonth()< moth){
-				binding.rejectValue("creditCard.expirationMonth", "subscription.expirationMonth");
+		Integer actualYear = date.getYearOfCentury();
+		Integer actualMonth = date.getMonthOfYear();
+		Integer ccYear      = creditCard.getExpirationYear();
+		Integer ccMonth     = creditCard.getExpirationMonth();
+		
+		if (ccYear < actualYear){
+			binding.rejectValue("creditCard.expirationMonth", "subscription.creditCard.expired");
+		}
+		else if(ccYear == actualYear){
+			if(ccMonth <actualMonth){
+				binding.rejectValue("creditCard.expirationMonth", "subscription.creditCard.expired");
 			}
 		}} catch (Throwable oops){
-			binding.rejectValue("creditCard.expirationMonth", "subscription.expirationMonth");
+			binding.rejectValue("creditCard.expirationMonth", "subscription.creditCard.expired");
 		}
 		
 	}

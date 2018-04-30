@@ -149,7 +149,7 @@
 <security:authorize access="hasRole('USER')">
 		<display:column>
 		<jsp:useBean id="now" class="java.util.Date"/>
-			<jstl:if test="${principal.newspapers.contains(row) && row.publicationDate > now}">
+			<jstl:if test="${principal.newspapers.contains(row) && row.publicationDate gt now}">
 		<a href="newspaper/user/publish.do?newspaperId=${row.id}"> <spring:message
 			code="newspaper.publish" />
 		</a>
@@ -175,14 +175,16 @@
 </jstl:if>
 </jstl:forEach>
 
-		<jsp:useBean id="now" class="java.util.Date"/>
-		<jstl:if test="${!(subscrito == true) and (row.isPrivate == true) and (row.publicationDate < now)}">
+		
 		<display:column>
+		<jsp:useBean id="now2" class="java.util.Date"/>
+		<jstl:if test="${(subscrito == false) and (row.isPrivate == true) and (row.publicationDate lt now2)}">
 		<a href="subscription/customer/create.do?newspaperId=${row.id}"> <spring:message
 			code="article.subscribe" />
 		</a>
-		</display:column>
 		</jstl:if>
+		</display:column>
+	
 	
 </security:authorize>
 		

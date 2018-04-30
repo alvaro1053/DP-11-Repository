@@ -109,7 +109,7 @@ public class CustomerSubscriptionController extends AbstractController{
 		//Edit
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final SubscriptionForm subscriptionForm, final BindingResult binding) {
+	public ModelAndView save(final SubscriptionForm subscriptionForm, final BindingResult binding) {
 		ModelAndView result;
 		Subscription subscription = this.subscriptionService.reconstruct(subscriptionForm, binding);
 		if (binding.hasErrors()) {
@@ -183,7 +183,7 @@ public class CustomerSubscriptionController extends AbstractController{
 			ModelAndView result;
 
 			result = new ModelAndView("subscription/subscribeVolume");
-			result.addObject("subscriptionForm", subscription);
+			result.addObject("subscriptionVolumeForm", subscription);
 			result.addObject("message", message);
 
 			return result;

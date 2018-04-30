@@ -116,7 +116,7 @@ public class UserNewspaperController extends AbstractController{
 	// Edition ----------------------------------------------------------------
 
 		@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-		public ModelAndView save(@Valid final NewspaperForm newspaperForm, final BindingResult binding) {
+		public ModelAndView save(final NewspaperForm newspaperForm, final BindingResult binding) {
 			ModelAndView result;
 			Newspaper newspaper = this.newspaperService.reconstruct(newspaperForm,binding);
 			if (binding.hasErrors())
@@ -186,7 +186,7 @@ public class UserNewspaperController extends AbstractController{
 			ModelAndView result;
 
 			result = new ModelAndView("newspaper/edit");
-			result.addObject("newspaper", newspaper);
+			result.addObject("newspaperForm", newspaper);
 			result.addObject("message", message);
 
 			return result;
