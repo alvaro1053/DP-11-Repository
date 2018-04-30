@@ -1,10 +1,12 @@
 
 package services;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,7 +51,6 @@ public class SubscriptionService {
 		principal = this.customerService.findByPrincipal();
 		Assert.notNull(principal);
 		subscription.setCustomer(principal);
-		subscription = new Subscription();
 
 		return subscription;
 	}
@@ -115,6 +116,7 @@ public class SubscriptionService {
 			result.setNewspaper(subscription.getNewspaper());
 			
 		this.validator.validate(result, binding);
+		this.checkDate(subscription.getCreditCard(), binding);
 		return result;
 		
 		
@@ -162,6 +164,27 @@ public class SubscriptionService {
 	
 	public void flush() {
 	this.subscriptionRepository.flush();
+		
+	}
+	
+	public void checkDate(CreditCard creditCard, BindingResult binding){
+		try{
+		LocalDate date = new LocalDate();
+		Integer actualYear = date.getYearOfCentury();
+		Integer actualMonth = date.getMonthOfYear();
+		Integer ccYear      = creditCard.getExpirationYear();
+		Integer ccMonth     = creditCard.getExpirationMonth();
+		
+		if (ccYear < actualYear){
+			binding.rejectValue("creditCard.expirationMonth", "subscription.creditCard.expired");
+		}
+		else if(ccYear == actualYear){
+			if(ccMonth <actualMonth || ccMonth == actualMonth){
+				binding.rejectValue("creditCard.expirationMonth", "subscription.creditCard.expired");
+			}
+		}} catch (Throwable oops){
+			binding.rejectValue("creditCard.expirationMonth", "subscription.creditCard.expired");
+		}
 		
 	}
 }

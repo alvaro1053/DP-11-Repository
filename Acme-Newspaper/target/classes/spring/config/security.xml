@@ -108,6 +108,8 @@
 		<!-- Subscription -->
 		<security:intercept-url pattern="/subscription/customer/create.do" access="hasRole('CUSTOMER')" /> 
 		<security:intercept-url pattern="/subscription/customer/edit.do" access="hasRole('CUSTOMER')" /> 
+			<security:intercept-url pattern="/subscription/customer/createVolume.do" access="hasRole('CUSTOMER')" /> 
+		<security:intercept-url pattern="/subscription/customer/editVolume.do" access="hasRole('CUSTOMER')" /> 
 		
 		<!-- Follow up -->
 		<security:intercept-url pattern="/followUp/user/list.do" access="hasRole('USER')" /> 
@@ -121,8 +123,11 @@
 		
 		<!-- Volume -->
 		<security:intercept-url pattern="/volume/list.do" access="permitAll" /> 
+		<security:intercept-url pattern="/volume/display.do" access="permitAll" /> 
 		<security:intercept-url pattern="/volume/user/create.do" access="hasRole('USER')" /> 
 		<security:intercept-url pattern="/volume/user/edit.do" access="hasRole('USER')" /> 
+		<security:intercept-url pattern="/volume/user/display.do" access="hasRole('USER')" /> 
+		
 		
 		<!-- Advertisement -->
 		<security:intercept-url pattern="/advertisement/agent/**" access="hasRole('AGENT')" />

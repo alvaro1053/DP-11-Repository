@@ -68,7 +68,6 @@ public class UserVolumeController extends AbstractController {
 			return result;
 
 	}
-		
 	
 	// Creation ---------------------------------------------------------------
 

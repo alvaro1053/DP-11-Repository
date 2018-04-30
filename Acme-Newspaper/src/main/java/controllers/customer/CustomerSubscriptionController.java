@@ -3,6 +3,7 @@ package controllers.customer;
 
 
 
+
 import javax.validation.Valid;
 
 
@@ -17,28 +18,38 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import controllers.AbstractController;
 
+import domain.CreditCard;
 import domain.Newspaper;
 import domain.Subscription;
+import domain.Volume;
 import forms.SubscriptionForm;
+import forms.SubscriptionVolumeForm;
 
 import services.CustomerService;
 import services.NewspaperService;
 import services.SubscriptionService;
+import services.VolumeService;
 
 
 @Controller
 @RequestMapping("/subscription/customer")
 public class CustomerSubscriptionController extends AbstractController{
 
-	//Services
+
+	// Services
 	@Autowired
 	private NewspaperService	newspaperService;
+
+	@Autowired
+	private VolumeService	volumeService;
+	
 	
 	@Autowired
 	private CustomerService	customerService;
 	
 	@Autowired
 	private SubscriptionService	subscriptionService;
+
 
 
 	//Constructors
@@ -49,7 +60,7 @@ public class CustomerSubscriptionController extends AbstractController{
 	//Creation
 	
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView filter(@RequestParam final int newspaperId, RedirectAttributes redir) {
+	public ModelAndView create(@RequestParam final int newspaperId, RedirectAttributes redir) {
 		ModelAndView result;
 		SubscriptionForm subscription = new SubscriptionForm();
 		try{
@@ -69,8 +80,32 @@ public class CustomerSubscriptionController extends AbstractController{
 	}
 	
 	
+	//Creation for Volume
+	
+		@RequestMapping(value = "/createVolume", method = RequestMethod.GET)
+		public ModelAndView createVolumeSubscription(@RequestParam final int volumeId, RedirectAttributes redir) {
+			ModelAndView result;
+			SubscriptionVolumeForm subscription = new SubscriptionVolumeForm();
+			try{
+			this.customerService.findByPrincipal();
+			Volume volume = this.volumeService.findOne(volumeId);
+			subscription.setVolume(volume);
+			
+			result = createEditModelAndViewOfVolume(subscription);
+			}catch(Throwable oops){
+				result = new ModelAndView("redirect:../../volume/list.do");
+				redir.addFlashAttribute("message", "volume.permision");
+			}
+			
+			
+
+			return result;
+		}
+	
+		//Edit
+	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final SubscriptionForm subscriptionForm, final BindingResult binding) {
+	public ModelAndView save(final SubscriptionForm subscriptionForm, final BindingResult binding) {
 		ModelAndView result;
 		Subscription subscription = this.subscriptionService.reconstruct(subscriptionForm, binding);
 		if (binding.hasErrors()) {
@@ -80,7 +115,30 @@ public class CustomerSubscriptionController extends AbstractController{
 				this.subscriptionService.save(subscription);
 				result = new ModelAndView("redirect:../../newspaper/list.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(subscriptionForm, "subscription.commit.error");
+				result = this.createEditModelAndView(subscriptionForm, "v.commit.error");
+			}
+
+		return result;
+	}
+	
+	//Edit of Volume
+	
+	@RequestMapping(value = "/editVolume", method = RequestMethod.POST, params = "save")
+	public ModelAndView saveOfVolume(@Valid final SubscriptionVolumeForm subscriptionForm,
+			final BindingResult binding) {
+		ModelAndView result;
+		this.subscriptionService.checkDate(subscriptionForm.getCreditCard(), binding);
+		if (binding.hasErrors()) {
+			result = this.createEditModelAndViewOfVolume(subscriptionForm);
+		} else
+			try {
+				Volume volume = subscriptionForm.getVolume();
+				CreditCard creditCard = subscriptionForm.getCreditCard();
+				this.volumeService.subscribe(volume, creditCard);
+				result = new ModelAndView("redirect:../../volume/list.do");
+			} catch (final Throwable oops) {
+				result = this.createEditModelAndViewOfVolume(subscriptionForm,
+						"volume.commit.error");
 			}
 
 		return result;
@@ -102,6 +160,26 @@ public class CustomerSubscriptionController extends AbstractController{
 
 			result = new ModelAndView("subscription/edit");
 			result.addObject("subscriptionForm", subscription);
+			result.addObject("message", message);
+
+			return result;
+		}
+		
+		
+		
+		protected ModelAndView createEditModelAndViewOfVolume(final SubscriptionVolumeForm subscription) {
+			ModelAndView result;
+
+			result = this.createEditModelAndViewOfVolume(subscription, null);
+
+			return result;
+		}
+
+		protected ModelAndView createEditModelAndViewOfVolume (final SubscriptionVolumeForm subscription, final String message) {
+			ModelAndView result;
+
+			result = new ModelAndView("subscription/subscribeVolume");
+			result.addObject("subscriptionVolumeForm", subscription);
 			result.addObject("message", message);
 
 			return result;

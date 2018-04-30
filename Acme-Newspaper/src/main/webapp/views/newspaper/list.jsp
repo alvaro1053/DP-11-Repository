@@ -48,8 +48,8 @@
 	<!-- publicationDate -->
 	<spring:message code="newspaper.publicationDate"
 		var="publicationDateHeader" />
-	<display:column property="publicationDate" title="${publicationDateHeader}"
-		 />		
+	<spring:message code="newspaper.date.format" var="dateFormat"/>
+	<display:column property="publicationDate" format="{0,date,${dateFormat}}" title="${publicationDateHeader}"/>		
 	
 	
 	
@@ -115,7 +115,7 @@
 		<jstl:forEach items="${row.articles}" var="article"> 
 			 <li>
 			 <jstl:choose>
-				<jstl:when test="${suscrito == true}">
+				<jstl:when test="${suscrito == true || row.isPrivate == false}">
 					<a href="article/display.do?articleId=${article.id}">
 						<jstl:out value="${article.title}"/>
 					</a>
@@ -150,7 +150,7 @@
 <security:authorize access="hasRole('USER')">
 		<display:column>
 		<jsp:useBean id="now" class="java.util.Date"/>
-			<jstl:if test="${principal.newspapers.contains(row) && row.publicationDate > now}">
+			<jstl:if test="${principal.newspapers.contains(row) && row.publicationDate gt now}">
 		<a href="newspaper/user/publish.do?newspaperId=${row.id}"> <spring:message
 			code="newspaper.publish" />
 		</a>
@@ -176,14 +176,17 @@
 </jstl:if>
 </jstl:forEach>
 
+		
 		<display:column>
-		<jstl:if test="${!(subscrito == true) and (row.isPrivate == true)}">
+		<jsp:useBean id="now2" class="java.util.Date"/>
+		<jstl:if test="${(subscrito == false) and (row.isPrivate == true) and (row.publicationDate lt now2)}">
 		<a href="subscription/customer/create.do?newspaperId=${row.id}"> <spring:message
 			code="article.subscribe" />
 		</a>
 		</jstl:if>
-		
-	</display:column>
+		</display:column>
+	
+	
 </security:authorize>
 		
 </display:table>
@@ -201,14 +204,21 @@
 			code="newspaper.create" /> </a>
 </security:authorize>
 
-<script>
-$(document).ready( function () {
-    $('#row').DataTable();
-} );
 
-$('#row').dataTable( {
-  "searching": false,
-  "lengthMenu": [ 5, 10, 25, 50, 100 ]
+<spring:message code="datatables.locale.lang" var="tableLang"/>
+<spring:message code="datatables.date.format" var="tableFormatDate"/>
+
+<script>
+$(document).ready( function () {	
+	$.fn.dataTable.moment('${tableFormatDate}');
+	
+    $('#row').dataTable( {
+    	"language": {
+        	"url": '${tableLang}'
+    	},
+	    "searching": false,
+		"lengthMenu": [ 5, 10, 25, 50, 100 ]
+    } );
 } );
 </script>
 

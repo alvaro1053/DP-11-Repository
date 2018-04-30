@@ -23,86 +23,169 @@
 
 <table class="displayStyle" >
 
-<tr>
-<td class ="left-display"> <strong> <spring:message code="newspaper.title" /> : </strong> </td>
-<td class="right-display">  <jstl:out value = "${newspaper.title}"/> &nbsp;  </td>
-</tr>
-
-
-<jstl:if test="${suscrito == true || newspaper.isPrivate == false}"> 
-
 
 <tr>
-<td class ="left-display"> <strong> <spring:message code="newspaper.publicationDate" /> : </strong> </td>
-<td class="right-display">  <jstl:out value = "${newspaper.publicationDate}"/> &nbsp;  </td>
+<td class ="left-display"> <strong> <spring:message code="volume.title" /> : </strong> </td>
+<td class="right-display">  <jstl:out value = "${volume.title}"/> &nbsp;  </td>
 </tr>
 
 <tr>
-<td class ="left-display"> <strong> <spring:message code="newspaper.description" /> : </strong> </td>
-<td class="right-display">  <jstl:out value = "${newspaper.description}"/> &nbsp;  </td>
+<td class ="left-display"> <strong> <spring:message code="volume.description" /> : </strong> </td>
+<td class="right-display">  <jstl:out value = "${volume.description}"/> &nbsp;  </td>
 </tr>
-
 
 <tr>
-<spring:message code="newspaper.pictureError" var="pictureError" />
-<td class ="left-display"> <strong> <spring:message code="newspaper.pictureURL" /> : </strong> </td>
-<td class="right-display">  <img src="${newspaper.pictureURL}" width="auto" height="200" alt ="${pictureError}"> &nbsp; </td>
+<td class ="left-display"> <strong> <spring:message code="volume.year" /> : </strong> </td>
+<td class="right-display">  <jstl:out value = "${volume.year}"/> &nbsp;  </td>
 </tr>
-
 
 <tr>
-<td class ="left-display"> <strong> <spring:message code="newspaper.user" /> : </strong> </td>
-<td class="right-display">  <jstl:out value="${newspaper.user.name}" /> &nbsp; </td>
+<td class ="left-display"> <strong> <spring:message code="volume.user" /> : </strong> </td>
+<td class="right-display"> <jstl:out value ="${volume.user.name}" /> &nbsp; </td>
 </tr>
-
-</jstl:if>
-
-<jstl:choose>
-<jstl:when test="${not empty newspaper.articles}"> 
-
-
-<display:table name="articles" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
-	
-	<spring:message code="newspaper.article.title" var="titleHeader" />
-	<display:column title="${titleHeader}" sortable="true" >
-	<jstl:choose>
-		<jstl:when test="${suscrito == true}">
-		<a href="article/display.do?articleId=${row.id}">
-			<jstl:out value="${row.title}"/>
-		</a>
-		</jstl:when>
-		<jstl:otherwise>
-			<jstl:out value="${row.title}"/>
-		</jstl:otherwise>
-	</jstl:choose>
-	</display:column>
-	
-	
-	<spring:message code="article.user" var="userHeader" />
-	<display:column title="${userHeader}" sortable="true" >
-	<jstl:choose>
-		<jstl:when test="${suscrito == true}">
-		<a href="user/display.do?userId=${row.user.id}">
-			<jstl:out value="${row.user.name}"/>
-		</a>
-		</jstl:when>
-		<jstl:otherwise>
-			<jstl:out value="${row.user.name}"/>
-		</jstl:otherwise>
-	</jstl:choose>
-	</display:column>
-	
-	<spring:message code="article.summary" var = "summaryHeader" />
-	<display:column property="summary" title ="${summaryHeader}" sortable="true"/>
-</display:table>
-
-</jstl:when>
-<jstl:otherwise>
-
-<spring:message code="newspaper.articles.empty" />
-
-</jstl:otherwise>
-</jstl:choose>
-
 
 </table>
+
+<display:table name="newspapers" id="row" requestURI="newspaper${uri}/list.do" pagesize="5" class="displaytag">
+
+	<!-- title -->
+	<spring:message code="newspaper.title"
+		var="titleHeader" />
+	<display:column property="title" title="${titleHeader}"
+		 />
+		
+	
+	
+	<security:authorize access="!(isAnonymous())">
+	
+	<!-- publicationDate -->
+	<spring:message code="newspaper.publicationDate"
+		var="publicationDateHeader" />
+	<display:column property="publicationDate" title="${publicationDateHeader}"
+		 />		
+	
+	
+	
+	<!-- description -->
+	
+	
+	<spring:message code="newspaper.description"
+		var="descriptionHeader" />
+	<display:column property="description" title="${descriptionHeader}"
+		 />
+
+		
+	<!-- pictureURL -->
+	<spring:message code="newspaper.pictureURL" var="pictureHeader" />
+	<spring:message code="newspaper.pictureError" var="pictureError" />
+
+	<display:column title="${pictureHeader}"  > 
+	<img src="${row.pictureURL}" alt="${pictureError}"  width="200" height="200"> 
+	</display:column>
+	</security:authorize>
+
+
+	<!-- isPrivate -->
+		<spring:message code="newspaper.isPrivate"
+		var="isPrivateHeader" />
+	<display:column title="${isPrivateHeader}"> 
+	<security:authorize access="hasRole('USER')">
+
+	<jstl:if test="${principal.newspapers.contains(row)}">
+	
+	<jstl:choose>
+		<jstl:when test="${row.isPrivate == true}">
+			<a href="newspaper/user/private.do?newspaperId=${row.id}"> <spring:message
+			code="newspaper.makePublic" />
+		</a>
+		</jstl:when>
+		 
+		<jstl:otherwise>
+			<a href="newspaper/user/private.do?newspaperId=${row.id}"> <spring:message
+			code="newspaper.makePrivate" />
+		</a>
+		</jstl:otherwise>
+		</jstl:choose>
+	</jstl:if>
+	</security:authorize>
+	<jstl:choose>
+			<jstl:when test="${row.isPrivate == true}">
+			<img class="alarmImg" src="images/lock.png" width="30" height="auto"/>
+		</jstl:when>
+		
+		<jstl:otherwise>
+			<img class="alarmImg" src="images/open.png" width="30" height="auto"/>
+		</jstl:otherwise>
+		</jstl:choose>
+	</display:column>
+	
+		
+	<!-- articles -->
+	<spring:message code="newspaper.articles"
+  	var="articles" />
+	<display:column title="${articles}">
+	<ul>
+		<jstl:forEach items="${row.articles}" var="article"> 
+			 <li>
+			 <jstl:choose>
+				<jstl:when test="${suscrito == true|| row.isPrivate == false}">
+					<a href="article/display.do?articleId=${article.id}">
+						<jstl:out value="${article.title}"/>
+					</a>
+				</jstl:when>
+			<jstl:otherwise>
+			<jstl:out value="${article.title}"/>
+			</jstl:otherwise>
+			</jstl:choose>
+			 </li>
+		</jstl:forEach>
+	</ul>
+	</display:column>
+	
+
+	<!-- Publisher -->
+	<spring:message code="newspaper.user"
+		var="userHeader" />
+	<display:column title="${userHeader}"  > 
+		<a href="user${uri}/display.do?userId=${row.user.id}">
+			<jstl:out value="${row.user.name} ${row.user.surname}"/>
+		</a>
+	</display:column>
+	
+	
+	<display:column>
+		<a href="newspaper${uri}/display.do?newspaperId=${row.id}"> <spring:message
+			code="newspaper.display" />
+		</a>
+	</display:column>
+	
+<security:authorize access="hasRole('ADMIN')">
+		<display:column>
+		<a href="newspaper/admin/delete.do?newspaperId=${row.id}"> <spring:message
+			code="master.page.delete" />
+		</a>
+	</display:column>
+</security:authorize>
+
+
+<security:authorize access="hasRole('CUSTOMER')">
+
+<jstl:set var="subscrito" value="${false}"/>
+<jstl:forEach var="subscription" items="${principal.subscriptions}">
+<jstl:if test="${subscription.newspaper.id == row.id}">
+<jstl:set var="subscrito" value="${true}"/>
+</jstl:if>
+</jstl:forEach>
+
+		<jsp:useBean id="now" class="java.util.Date"/>
+		<jstl:if test="${!(subscrito == true) and (row.isPrivate == true) and (row.publicationDate < now)}">
+		<display:column>
+		<a href="subscription/customer/create.do?newspaperId=${row.id}"> <spring:message
+			code="article.subscribe" />
+		</a>
+		
+		</display:column>
+		</jstl:if>
+	
+</security:authorize>
+</display:table>

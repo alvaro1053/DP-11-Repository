@@ -45,12 +45,17 @@
 
 </display:table>
 
+<spring:message code="datatables.locale.lang" var="tableLang"/>
+<spring:message code="datatables.moment.format" var="tableFormatMoment"/>
 <script>
-$(document).ready( function () {
-    $('#row').DataTable();
-} );
-
-$('#row').dataTable( {
-  "lengthMenu": [ 5, 10, 25, 50, 100 ]
+$(document).ready( function () {	
+	$.fn.dataTable.moment('${tableFormatMoment}');
+	
+    $('#row').dataTable( {
+    	"language": {
+        	"url": '${tableLang}'
+    	},
+		"lengthMenu": [ 5, 10, 25, 50, 100 ]
+    } );
 } );
 </script>

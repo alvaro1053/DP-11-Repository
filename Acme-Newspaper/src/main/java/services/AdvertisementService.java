@@ -32,6 +32,9 @@ public class AdvertisementService {
 	CustomisationService	customisationService;
 	
 	@Autowired
+	SubscriptionService subscriptionService;
+	
+	@Autowired
 	AdminService			adminService;
 	
 	@Autowired
@@ -83,7 +86,10 @@ public class AdvertisementService {
 		}
 		
 		validator.validate(result, binding);
-	
+		
+		//Comprobación de que la creditcard no caduca en el mes actual o se encuentra caducada
+		this.subscriptionService.checkDate(result.getCreditCard(), binding);
+		
 		return result;
 	}
 

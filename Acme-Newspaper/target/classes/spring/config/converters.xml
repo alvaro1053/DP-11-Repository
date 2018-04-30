@@ -53,6 +53,10 @@
 		<!-- Agent -->
 		<bean class="converters.StringToAgentConverter" />
 		<bean class="converters.AgentToStringConverter" />
+		<!-- Message -->
+		<bean class="converters.StringToVolumeConverter" />
+		<bean class="converters.VolumeToStringConverter" />
+
 		
 	</util:list>
 	
