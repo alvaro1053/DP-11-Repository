@@ -22,6 +22,7 @@ import domain.Customer;
 import domain.Newspaper;
 import domain.Subscription;
 import domain.User;
+import domain.Volume;
 import forms.NewspaperForm;
 
 @Service
@@ -88,6 +89,7 @@ public class NewspaperService {
 	}
 
 	public void delete(final Newspaper newspaper) {
+		Collection<Newspaper>updated2;
 		Admin principal = adminService.findByPrincipal();
 		Assert.notNull(principal);
 		
@@ -100,8 +102,18 @@ public class NewspaperService {
 		
 		for(Subscription s : subs){
 			this.subcriptionService.delete(s);
-		}
+		}	
 		
+		Collection<Volume> volumes = newspaper.getVolumen();
+		for(Volume v : volumes){
+			Collection<Newspaper> newspapers = v.getNewspapers();
+
+			if(newspapers.contains(newspaper)){
+				updated2 = new ArrayList<Newspaper>(newspapers);
+				updated2.remove(newspaper);
+				v.setNewspapers(updated2);
+			}
+		}
 		this.newspaperRepository.delete(newspaper);
 
 	}

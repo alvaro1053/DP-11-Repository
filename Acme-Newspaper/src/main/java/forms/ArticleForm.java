@@ -30,7 +30,7 @@ public class ArticleForm extends DomainEntity {
 	private Date					moment;
 	private String					summary;
 	private String					body;
-	private List<String>		photosURL;
+	private List<String>			photosURL;
 	private Boolean					isDraft;	
 	private Newspaper 				newspaper;
 	

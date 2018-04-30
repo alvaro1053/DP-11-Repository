@@ -91,8 +91,6 @@ public class VolumeService {
 	
 	public Volume reconstruct (VolumeForm volumeForm, BindingResult binding){
 		User user;
-		//Calendar cal = Calendar.getInstance();
-		//int year = cal.get(Calendar.YEAR);
 		
 		user = this.userService.findByPrincipal();
 		Volume volume = this.create();
@@ -101,13 +99,6 @@ public class VolumeService {
 		volume.setDescription(volumeForm.getDescription());
 
 		volume.setYear(volumeForm.getYear());
-		/*
-		if(volume.getYear()!=0){
-			volume.setYear(volumeForm.getYear());
-		}else{
-			volume.setYear(year);
-		}
-		*/
 		volume.setNewspapers(volumeForm.getNewspapers());
 		volume.setId(volumeForm.getId());
 		volume.setVersion(volumeForm.getVersion());
@@ -116,7 +107,6 @@ public class VolumeService {
 			volume.setUser(user);
 		}
 	
-		
 		validator.validate(volumeForm, binding);
 		return volume;
 	}

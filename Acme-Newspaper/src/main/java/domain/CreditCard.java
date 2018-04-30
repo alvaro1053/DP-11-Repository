@@ -1,6 +1,5 @@
 package domain;
 
-import java.sql.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;

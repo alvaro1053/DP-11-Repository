@@ -4,7 +4,6 @@ package controllers.user;
 
 import java.util.Collection;
 
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -123,7 +122,7 @@ public class UserArticleController extends AbstractController{
 	}
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final ArticleForm articleForm, final BindingResult binding) {
+	public ModelAndView save(final ArticleForm articleForm, final BindingResult binding) {
 		ModelAndView result;
 		Article article;
 		User principal;
