@@ -226,5 +226,13 @@ public class NewspaperService {
 		return result;
 	}
 
+	public Collection<Newspaper> findNotPlacedAdsByAgent(int agentId) {
+		Collection<Newspaper> result;
+		
+		result = this.newspaperRepository.findNotPlacedAdsByAgent(agentId);
+		
+		return result;
+	}
+
 
 }

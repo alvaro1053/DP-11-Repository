@@ -89,9 +89,10 @@ public class AgentAdvertisementController {
 		Agent principal;
 		
 		principal = this.agentService.findByPrincipal();
-		listPlacedAds = this.newspaperService.findPlacedAdsByAgent(principal.getId());
+		listPlacedAds = this.newspaperService.findNotPlacedAdsByAgent(principal.getId());
 		result = new ModelAndView("newspaper/list");
 		result.addObject("newspapers", listPlacedAds);
+		result.addObject("location", "newspaper.NotPlacedAds");
 		
 		return result;
 	}

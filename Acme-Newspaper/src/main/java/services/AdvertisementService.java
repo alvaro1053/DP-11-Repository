@@ -2,6 +2,7 @@ package services;
 
 import java.util.Collection;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +13,7 @@ import org.springframework.validation.Validator;
 import domain.Admin;
 import domain.Advertisement;
 import domain.Agent;
+import domain.CreditCard;
 import domain.Newspaper;
 import forms.AdvertisementForm;
 
@@ -30,9 +32,6 @@ public class AdvertisementService {
 	
 	@Autowired
 	CustomisationService	customisationService;
-	
-	@Autowired
-	SubscriptionService subscriptionService;
 	
 	@Autowired
 	AdminService			adminService;
@@ -88,8 +87,7 @@ public class AdvertisementService {
 		validator.validate(result, binding);
 		
 		//Comprobación de que la creditcard no caduca en el mes actual o se encuentra caducada
-		this.subscriptionService.checkDate(result.getCreditCard(), binding);
-		
+		this.checkDate(result.getCreditCard(), binding);
 		return result;
 	}
 
@@ -145,5 +143,26 @@ public class AdvertisementService {
 		agent.setAdvertisements(updated);
 		
 		this.advertisementRepository.delete(advert);
+	}
+	
+	public void checkDate(CreditCard creditCard, BindingResult binding){
+		try{
+		LocalDate date = new LocalDate();
+		Integer actualYear = date.getYearOfCentury();
+		Integer actualMonth = date.getMonthOfYear();
+		Integer ccYear      = creditCard.getExpirationYear();
+		Integer ccMonth     = creditCard.getExpirationMonth();
+		
+		if (ccYear < actualYear){
+			binding.rejectValue("creditCard.expirationMonth", "advertisement.creditCard.expired");
+		}
+		else if(ccYear == actualYear){
+			if(ccMonth <actualMonth || ccMonth == actualMonth){
+				binding.rejectValue("creditCard.expirationMonth", "advertisement.creditCard.expired");
+			}
+		}} catch (Throwable oops){
+			binding.rejectValue("creditCard.expirationMonth", "advertisement.creditCard.expired");
+		}
+		
 	}
 }
