@@ -95,7 +95,6 @@ in a newspaper.
 					//Test positivo, probando el registro de un usuario con el número de teléfono con un signo +
 					{"userPrueba10", "surn10","email@prueba.com", "+111222333", "calle10",true,"prueba10", "prueba10pass", "prueba10pass",null},
 					
-					
 			};
 			for(int i = 0; i < testingData.length; i++){
 				this.startTransaction();

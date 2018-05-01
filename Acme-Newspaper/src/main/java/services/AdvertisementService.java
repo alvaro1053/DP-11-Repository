@@ -98,6 +98,10 @@ public class AdvertisementService {
 		Collection<Newspaper> relatedNewspapers;
 		Collection<Advertisement> beforeUpdate;
 		
+		Assert.hasText(advertisement.getTitle());
+		Assert.hasText(advertisement.getBannerURL());
+		Assert.hasText(advertisement.getTargetPageURL());
+		
 		relatedNewspapers = advertisement.getNewspapers();
 		
 		saved = this.advertisementRepository.save(advertisement);

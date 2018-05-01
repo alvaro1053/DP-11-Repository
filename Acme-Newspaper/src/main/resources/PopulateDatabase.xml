@@ -432,6 +432,7 @@
 	<property name="advertisements">
 	<list>
 		<ref bean = "advertisement1"></ref>
+		<ref bean = "advertisement3"></ref>
 	</list>
 	</property>
 	
@@ -466,8 +467,9 @@
 	</property>
 	
 	<property name="advertisements">
-	<list>
-	</list>
+		<list>
+				<ref bean = "advertisement2"></ref>
+		</list>
 	</property>
 
 
@@ -502,7 +504,8 @@
 	</property>
 	<property name="adverts">
 		<list>
-			<ref bean = "advertisement1"></ref>
+			<ref bean = "advertisement1"/>
+			<ref bean = "advertisement2"/>
 		</list>
 	</property>
 
@@ -537,8 +540,9 @@
 	</property>
 	
 		<property name="adverts">
-		<list>
-		</list>
+			<list>
+				<ref bean = "advertisement3"/>
+			</list>
 	</property>
 
 </bean>
@@ -797,6 +801,34 @@
 	<property name="newspapers">
 		<list>
 			<ref bean="newspaper1"/>
+		</list>
+	</property>
+	<property name="tabooWords" value="false"/>
+</bean>
+
+<bean class="domain.Advertisement" id="advertisement2">
+	<property name="title" value="anuncio2 sex" />
+	<property name="bannerURL" value="https://cdn.adguard.com/public/Adguard/En/Articles/fake-popup.png"/>
+	<property name="targetPageURL" value="https://adguard.com/en/article/popups-blocker.html"/>
+	<property name="creditCard" ref="creditCard2"/>
+	<property name="agent" ref="agent2"/>
+	<property name="newspapers">
+		<list>
+			<ref bean="newspaper1"/>
+		</list>
+	</property>
+	<property name="tabooWords" value="true"/>
+</bean>
+
+<bean class="domain.Advertisement" id="advertisement3">
+	<property name="title" value="anuncio3" />
+	<property name="bannerURL" value="http://www.nyx.net/~cmeador/public/snakesonmyplane.jpg"/>
+	<property name="targetPageURL" value="https://www.reddit.com/r/fakebadads/"/>
+	<property name="creditCard" ref="creditCard1"/>
+	<property name="agent" ref="agent1"/>
+	<property name="newspapers">
+		<list>
+			<ref bean="newspaper2"/>
 		</list>
 	</property>
 	<property name="tabooWords" value="false"/>

@@ -64,6 +64,8 @@ public class AgentService {
 		
 		saved = this.agentRepository.save(agent);
 		
+		Assert.isTrue(this.agentRepository.findAll().contains(saved));
+		
 		return saved;
 	}
 
