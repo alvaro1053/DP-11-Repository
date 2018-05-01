@@ -280,17 +280,17 @@ public class NewspaperServiceTest extends AbstractTest {
 					//Requisito C 7.1 An actor who is authenticated as an administrator must be able to: Remove an newspaper that he or she thinks is inappropriate.
 					
 					//TEST POSITIVO
-					//Pruebo que el admin puede eliminar el artículo 3
+					//Pruebo que el admin puede eliminar el newspaper1
 					{"admin", "newspaper1", null}, 
 					//
 					//==========================================================================//
 
 					//TEST NEGATIVO
 					//
-					//Se elimina el article4 incorrectamente porque no lo puede eliminar un user
-	//				{"user1", "newspaper1", IllegalArgumentException.class},
-					//Se elimina el article1 incorrectamente porque no lo puede eliminar un customer
-	//				{"customer1", "newspaper1", IllegalArgumentException.class}
+					//Se elimina el newspaper1 incorrectamente porque no lo puede eliminar un user
+					{"user1", "newspaper1", IllegalArgumentException.class},
+					//Se elimina el newspaper1 incorrectamente porque no lo puede eliminar un customer
+					{"customer1", "newspaper1", IllegalArgumentException.class}
 			};
 			for (int i = 0; i < testingData.length; i++)
 				this.templateDelete((String) testingData[i][0], super.getEntityId((String) testingData[i][1]), (Class<?>) testingData[i][2]);
@@ -304,15 +304,12 @@ public class NewspaperServiceTest extends AbstractTest {
 				super.authenticate(username);
 				newspaper = this.newspaperService.findOne(newspaperId);
 				this.newspaperService.delete(newspaper);
-
-				this.newspaperService.flush();
+				super.unauthenticate();
 			} catch (final Throwable oops) {
 				caught = oops.getClass();
 			}
 
 			this.checkExceptions(expected, caught);
-
-			super.unauthenticate();
 		}
 
 	}

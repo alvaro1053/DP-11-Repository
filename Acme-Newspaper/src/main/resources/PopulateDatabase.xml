@@ -861,7 +861,7 @@
 <bean class="domain.Subscription" id="subscription1">
 <property name="creditCard" ref="creditCard1"/>
 <property name="customer" ref="customer1"/>
-<property name="newspaper" ref="newspaper3"/>
+<property name="newspaper" ref="newspaper2"/>
 
 
 </bean>

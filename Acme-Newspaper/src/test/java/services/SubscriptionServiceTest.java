@@ -73,7 +73,7 @@ public class SubscriptionServiceTest extends AbstractTest {
 			
 			
 			this.subscriptionService.save(subscription);
-			unauthenticate();
+			super.unauthenticate();
 		}catch(Throwable oops){
 			caught = oops.getClass();
 		}
