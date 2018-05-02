@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import domain.Actor;
 import domain.Folder;
-import domain.Message;
 
 import utilities.AbstractTest;
 
