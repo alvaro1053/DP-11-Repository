@@ -79,11 +79,9 @@
 
 <jstl:set var="subscrito" value="${true}"/>
 <jstl:forEach var="newspaper" items="${row.newspapers}">
-<jstl:forEach var="subscription" items="${principal.subscriptions}">
-<jstl:if test="${newspaper.id != subscription.newspaper.id and newspaper.isPrivate == true }">
+<jstl:if test="${not subscribed.contains(newspaper) and (newspaper.isPrivate == true)}">
 <jstl:set var="subscrito" value="${false}"/>
 </jstl:if>
-</jstl:forEach>
 </jstl:forEach>
 
 		<display:column>

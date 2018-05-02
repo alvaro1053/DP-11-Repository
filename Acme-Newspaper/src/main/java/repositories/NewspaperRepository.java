@@ -32,4 +32,7 @@ public interface NewspaperRepository extends JpaRepository<Newspaper, Integer> {
 	@Query("select distinct n from Newspaper n left join n.adverts ad where ((n.adverts is empty) or (ad.agent.id != ?1)) and (n.isPrivate = false) and (current_timestamp() >= n.publicationDate)")
 	Collection<Newspaper> findNotPlacedAdsByAgent(int agentId);
 	
+	@Query("select s.newspaper from Customer c join c.subscriptions s where c.id = ?1")
+	Collection<Newspaper> selectSubscribedNewspapers(int customerId);
+	
 }

@@ -36,6 +36,8 @@ public class NewspaperService {
 	@Autowired
 	private UserService userService;
 	@Autowired
+	private CustomerService customerService;
+	@Autowired
 	private ActorService actorService;
 	@Autowired
 	private AdminService adminService;
@@ -246,5 +248,11 @@ public class NewspaperService {
 		return result;
 	}
 
+	public Collection <Newspaper> selectSubscribedNewspapers (){
+		Customer principal = this.customerService.findByPrincipal();
+		Collection<Newspaper> res = this.newspaperRepository.selectSubscribedNewspapers(principal.getId());
+		return res;
+		
+	}
 
 }
