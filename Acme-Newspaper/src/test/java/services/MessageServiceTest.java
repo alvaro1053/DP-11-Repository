@@ -3,7 +3,6 @@ package services;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -124,7 +123,7 @@ public class MessageServiceTest extends AbstractTest {
 		try {
 			super.authenticate(username);
 			
-			Actor principal = this.actorService.findByPrincipal();
+			this.actorService.findByPrincipal();
 			Message message = this.messageService.create();
 			message.setSubject(messageSubject);
 			message.setBody(messageBody);

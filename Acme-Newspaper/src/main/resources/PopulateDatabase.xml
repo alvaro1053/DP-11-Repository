@@ -505,7 +505,7 @@
 	<property name="adverts">
 		<list>
 			<ref bean = "advertisement1"/>
-			<ref bean = "advertisement2"/>
+			<ref bean = "advertisement3"/>
 		</list>
 	</property>
 
@@ -541,7 +541,7 @@
 	
 		<property name="adverts">
 			<list>
-				<ref bean = "advertisement3"/>
+				<ref bean = "advertisement2"/>
 			</list>
 	</property>
 
@@ -734,7 +734,7 @@
 	
 	<bean class="domain.FollowUp" id="followUp3">
 	<property name="title" value="Se ha vuelto a romper" />
-	<property name="publicationDate" value="2018/05/02 09:21"/>
+	<property name="publicationDate" value="2018/07/02 09:21"/>
 	<property name="summary" value="La mesa de messi se le ha vuelto a romper"/>
 	<property name="text" value="Cuando creíamos todos que la mesa estaba arreglada al parecer la pobre..."/>
 <property name="photosURL">
@@ -814,7 +814,7 @@
 	<property name="agent" ref="agent2"/>
 	<property name="newspapers">
 		<list>
-			<ref bean="newspaper1"/>
+			<ref bean="newspaper2"/>
 		</list>
 	</property>
 	<property name="tabooWords" value="true"/>
@@ -828,7 +828,7 @@
 	<property name="agent" ref="agent1"/>
 	<property name="newspapers">
 		<list>
-			<ref bean="newspaper2"/>
+			<ref bean="newspaper1"/>
 		</list>
 	</property>
 	<property name="tabooWords" value="false"/>
