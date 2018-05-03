@@ -17,6 +17,7 @@ import services.UserService;
 import repositories.NewspaperRepository;
 import domain.Actor;
 import domain.Admin;
+import domain.Advertisement;
 import domain.Article;
 import domain.Customer;
 import domain.Newspaper;
@@ -41,6 +42,8 @@ public class NewspaperService {
 	private ActorService actorService;
 	@Autowired
 	private AdminService adminService;
+	@Autowired
+	private AdvertisementService advertisementService;
 	@Autowired
 	private SubscriptionService subcriptionService;
 	@Autowired
@@ -92,6 +95,7 @@ public class NewspaperService {
 
 	public void delete(final Newspaper newspaper) {
 		Collection<Newspaper>updated2;
+		Collection<Advertisement> adverts;
 		Admin principal = adminService.findByPrincipal();
 		Assert.notNull(principal);
 		
@@ -101,6 +105,12 @@ public class NewspaperService {
 		creator.setNewspapers(creatorsNewspapers);
 		
 		Collection<Subscription> subs = new ArrayList<Subscription>(newspaper.getSubscriptions());
+		
+		adverts = newspaper.getAdverts();
+		
+		for(Advertisement advert : adverts){
+			this.advertisementService.deleteAdmin(advert);
+		}
 		
 		for(Subscription s : subs){
 			this.subcriptionService.delete(s);
