@@ -76,4 +76,13 @@ public interface AdminRepository extends JpaRepository<Admin, Integer> {
 	//1.5 (A) The average ratio of private versus public newspapers per publisher.
 	@Query("select count(n)/(select count(n) from n) from User u join u.newspapers n where n.isPrivate = TRUE")
 	Collection<Long> AverageRatioOfPrivateVersusPublicNewspapers();
+	
+	//===============//Querys Newspaper 2.0 C===========================
+	
+	//5.3 (C Acme Newspaper 2.0) The ratio of newspapers that have at least one advertisement versus the newspapers that haven’t any.
+	@Query("select 1.0*count(n1)/(select count(n2) from Newspaper n2 where n2.adverts.size = 0) from Newspaper n1 where n1.adverts.size >= 1")
+	Double RatioNewspaperOneAdvertisementVersusAny();
+	//5.3 (C Acme Newspaper 2.0) The ratio of advertisements that have taboo words
+	@Query("select 1.0*count(a)/(select count(ad) from Advertisement ad) from Advertisement a where a.tabooWords = TRUE")
+	Double RatioAdvertisementTabooWords();
 }

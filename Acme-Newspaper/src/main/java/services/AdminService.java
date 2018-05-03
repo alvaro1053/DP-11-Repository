@@ -226,5 +226,35 @@ public class AdminService {
 		res = sumas/ratios.size();
 		return res;
 	}
+	
+	//5.3
+	public Double ratioNewspaperOneAdvertisementOrAny(){
+		Double result;
+		Admin principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		
+		result = this.adminRepository.RatioNewspaperOneAdvertisementVersusAny();
+		
+		if(result == null){
+			result = 0.0;
+		}
+		
+		return result;
+	}
+	
+	//5.3
+	public Double ratioAdvertisementTabooWords(){
+		Double result;
+		Admin principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		
+		result = this.adminRepository.RatioAdvertisementTabooWords();
+		
+		if(result == null){
+			result = 0.0;
+		}
+		
+		return result;
+	}
 
 }

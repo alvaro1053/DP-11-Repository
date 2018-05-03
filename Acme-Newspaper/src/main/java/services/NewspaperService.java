@@ -241,11 +241,16 @@ public class NewspaperService {
 	}
 
 	public Collection<Newspaper> findNotPlacedAdsByAgent(int agentId) {
-		Collection<Newspaper> result;
+		Collection<Newspaper> publishedNewspapers, agentPublishedNewspapers;
 		
-		result = this.newspaperRepository.findNotPlacedAdsByAgent(agentId);
+		publishedNewspapers = this.publishedNewspapers();
+		agentPublishedNewspapers = this.findPlacedAdsByAgent(agentId);
 		
-		return result;
+		
+		publishedNewspapers.removeAll(agentPublishedNewspapers);
+		
+		
+		return publishedNewspapers;
 	}
 
 	public Collection <Newspaper> selectSubscribedNewspapers (){

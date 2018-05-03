@@ -58,7 +58,7 @@ public class AgentAdvertisementController {
 		}else{
 			try{
 				this.advertisementService.save(advertisement);
-				result = new ModelAndView("redirect:../../");
+				result = new ModelAndView("redirect:listPlacedAds.do");
 			}catch(Throwable oops){
 				result = this.createEditModelAndView(advertisementForm, "advertisement.commit.error");
 			}
@@ -85,13 +85,13 @@ public class AgentAdvertisementController {
 	@RequestMapping(value = "/listNotPlacedAds", method = RequestMethod.GET)
 	public ModelAndView listNotPlacedAds(){
 		ModelAndView result;
-		Collection<Newspaper> listPlacedAds;
+		Collection<Newspaper> listNotPlacedAds;
 		Agent principal;
 		
 		principal = this.agentService.findByPrincipal();
-		listPlacedAds = this.newspaperService.findNotPlacedAdsByAgent(principal.getId());
+		listNotPlacedAds = this.newspaperService.findNotPlacedAdsByAgent(principal.getId());
 		result = new ModelAndView("newspaper/list");
-		result.addObject("newspapers", listPlacedAds);
+		result.addObject("newspapers", listNotPlacedAds);
 		result.addObject("location", "newspaper.NotPlacedAds");
 		
 		return result;
