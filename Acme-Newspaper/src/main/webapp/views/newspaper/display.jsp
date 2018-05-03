@@ -66,7 +66,7 @@
 	<spring:message code="newspaper.article.title" var="titleHeader" />
 	<display:column title="${titleHeader}" sortable="true" >
 	<jstl:choose>
-		<jstl:when test="${suscrito == true}">
+		<jstl:when test="${suscrito == true || newspaper.isPrivate == false}">
 		<a href="article/display.do?articleId=${row.id}">
 			<jstl:out value="${row.title}"/>
 		</a>
@@ -81,7 +81,7 @@
 	<spring:message code="article.user" var="userHeader" />
 	<display:column title="${userHeader}" sortable="true" >
 	<jstl:choose>
-		<jstl:when test="${suscrito == true}">
+		<jstl:when test="${suscrito == true || newspaper.isPrivate == false}">
 		<a href="user/display.do?userId=${row.user.id}">
 			<jstl:out value="${row.user.name}"/>
 		</a>
