@@ -173,7 +173,7 @@ public class MessageActorController extends AbstractController {
 		result.addObject("mensaje", mensaje);
 		result.addObject("recipients", recipients);
 		result.addObject("folders", folders);
-		result.addObject("requestURI", "/Acme-Newspaper/message/actor/edit.do");
+		result.addObject("requestURI", "message/actor/edit.do");
 		result.addObject("broadcast", false);
 		result.addObject("permission", permission);
 
