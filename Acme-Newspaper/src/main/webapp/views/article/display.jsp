@@ -20,7 +20,11 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<jsp:useBean id="now" class="java.util.Date"/>
 
+<jstl:choose>
+<jstl:when test="${article.newspaper.isPrivate == false && article.newspaper.publicationDate lt now}">
+						
 <table class="displayStyle" >
 
 
@@ -116,9 +120,16 @@
 </table>
 
 
+
 <jstl:if test="${advert != null}">
 	<spring:message code ="article.imageBannerNotFound" var = "imageBannerNotFound"></spring:message>
 	<a href="${advert.targetPageURL}">
 		<img src="${advert.bannerURL}" alt="${imageBanner}">
 	</a>
 </jstl:if>
+
+</jstl:when>
+<jstl:otherwise>
+<spring:message code="article.permission" />
+</jstl:otherwise>
+</jstl:choose>

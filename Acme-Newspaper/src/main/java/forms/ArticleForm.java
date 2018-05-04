@@ -84,6 +84,7 @@ public class ArticleForm extends DomainEntity {
 
 	//Relationships	
 
+	@NotNull
 	@ManyToOne(optional = true)
 	public Newspaper getNewspaper() {
 		return this.newspaper;

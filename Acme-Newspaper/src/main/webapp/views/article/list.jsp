@@ -68,7 +68,18 @@
 	
 	
 	<spring:message code="article.title" var="titleHeader" />
-	<display:column title="${titleHeader}"><a href="article/display.do?articleId=${row.id}"><jstl:out value="${row.title}"></jstl:out></a></display:column>
+	<display:column title="${titleHeader}">
+	<jsp:useBean id="now" class="java.util.Date"/>
+		
+		<jstl:choose>
+			<jstl:when test="${row.newspaper.isPrivate == false && row.newspaper.publicationDate lt now}">
+				<a href="article/display.do?articleId=${row.id}"><jstl:out value="${row.title}"></jstl:out></a>
+			</jstl:when>
+			<jstl:otherwise>
+			<jstl:out value="${row.title}"/>
+			</jstl:otherwise>
+			</jstl:choose>
+	</display:column>
 	
 	<spring:message code="article.summary" var="summary" />
 	<display:column property="summary" title="${summary}"/>
