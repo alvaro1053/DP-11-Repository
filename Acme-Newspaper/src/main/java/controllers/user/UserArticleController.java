@@ -1,7 +1,6 @@
 
 package controllers.user;
 
-
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,30 +13,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import controllers.AbstractController;
-
 import services.ArticleService;
 import services.NewspaperService;
 import services.UserService;
+import controllers.AbstractController;
 import domain.Article;
 import domain.Newspaper;
 import domain.User;
 import forms.ArticleForm;
 
-
 @Controller
 @RequestMapping("/article/user")
-public class UserArticleController extends AbstractController{
+public class UserArticleController extends AbstractController {
 
 	//Autowired
 	@Autowired
-	ArticleService	articleService;
-	
+	ArticleService		articleService;
+
 	@Autowired
 	NewspaperService	newspaperService;
-	
+
 	@Autowired
-	UserService	userService;
+	UserService			userService;
 
 
 	//Constructor
@@ -58,27 +55,25 @@ public class UserArticleController extends AbstractController{
 		result.addObject("articles", articles);
 		result.addObject("principal", principal);
 
-
 		return result;
 
 	}
-	
+
 	//create
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create(){
+	public ModelAndView create() {
 		ModelAndView result;
 		ArticleForm articleForm;
 		Collection<Newspaper> newspapers;
-		
+
 		articleForm = this.articleService.createForm();
 		newspapers = this.newspaperService.notPublishedNewspapers();
-		
+
 		result = this.createEditModelAndView(articleForm);
 		result.addObject("newspapers", newspapers);
-		
+
 		return result;
 	}
-	
 
 	//Display
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
@@ -87,7 +82,7 @@ public class UserArticleController extends AbstractController{
 		Article article;
 		final User principal = this.userService.findByPrincipal();
 		final String uri = "/user";
-		
+
 		article = this.articleService.findOne(articleId);
 
 		result = new ModelAndView("article/display");
@@ -98,28 +93,27 @@ public class UserArticleController extends AbstractController{
 
 	}
 
-	
-	@RequestMapping(value="/edit", method= RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int articleId, RedirectAttributes redir){
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam final int articleId, final RedirectAttributes redir) {
 		ModelAndView result;
 		Article article;
 		ArticleForm articleForm;
-		User principal = this.userService.findByPrincipal();
-		try{
-		article = this.articleService.findOne(articleId);
-		Assert.isTrue(article.getUser().equals(principal));
-		articleForm = this.articleService.reconstructForm(article);
-		result = this.createEditModelAndView(articleForm);
-		} catch (Throwable oops){
-		result = new ModelAndView("redirect:/article/list.do");
-		redir.addFlashAttribute("message", "article.permision");
-		
+		final User principal = this.userService.findByPrincipal();
+		try {
+			article = this.articleService.findOne(articleId);
+			Assert.isTrue(article.getUser().equals(principal));
+			articleForm = this.articleService.reconstructForm(article);
+			result = this.createEditModelAndView(articleForm);
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/article/list.do");
+			redir.addFlashAttribute("message", "article.permision");
+
 		}
-		
+
 		return result;
-		
+
 	}
-	
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(final ArticleForm articleForm, final BindingResult binding) {
 		ModelAndView result;
@@ -129,10 +123,9 @@ public class UserArticleController extends AbstractController{
 		principal = this.userService.findByPrincipal();
 		article = this.articleService.reconstruct(articleForm, binding);
 
-
-		if (binding.hasErrors()) {
+		if (binding.hasErrors())
 			result = this.createEditModelAndView(articleForm);
-		} else
+		else
 			try {
 				this.articleService.save(article);
 				result = new ModelAndView("redirect:/article/list.do");
@@ -141,43 +134,32 @@ public class UserArticleController extends AbstractController{
 				result = this.createEditModelAndView(articleForm, "article.commit.error");
 			}
 
-
-		result.addObject("principal",principal);
+		result.addObject("principal", principal);
 		return result;
 	}
-	
-	
-	
-	
-	
-	
+
 	//Ancillary methods
-	
-		protected ModelAndView createEditModelAndView(ArticleForm articleForm) {
-			ModelAndView result; 
-			
-			result = this.createEditModelAndView(articleForm, null);
-			
-			return result;
-		}
-		
-		protected ModelAndView createEditModelAndView(ArticleForm articleForm,
-				String message) {
-			ModelAndView result;
-			Collection<Newspaper> newspapers;
 
-			newspapers = this.newspaperService.notPublishedNewspapers();
-			
-			result = new ModelAndView("article/edit");
-			result.addObject("articleForm", articleForm);
-			result.addObject("message", message);
-			result.addObject("newspapers", newspapers);
+	protected ModelAndView createEditModelAndView(final ArticleForm articleForm) {
+		ModelAndView result;
 
-			return result;
-		}
-		
-		
+		result = this.createEditModelAndView(articleForm, null);
 
+		return result;
+	}
 
+	protected ModelAndView createEditModelAndView(final ArticleForm articleForm, final String message) {
+		ModelAndView result;
+		Collection<Newspaper> newspapers;
+
+		newspapers = this.newspaperService.notPublishedNewspapers();
+
+		result = new ModelAndView("article/edit");
+		result.addObject("articleForm", articleForm);
+		result.addObject("message", message);
+		result.addObject("newspapers", newspapers);
+
+		return result;
+	}
 
 }

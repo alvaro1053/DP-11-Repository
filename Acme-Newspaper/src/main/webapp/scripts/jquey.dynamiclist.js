@@ -23,7 +23,7 @@
 			itemClass : "list-item",
 			addClass : "list-add",
 			removeClass : "list-remove",
-			minSize : 0,
+			minSize : 1,
 			maxSize : 20,
 			withEvents : false,
 			addCallbackFn : null,

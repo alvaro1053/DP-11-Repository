@@ -74,6 +74,7 @@ public class Article extends DomainEntity {
 	}
 
 	@ElementCollection
+	@NotNull
 	public List<String> getPhotosURL() {
 		return this.photosURL;
 	}
