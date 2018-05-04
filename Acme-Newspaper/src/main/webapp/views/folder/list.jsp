@@ -70,11 +70,11 @@
 	</display:column>
 	
 	
-	<display:column>
 	<jstl:if test="${!folder.isSystem}">
+	<display:column>
 	<a href="folder/actor/edit.do?folderId=${folder.id}"><spring:message code="folder.editFolder" /></a>
-	</jstl:if>
 	</display:column>
+	</jstl:if>
 	
 	
 </display:table>

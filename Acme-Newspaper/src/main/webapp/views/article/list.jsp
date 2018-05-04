@@ -79,7 +79,13 @@
 	
 	<spring:message code="article.photosURL.failed" var="failed" />
 	<spring:message code="article.photosURL" var="picture" />
-	<display:column  title="${picture}"> <jstl:forEach var="picture" items="${row.photosURL}"><img src="${picture}" alt= "${failed}" height="150" width=auto /> </jstl:forEach></display:column>
+	<display:column  title="${picture}"> 
+		<jstl:forEach var="picture" items="${row.photosURL}">
+			<jstl:if test="${not empty picture}">
+				<img src="${picture}" alt= "${failed}" height="150" width=auto />
+			</jstl:if> 
+		</jstl:forEach>	
+	</display:column>
 
 
 </display:table>

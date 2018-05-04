@@ -54,7 +54,9 @@
 <jstl:when test="${not empty article.photosURL}"> 
 <ul>
 <jstl:forEach items="${article.photosURL}" var="photoURL">
-	<img src="${photoURL}"  width="auto" height="200"> &nbsp;
+	<jstl:if test="${not empty photoURL}">
+		<img src="${photoURL}"  width="auto" height="200"> &nbsp;
+	</jstl:if>
 </jstl:forEach>
 </ul> 
 </jstl:when>

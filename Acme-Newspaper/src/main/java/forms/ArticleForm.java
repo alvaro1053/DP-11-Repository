@@ -1,7 +1,6 @@
 
 package forms;
 
-
 import java.util.Date;
 import java.util.List;
 
@@ -20,83 +19,77 @@ import org.springframework.format.annotation.DateTimeFormat;
 import domain.DomainEntity;
 import domain.Newspaper;
 
-
-
 @Entity
 @Access(AccessType.PROPERTY)
 public class ArticleForm extends DomainEntity {
 
-	private String					title;
-	private Date					moment;
-	private String					summary;
-	private String					body;
-	private List<String>		photosURL;
-	private Boolean					isDraft;	
-	private Newspaper 				newspaper;
-	
-	
-	
+	private String			title;
+	private Date			moment;
+	private String			summary;
+	private String			body;
+	private List<String>	photosURL;
+	private Boolean			isDraft;
+	private Newspaper		newspaper;
+
+
 	@NotBlank
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getMoment() {
-		return moment;
+		return this.moment;
 	}
-	public void setMoment(Date moment) {
+	public void setMoment(final Date moment) {
 		this.moment = moment;
 	}
-	
+
 	@NotBlank
 	public String getSummary() {
-		return summary;
+		return this.summary;
 	}
-	public void setSummary(String summary) {
+	public void setSummary(final String summary) {
 		this.summary = summary;
 	}
-	
+
 	@NotBlank
 	public String getBody() {
-		return body;
+		return this.body;
 	}
-	public void setBody(String body) {
+	public void setBody(final String body) {
 		this.body = body;
 	}
-	
+
 	@ElementCollection
+	@NotNull
 	public List<String> getPhotosURL() {
-		return photosURL;
+		return this.photosURL;
 	}
-	public void setPhotosURL(List<String> photosURL) {
+	public void setPhotosURL(final List<String> photosURL) {
 		this.photosURL = photosURL;
 	}
-	
+
 	@NotNull
 	public Boolean getIsDraft() {
-		return isDraft;
+		return this.isDraft;
 	}
-	public void setIsDraft(Boolean isDraft) {
+	public void setIsDraft(final Boolean isDraft) {
 		this.isDraft = isDraft;
 	}
-	
-	
 
+	//Relationships	
 
-//Relationships	
-	
 	@ManyToOne(optional = true)
 	public Newspaper getNewspaper() {
-		return newspaper;
+		return this.newspaper;
 	}
-	public void setNewspaper(Newspaper newspaper) {
+	public void setNewspaper(final Newspaper newspaper) {
 		this.newspaper = newspaper;
 	}
-	
 
 }

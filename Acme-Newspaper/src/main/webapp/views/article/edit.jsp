@@ -53,14 +53,14 @@
 			
 			<jstl:choose> 
 			<jstl:when test="${empty articleForm.photosURL}">
-			<tr class="list-item">
-			
-			
-			
-			<td>  	<form:input path="photosURL[0]" /> <form:errors cssClass="error" path="photosURL[0]" /></td>
-			<td>	<a href="#" onclick="event.preventDefault();"
-					class="list-remove"> <spring:message code="article.photosURL.remove" /> </a> </td>
-			</tr>
+				<jstl:forEach begin="0" end="0" var="photoURL" varStatus="i" step="1">
+	   			 <tr class="list-item">
+				<td> <form:input path="photosURL[${i.index}]" /></td>
+	     		<td>	<a href="#" onclick="event.preventDefault();"
+						class="list-remove"> <spring:message code="article.photosURL.remove" /> </a> </td>
+			    </tr>
+		            <br />
+		        </jstl:forEach>
 			
 			</jstl:when>
 			<jstl:otherwise>
