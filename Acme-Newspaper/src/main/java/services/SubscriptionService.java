@@ -220,5 +220,25 @@ public class SubscriptionService {
 		return result;
 	}
 	
+	public void updateDeleteByVolumen (Subscription subcription){
+		Collection<Subscription> update,update2;
+		
+		Customer c = subcription.getCustomer();
+		update = c.getSubscriptions();
+		update.remove(subcription);
+		subcription.getCustomer().setSubscriptions(update);
+		
+		Newspaper news = subcription.getNewspaper();
+		update2 = news.getSubscriptions();
+		update2.remove(subcription);
+		subcription.getNewspaper().setSubscriptions(update2);
+		
+		this.subscriptionRepository.delete(subcription);
+		
+	}
 	
+	public Subscription findByCustomerAndNewspaperint (int customerId, int newspaperId){
+		Subscription res = this.subscriptionRepository.findByCustomerAndNewspaper(customerId, newspaperId);
+		return res;
+	}
 }

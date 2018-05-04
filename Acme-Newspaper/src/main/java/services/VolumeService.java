@@ -81,6 +81,8 @@ public class VolumeService {
 			if(!(oldNewspapers.equals(actualNewspapers))){
 				Collection<Newspaper> newNewspapers = new ArrayList<Newspaper>(actualNewspapers);
 				newNewspapers.removeAll(oldNewspapers);
+				Collection<Newspaper> newspapersRemoved = new ArrayList<Newspaper>(oldNewspapers);
+				newspapersRemoved.removeAll(actualNewspapers);
 				
 				
 				Collection<Customer> subscribed = new ArrayList<Customer>(volume.getCustomersSubscribed());
@@ -101,9 +103,18 @@ public class VolumeService {
 					subscription.setCreditCard(creditCard);
 					this.subscriptionService.updateVolumeSubscription(subscription);
 				}
-				}				
-			}		
-			
+					for (Newspaper n : newspapersRemoved) {
+						if (n.getIsPrivate()) {
+							Subscription toRemove = this.subscriptionService
+									.findByCustomerAndNewspaperint(c.getId(),
+											n.getId());
+							this.subscriptionService
+									.updateDeleteByVolumen(toRemove);
+						}
+					}
+				}
+			}
+
 		}
 		
 		result = this.volumeRepository.save(volume);
