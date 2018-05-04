@@ -149,6 +149,26 @@ public class AdvertisementService {
 		this.advertisementRepository.delete(advert);
 	}
 	
+	public void deleteAdmin(Advertisement advert) {
+		Admin admin;
+		Collection<Advertisement> updated;
+		Agent agent;
+		Assert.notNull(advert);
+		
+		
+		admin = this.adminService.findByPrincipal();
+		Assert.notNull(admin);
+	
+		agent = advert.getAgent();
+		
+		updated = agent.getAdvertisements();
+		updated.remove(advert);
+		agent.setAdvertisements(updated);
+		
+		this.advertisementRepository.delete(advert);
+	}
+	
+	
 	public void checkDate(CreditCard creditCard, BindingResult binding){
 		try{
 		LocalDate date = new LocalDate();

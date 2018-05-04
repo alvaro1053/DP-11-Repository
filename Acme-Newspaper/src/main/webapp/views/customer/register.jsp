@@ -40,7 +40,7 @@ function Terms(){
 	<form:label path="phone">
 		<spring:message code="customer.phone" />
 	</form:label>	
-	<form:input path="phone" pattern="[0-9]{9}"/>	
+	<form:input path="phone" pattern="+?([0-9]{9})?"/>	
 	<form:errors path="phone" cssClass="error" />
 	<br />
 	<br />
