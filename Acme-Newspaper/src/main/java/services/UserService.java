@@ -29,7 +29,7 @@ public class UserService {
 
 	// Managed Repository
 	@Autowired
-	private UserRepository	UserRepository;
+	private UserRepository	userRepository;
 	
 	@Autowired
 	private FolderService folderService;
@@ -72,23 +72,23 @@ public class UserService {
 			User.getUserAccount().setPassword(passwordEncoder.encodePassword(User.getUserAccount().getPassword(), null));
 		}
 
-		saved = this.UserRepository.save(User);
+		saved = this.userRepository.save(User);
 
 		//TEST ASSERT - Testing if the user is in the system after saving him/her
-		Assert.isTrue(this.UserRepository.findAll().contains(saved));
+		Assert.isTrue(this.userRepository.findAll().contains(saved));
 		//TEST ASSERT =========================================
 		return saved;
 	}
 
 	public User findOne(final int UserId) {
 		User result;
-		result = this.UserRepository.findOne(UserId);
+		result = this.userRepository.findOne(UserId);
 		return result;
 	}
 
 	public Collection<User> findAll() {
 		Collection<User> result;
-		result = this.UserRepository.findAll();
+		result = this.userRepository.findAll();
 		Assert.notNull(result);
 		return result;
 
@@ -111,7 +111,7 @@ public class UserService {
 	public User findByUserAccount(final UserAccount userAccount) {
 		Assert.notNull(userAccount);
 		User result;
-		result = this.UserRepository.findByUserAccountId(userAccount.getId());
+		result = this.userRepository.findByUserAccountId(userAccount.getId());
 		return result;
 	}
 
@@ -140,7 +140,7 @@ public class UserService {
 	}
 
 	public void flush() {
-		this.UserRepository.flush();
+		this.userRepository.flush();
 	}
 
 	public void follow(final User userToBeFollowed) {

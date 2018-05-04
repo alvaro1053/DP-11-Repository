@@ -39,13 +39,13 @@ public class AdminArticleController extends AbstractController {
 
 	// Listing
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list() {
+	public ModelAndView list(String filter) {
 		ModelAndView result;
 		Collection<Article> articles;
 		Admin principal = this.adminService.findByPrincipal();
-		final String uri = "admin";
+		final String uri = "/admin";
 		
-		articles = this.articleService.findAll();
+		articles = this.articleService.findByFilter(filter);
 		
 		result = new ModelAndView("article/list");
 		result.addObject("articles", articles);
@@ -60,7 +60,7 @@ public class AdminArticleController extends AbstractController {
 		final ModelAndView result;
 		Article article;
 		Admin principal = this.adminService.findByPrincipal();
-		final String uri = "admin";
+		final String uri = "/admin";
 
 		article = this.articleService.findOne(articleId);
 

@@ -68,7 +68,8 @@ public class FolderService {
 		Assert.notNull(principal);
 
 		if (folder.getId() == 0) {
-
+			
+			Assert.isTrue(folder.getName() != "");
 			folder.setIsSystem(false);
 			messages = new ArrayList<Message>();
 			folder.setMessages(messages);

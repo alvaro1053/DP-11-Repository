@@ -127,6 +127,7 @@
 			<ul>
 				<li class="arrow"></li>
 					<li><a href="advertisement/agent/listPlacedAds.do"><spring:message code="master.page.advertisement.listPlacedAds" /></a></li>
+					<li><a href="advertisement/agent/listNotPlacedAds.do"><spring:message code="master.page.advertisement.listNotPlacedAds" /></a></li>
 			</ul>	
 		</li>
 		</security:authorize>

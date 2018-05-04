@@ -288,7 +288,44 @@
 			<td><spring:message code="administrator.NewspapersWithLessArticlesThanAverage" /></td>
 			<td>${NewspapersWithLessArticlesThanAverage }</td>
 		</tr>
+		
+		
 	</table>
+	
+	<!-- 18 -->
+	<table class="displayStyle">
+		
+		<tr>
+			<th><spring:message code="administrator.query" /></th>
+			<th><spring:message code="administrator.value" /></th>
+		
+		</tr>
+		
+		<tr>
+			<td><spring:message code="administrator.RatioNewspapersWithOneAdvertisementVersusAny" /></td>
+			<td>${RatioNewspapersWithOneAdvertisementVersusAny }</td>
+		</tr>
+		
+		
+	</table>
+	
+	<!-- 19 -->
+	<table class="displayStyle">
+		
+		<tr>
+			<th><spring:message code="administrator.query" /></th>
+			<th><spring:message code="administrator.value" /></th>
+		
+		</tr>
+		
+		<tr>
+			<td><spring:message code="administrator.RatioAdvertisementTabooWords" /></td>
+			<td>${RatioAdvertisementTabooWords}</td>
+		</tr>
+		
+		
+	</table>
+	
 	
 	
 	

@@ -35,6 +35,14 @@
 	
 
 	
+	<security:authorize access="hasRole('ADMIN')">
+		<spring:message code="newspaper.confirm" var="confirmNewspaper"  />
+		<display:column>
+		<a href="newspaper/admin/delete.do?newspaperId=${row.id}" onclick="return confirm('${confirmNewspaper}')"> <spring:message
+			code="master.page.delete" /> </a>
+		</display:column>
+	</security:authorize>
+	
 	<!-- title -->
 	<spring:message code="newspaper.title"
 		var="titleHeader" />
@@ -157,15 +165,6 @@
 		</jstl:if>
 	</display:column>
 </security:authorize>
-	
-<security:authorize access="hasRole('ADMIN')">
-		<display:column>
-		<a href="newspaper/admin/delete.do?newspaperId=${row.id}"> <spring:message
-			code="master.page.delete" />
-		</a>
-	</display:column>
-</security:authorize>
-
 
 <security:authorize access="hasRole('CUSTOMER')">
 

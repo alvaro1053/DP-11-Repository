@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.Actor;
+import domain.Customer;
 import domain.Newspaper;
 import domain.Volume;
 
 import services.ActorService;
+import services.NewspaperService;
 import services.VolumeService;
 
 
@@ -29,6 +31,9 @@ public class VolumeController extends AbstractController {
 	
 	@Autowired
 	private ActorService	actorService;
+	
+	@Autowired
+	private NewspaperService	newspaperService;
 
 	// Constructors
 
@@ -67,6 +72,10 @@ public class VolumeController extends AbstractController {
 		result = new ModelAndView("volume/list");
 		if(principal != null){
 			result.addObject("principal",principal);
+		}
+		if(principal instanceof Customer){
+			Collection<Newspaper> subscribed = this.newspaperService.selectSubscribedNewspapers();
+			result.addObject("subscribed",subscribed);
 		}
 		result.addObject("volumes", volumes);
 		result.addObject("uri", uri);

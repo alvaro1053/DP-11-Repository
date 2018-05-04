@@ -275,4 +275,8 @@ public class MessageService {
 
 		return result;
 	}
+	
+	public void flush(){
+		this.messageRepository.flush();
+	}
 }

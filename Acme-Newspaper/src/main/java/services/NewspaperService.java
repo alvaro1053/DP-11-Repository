@@ -17,11 +17,13 @@ import services.UserService;
 import repositories.NewspaperRepository;
 import domain.Actor;
 import domain.Admin;
+import domain.Advertisement;
 import domain.Article;
 import domain.Customer;
 import domain.Newspaper;
 import domain.Subscription;
 import domain.User;
+import domain.Volume;
 import forms.NewspaperForm;
 
 @Service
@@ -35,9 +37,13 @@ public class NewspaperService {
 	@Autowired
 	private UserService userService;
 	@Autowired
+	private CustomerService customerService;
+	@Autowired
 	private ActorService actorService;
 	@Autowired
 	private AdminService adminService;
+	@Autowired
+	private AdvertisementService advertisementService;
 	@Autowired
 	private SubscriptionService subcriptionService;
 	@Autowired
@@ -88,6 +94,8 @@ public class NewspaperService {
 	}
 
 	public void delete(final Newspaper newspaper) {
+		Collection<Newspaper>updated2;
+		Collection<Advertisement> adverts;
 		Admin principal = adminService.findByPrincipal();
 		Assert.notNull(principal);
 		
@@ -98,10 +106,26 @@ public class NewspaperService {
 		
 		Collection<Subscription> subs = new ArrayList<Subscription>(newspaper.getSubscriptions());
 		
-		for(Subscription s : subs){
-			this.subcriptionService.delete(s);
+		adverts = newspaper.getAdverts();
+		
+		for(Advertisement advert : adverts){
+			this.advertisementService.deleteAdmin(advert);
 		}
 		
+		for(Subscription s : subs){
+			this.subcriptionService.delete(s);
+		}	
+		
+		Collection<Volume> volumes = newspaper.getVolumen();
+		for(Volume v : volumes){
+			Collection<Newspaper> newspapers = v.getNewspapers();
+
+			if(newspapers.contains(newspaper)){
+				updated2 = new ArrayList<Newspaper>(newspapers);
+				updated2.remove(newspaper);
+				v.setNewspapers(updated2);
+			}
+		}
 		this.newspaperRepository.delete(newspaper);
 
 	}
@@ -226,5 +250,28 @@ public class NewspaperService {
 		return result;
 	}
 
+	public Collection<Newspaper> findNotPlacedAdsByAgent(int agentId) {
+		Collection<Newspaper> newspapersWithNoAdvPlacesByAgent;
+		
+		
+		newspapersWithNoAdvPlacesByAgent = this.newspaperRepository.findNotPlacedAdsByAgent(agentId);
+
+		
+//		publishedNewspapers = this.publishedNewspapers();
+//		agentPublishedNewspapers = this.findPlacedAdsByAgent(agentId);
+//		
+//		
+//		publishedNewspapers.removeAll(agentPublishedNewspapers);
+		
+		
+		return newspapersWithNoAdvPlacesByAgent;
+	}
+
+	public Collection <Newspaper> selectSubscribedNewspapers (){
+		Customer principal = this.customerService.findByPrincipal();
+		Collection<Newspaper> res = this.newspaperRepository.selectSubscribedNewspapers(principal.getId());
+		return res;
+		
+	}
 
 }

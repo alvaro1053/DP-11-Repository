@@ -177,7 +177,7 @@ public class ArticleService {
 			articles = new HashSet<Article>(this.articleRepository.articlesPublished());
 			articles.addAll(user.getArticles());
 		} else if ((principal instanceof Admin) && (filter == "" || filter == null))
-			articles = this.findAll();
+			articles = this.articleRepository.findAll();
 		else if ((principal instanceof Customer || principal == null) && (filter == "" || filter == null))
 			articles = this.articleRepository.articlesPublished();
 		else
