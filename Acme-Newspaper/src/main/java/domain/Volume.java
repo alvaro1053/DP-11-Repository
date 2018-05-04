@@ -9,6 +9,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
+
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -19,8 +22,9 @@ public class Volume extends DomainEntity {
 	private int	year;
 	private User					user;
 	private Collection<Newspaper>	newspapers;
+	private Collection<Customer>	customersSubscribed;
 
-
+	@NotBlank
 	public String getTitle() {
 		return this.title;
 	}
@@ -28,7 +32,7 @@ public class Volume extends DomainEntity {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
+	@NotBlank
 	public String getDescription() {
 		return this.description;
 	}
@@ -37,7 +41,8 @@ public class Volume extends DomainEntity {
 		this.description = description;
 	}
 	
-
+	@NotNull
+	@Range(min = 1900, max = 3000)
 	public int getYear() {
 		return year;
 	}
@@ -67,4 +72,14 @@ public class Volume extends DomainEntity {
 	public void setNewspapers(final Collection<Newspaper> newspapers) {
 		this.newspapers = newspapers;
 	}
+	@ManyToMany
+	public Collection<Customer> getCustomersSubscribed() {
+		return customersSubscribed;
+	}
+
+	public void setCustomersSubscribed(Collection<Customer> customersSubscribed) {
+		this.customersSubscribed = customersSubscribed;
+	}
+	
+	
 }

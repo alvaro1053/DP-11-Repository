@@ -23,7 +23,7 @@
 <jsp:useBean id="now" class="java.util.Date"/>
 
 <jstl:choose>
-<jstl:when test="${article.newspaper.isPrivate == false && article.newspaper.publicationDate lt now}">
+<jstl:when test="${article.newspaper.publicationDate lt now}">
 						
 <table class="displayStyle" >
 
@@ -102,7 +102,7 @@
 <jstl:when test="${not empty article.followUps}"> 
 <ul>
 <jstl:forEach items="${article.followUps}" var="followUp">
-<li> <jstl:out value="${followUp.title}"/> &nbsp; (<a href="followUp${uri}/display.do?followUpId=${followUp.id}"> ${showFollowUp} </a>) </li>
+<li> <jstl:out value="${followUp.title}"/> &nbsp; (<a href="followUp/display.do?followUpId=${followUp.id}"> ${showFollowUp} </a>) </li>
 </jstl:forEach>
 </ul> 
 </jstl:when>

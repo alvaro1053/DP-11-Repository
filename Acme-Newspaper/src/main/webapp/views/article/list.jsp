@@ -58,14 +58,6 @@
 		</display:column>
 	</security:authorize>
 	
-	<security:authorize access="hasRole('USER')">
-		<jstl:if test="">
-			<display:column>
-				<a href="article/user/edit.do?articleId=${row.id}" ><spring:message code ="article.edit" /></a>
-			</display:column>
-		</jstl:if>
-	</security:authorize>
-	
 	
 	<spring:message code="article.title" var="titleHeader" />
 	<display:column title="${titleHeader}">

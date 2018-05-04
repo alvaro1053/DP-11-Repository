@@ -103,7 +103,7 @@ public class MessageAdministratorController extends AbstractController {
 		result.addObject("recipient", this.actorService.findByPrincipal());
 		result.addObject("broadcast", true);
 		result.addObject("permission", true);
-		result.addObject("requestURI", "/Acme-Newspaper/message/admin/broadcast.do");
+		result.addObject("requestURI", "message/admin/broadcast.do");
 
 		result.addObject("message", messageCode);
 

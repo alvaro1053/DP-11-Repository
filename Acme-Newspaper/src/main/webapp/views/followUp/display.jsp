@@ -41,7 +41,7 @@
 
 <tr>
 <td class ="left-display"> <strong> <spring:message code="followUp.article" /> : </strong> </td>
-<td class="right-display">  <a href="article/display.do?articleId=${followUp.article.id}"><jstl:out value="${followUp.title}"/></a> &nbsp; </td>
+<td class="right-display">  <a href="article/display.do?articleId=${followUp.article.id}"><jstl:out value="${followUp.article.title}"/></a> &nbsp; </td>
 </tr>
 
 <tr>

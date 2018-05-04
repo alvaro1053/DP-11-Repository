@@ -175,16 +175,14 @@
 </jstl:if>
 </jstl:forEach>
 
-		
+		<jstl:if test="${(subscrito == false) and (row.isPrivate == true) and (row.publicationDate lt now2)}">
 		<display:column>
 		<jsp:useBean id="now2" class="java.util.Date"/>
-		<jstl:if test="${(subscrito == false) and (row.isPrivate == true) and (row.publicationDate lt now2)}">
 		<a href="subscription/customer/create.do?newspaperId=${row.id}"> <spring:message
 			code="article.subscribe" />
 		</a>
-		</jstl:if>
 		</display:column>
-	
+		</jstl:if>
 	
 </security:authorize>
 		

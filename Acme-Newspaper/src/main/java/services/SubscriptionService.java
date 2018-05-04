@@ -20,6 +20,7 @@ import domain.CreditCard;
 import domain.Customer;
 import domain.Newspaper;
 import domain.Subscription;
+import domain.User;
 import forms.SubscriptionForm;
 
 
@@ -35,6 +36,9 @@ public class SubscriptionService {
 
 	@Autowired
 	private Validator					validator;
+	
+	@Autowired
+	private UserService					userService;
 	
 	@Autowired
 	private AdminService					adminService;
@@ -186,5 +190,55 @@ public class SubscriptionService {
 			binding.rejectValue("creditCard.expirationMonth", "subscription.creditCard.expired");
 		}
 		
+	}
+	
+	public Subscription updateVolumeSubscription(final Subscription subscription) {
+		User principal;
+		Subscription result;
+		List<Subscription> updated,updated2;
+
+		Assert.notNull(subscription);
+
+		principal = this.userService.findByPrincipal();
+
+		Assert.notNull(principal);
+
+		result = this.subscriptionRepository.save(subscription);
+		
+		Customer customer = result.getCustomer();
+		final Collection<Subscription> subscriptions = customer.getSubscriptions();
+		updated = new ArrayList<Subscription>(subscriptions);
+		updated.add(result);
+		customer.setSubscriptions(updated);
+		
+		Newspaper newspaper = result.getNewspaper();
+		Collection<Subscription> subscriptions2 = newspaper.getSubscriptions();
+		updated2 = new ArrayList<Subscription>(subscriptions2);
+		updated2.add(result);
+		newspaper.setSubscriptions(updated2);
+
+		return result;
+	}
+	
+	public void updateDeleteByVolumen (Subscription subcription){
+		Collection<Subscription> update,update2;
+		
+		Customer c = subcription.getCustomer();
+		update = c.getSubscriptions();
+		update.remove(subcription);
+		subcription.getCustomer().setSubscriptions(update);
+		
+		Newspaper news = subcription.getNewspaper();
+		update2 = news.getSubscriptions();
+		update2.remove(subcription);
+		subcription.getNewspaper().setSubscriptions(update2);
+		
+		this.subscriptionRepository.delete(subcription);
+		
+	}
+	
+	public Subscription findByCustomerAndNewspaperint (int customerId, int newspaperId){
+		Subscription res = this.subscriptionRepository.findByCustomerAndNewspaper(customerId, newspaperId);
+		return res;
 	}
 }
