@@ -20,6 +20,7 @@ import domain.CreditCard;
 import domain.Customer;
 import domain.Newspaper;
 import domain.Subscription;
+import domain.User;
 import forms.SubscriptionForm;
 
 
@@ -35,6 +36,9 @@ public class SubscriptionService {
 
 	@Autowired
 	private Validator					validator;
+	
+	@Autowired
+	private UserService					userService;
 	
 	@Autowired
 	private AdminService					adminService;
@@ -187,4 +191,34 @@ public class SubscriptionService {
 		}
 		
 	}
+	
+	public Subscription updateVolumeSubscription(final Subscription subscription) {
+		User principal;
+		Subscription result;
+		List<Subscription> updated,updated2;
+
+		Assert.notNull(subscription);
+
+		principal = this.userService.findByPrincipal();
+
+		Assert.notNull(principal);
+
+		result = this.subscriptionRepository.save(subscription);
+		
+		Customer customer = result.getCustomer();
+		final Collection<Subscription> subscriptions = customer.getSubscriptions();
+		updated = new ArrayList<Subscription>(subscriptions);
+		updated.add(result);
+		customer.setSubscriptions(updated);
+		
+		Newspaper newspaper = result.getNewspaper();
+		Collection<Subscription> subscriptions2 = newspaper.getSubscriptions();
+		updated2 = new ArrayList<Subscription>(subscriptions2);
+		updated2.add(result);
+		newspaper.setSubscriptions(updated2);
+
+		return result;
+	}
+	
+	
 }

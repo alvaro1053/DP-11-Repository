@@ -364,6 +364,12 @@
 	<ref bean="subscription1"/>
 	</list>
 	</property>
+	
+	<property name="volumesSubscribed">
+	<list>
+	<ref bean="volume1"/>
+	</list>
+	</property>
 
 </bean>
 
@@ -395,6 +401,11 @@
 	</property>
 	
 	<property name="subscriptions">
+	<list>
+	</list>
+	</property>
+	
+	<property name="volumesSubscribed">
 	<list>
 	</list>
 	</property>
@@ -594,6 +605,12 @@
 		<ref bean="newspaper2"/>
 	</list>
 	</property>
+	
+	<property name="customersSubscribed">
+	<list>
+		<ref bean="customer1"/>
+	</list>
+	</property>
 
 </bean>
 
@@ -606,6 +623,11 @@
 	<property name="newspapers">
 	<list>
 		<ref bean="newspaper3"/>
+	</list>
+	</property>
+	
+	<property name="customersSubscribed">
+	<list>
 	</list>
 	</property>
 

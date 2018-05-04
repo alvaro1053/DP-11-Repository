@@ -52,6 +52,7 @@ public class VolumeService {
 		result = new Volume();
 		result.setUser(principal);
 		result.setNewspapers(new ArrayList<Newspaper>());
+		result.setCustomersSubscribed(new ArrayList<Customer>());
 		return result;
 	}
 
@@ -69,6 +70,41 @@ public class VolumeService {
 		User principal = userService.findByPrincipal();
 		Assert.notNull(principal);
 		Assert.isTrue(volume.getUser().equals(principal));
+		
+		//Comprobamos si los newspapers han cambiado
+		if(volume.getId() != 0){
+			Volume oldVolume = this.findOne(volume.getId());
+			
+			Collection<Newspaper> oldNewspapers = new ArrayList<Newspaper>(oldVolume.getNewspapers());
+			Collection<Newspaper> actualNewspapers = new ArrayList<Newspaper>(volume.getNewspapers());
+			//Si ha cambiado debemos subscribir a todos los usuarios subscritos a los nuevos newspapers que se hayan añadido
+			if(!(oldNewspapers.equals(actualNewspapers))){
+				Collection<Newspaper> newNewspapers = new ArrayList<Newspaper>(actualNewspapers);
+				newNewspapers.removeAll(oldNewspapers);
+				
+				
+				Collection<Customer> subscribed = new ArrayList<Customer>(volume.getCustomersSubscribed());
+				
+				//Para la creditCard, puesto que no sabemos cual es pondremos una ficticia puesto que ya el Customer está subscrito, por lo que ya ha pagado	
+				CreditCard creditCard = new CreditCard();
+				creditCard.setHolderName("Ficticia");
+				creditCard.setBrandName("Ficticia");
+				creditCard.setExpirationMonth(12);
+				creditCard.setExpirationYear(98);
+				creditCard.setCVV(234);
+				creditCard.setNumber("5540500001000004");
+				for(Customer c : subscribed ){
+					for (Newspaper n : newNewspapers){
+					Subscription subscription = new Subscription();
+					subscription.setCustomer(c);
+					subscription.setNewspaper(n);
+					subscription.setCreditCard(creditCard);
+					this.subscriptionService.updateVolumeSubscription(subscription);
+				}
+				}				
+			}		
+			
+		}
 		
 		result = this.volumeRepository.save(volume);
 		
@@ -106,6 +142,10 @@ public class VolumeService {
 		if(volume.getUser().getId() != 0){
 			volume.setUser(user);
 		}
+		if(volumeForm.getId() != 0){
+		Volume copy = this.findOne(volumeForm.getId());
+		volume.setCustomersSubscribed(copy.getCustomersSubscribed());
+		}
 	
 		validator.validate(volumeForm, binding);
 		return volume;
@@ -132,14 +172,20 @@ public class VolumeService {
 	}
 	
 	public void subscribe(Volume volume, CreditCard creditCard){
+		Collection<Volume> toUpdate,updated;
+		Collection<Customer> toUpdate2, updated2;
+		
 		Customer principal = this.customerService.findByPrincipal();
 		Collection<Newspaper> newspapers = volume.getNewspapers();
 		Collection<Subscription> subscriptions = principal.getSubscriptions();
+		
+		//Eliminamos los newspapers a los que ya está subscrito el principal
 		for (Subscription s : subscriptions){
 			if(newspapers.contains(s.getNewspaper())){
 				newspapers.remove(s.getNewspaper());
 			}
 			}
+		//Le subscribimos a los restantes
 		for(Newspaper n : newspapers){
 			Subscription subscription = this.subscriptionService.create();
 			subscription.setCreditCard(creditCard);
@@ -149,6 +195,17 @@ public class VolumeService {
 			this.subscriptionService.save(subscription);
 			}
 		}
+		toUpdate = principal.getVolumesSubscribed();
+		toUpdate.add(volume);
+		updated = new ArrayList<Volume>(toUpdate);
+		principal.setVolumesSubscribed(updated);
+		
+		toUpdate2 = volume.getCustomersSubscribed();
+		toUpdate2.add(principal);
+		updated2 = new ArrayList<Customer>(toUpdate2);
+		volume.setCustomersSubscribed(updated2);
+		
+		
 		}
 	}
 

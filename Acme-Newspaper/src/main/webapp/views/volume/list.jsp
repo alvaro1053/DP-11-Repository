@@ -77,15 +77,8 @@
 
 <security:authorize access="hasRole('CUSTOMER')">
 
-<jstl:set var="subscrito" value="${true}"/>
-<jstl:forEach var="newspaper" items="${row.newspapers}">
-<jstl:if test="${not subscribed.contains(newspaper) and (newspaper.isPrivate == true)}">
-<jstl:set var="subscrito" value="${false}"/>
-</jstl:if>
-</jstl:forEach>
-
 		<display:column>
-		<jstl:if test="${(subscrito == false)}">
+		<jstl:if test="${not row.customersSubscribed.contains(principal)}">
 		<a href="subscription/customer/createVolume.do?volumeId=${row.id}"> <spring:message
 			code="article.subscribe" />
 		</a>

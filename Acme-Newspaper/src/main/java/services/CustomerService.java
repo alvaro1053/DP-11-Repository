@@ -19,6 +19,7 @@ import security.UserAccount;
 import domain.Customer;
 import domain.Message;
 import domain.Subscription;
+import domain.Volume;
 import forms.ActorForm;
 
 @Service
@@ -51,6 +52,7 @@ public class CustomerService {
 		result.setReceivedMessages(new ArrayList<Message>());
 		result.setSentMessages(new ArrayList<Message>());
 		result.setFolders(this.folderService.createSystemFolders());
+		result.setVolumesSubscribed(new ArrayList<Volume>());
 		
 		return result;
 	}
