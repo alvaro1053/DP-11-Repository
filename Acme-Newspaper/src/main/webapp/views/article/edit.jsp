@@ -21,7 +21,7 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <jstl:choose>
-<jstl:when test="${article.isDraft == true}">
+<jstl:when test="${article.isDraft == true || articleForm.isDraft == true}">
 
 	<form:form action="article/user/edit.do" modelAttribute="articleForm">
 	<form:hidden path="id" />
