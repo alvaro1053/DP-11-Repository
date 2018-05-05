@@ -59,7 +59,7 @@
 <ul>
 <jstl:forEach items="${article.photosURL}" var="photoURL">
 	<jstl:if test="${not empty photoURL}">
-		<img src=<jstl:out value="${picture}"/> alt= "${failed}" height="150" width=auto />
+		<img src=<jstl:out value="${photoURL}"/> alt= "${failed}" height="150" width=auto />
 	</jstl:if>
 </jstl:forEach>
 </ul> 
