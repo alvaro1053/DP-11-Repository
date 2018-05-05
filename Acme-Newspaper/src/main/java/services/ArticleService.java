@@ -22,6 +22,7 @@ import domain.Admin;
 import domain.Advertisement;
 import domain.Article;
 import domain.Customer;
+import domain.FollowUp;
 import domain.Newspaper;
 import domain.User;
 import forms.ArticleForm;
@@ -117,37 +118,21 @@ public class ArticleService {
 	}
 
 	public void save(final Article article) {
-		Article result;
 		final Date momentNow = new Date(System.currentTimeMillis());
 
 		final User principal = this.userService.findByPrincipal();
-		Collection<String> tabooWords;
 		Assert.notNull(principal);
-
+		
 		article.setMoment(new Date(System.currentTimeMillis() - 1));
-
-		tabooWords = this.customisationService.findCustomisation().getTabooWords();
-		for (final String word : tabooWords) {
-			if (article.getTitle().toLowerCase().contains(word))
-				article.setTabooWords(true);
-			if (article.getSummary().toLowerCase().contains(word))
-				article.setTabooWords(true);
-			if (article.getBody().toLowerCase().contains(word))
-				article.setTabooWords(true);
-		}
-
+				
 		Assert.isTrue(article.getNewspaper().getPublicationDate().after(momentNow));
-
-		result = this.articleRepository.save(article);
+		
+		this.articleRepository.save(article);
 
 		final Collection<Article> update = new HashSet<>(principal.getArticles());
-		update.add(result);
+		update.add(article);
 		principal.setArticles(update);
 
-		final Newspaper newspaper = article.getNewspaper();
-		final Collection<Article> update2 = new HashSet<>(newspaper.getArticles());
-		update2.add(result);
-		newspaper.setArticles(update2);
 	}
 
 	public Article findOne(final int articleId) {
@@ -196,9 +181,11 @@ public class ArticleService {
 	}
 
 	public Article reconstruct(final ArticleForm articleForm, final BindingResult binding) {
-		final Article result = new Article();
+		final Article result = create();
 		User principal;
 		List<String> photos;
+		Collection<String> tabooWords;
+
 
 		principal = this.userService.findByPrincipal();
 		photos = articleForm.getPhotosURL();
@@ -217,8 +204,18 @@ public class ArticleService {
 		result.setIsDraft(articleForm.getIsDraft());
 		result.setNewspaper(articleForm.getNewspaper());
 		result.setTabooWords(false);
-		result.setFollowUps(null);
+		result.setFollowUps(new ArrayList<FollowUp>());
 		result.setUser(principal);
+		
+		tabooWords = this.customisationService.findCustomisation().getTabooWords();
+		for (final String word : tabooWords) {
+			if (result.getTitle().toLowerCase().contains(word))
+				result.setTabooWords(true);
+			if (result.getSummary().toLowerCase().contains(word))
+				result.setTabooWords(true);
+			if (result.getBody().toLowerCase().contains(word))
+				result.setTabooWords(true);
+		}
 
 		this.validator.validate(result, binding);
 
@@ -238,7 +235,7 @@ public class ArticleService {
 	public ArticleForm reconstructForm(final Article article) {
 		ArticleForm result;
 
-		result = new ArticleForm();
+		result = createForm();
 
 		result.setId(article.getId());
 		result.setVersion(article.getVersion());

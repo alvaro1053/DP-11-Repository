@@ -5,6 +5,7 @@ package forms;
 import java.util.Date;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 
 import domain.DomainEntity;
 
@@ -23,6 +24,7 @@ public class ChirpForm extends DomainEntity {
 	}
 	
 	@NotBlank
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getTitle() {
 		return title;
 	}
@@ -31,6 +33,7 @@ public class ChirpForm extends DomainEntity {
 	}
 	
 	@NotBlank
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getDescription() {
 		return description;
 	}

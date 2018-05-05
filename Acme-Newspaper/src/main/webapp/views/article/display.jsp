@@ -20,7 +20,11 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<jsp:useBean id="now" class="java.util.Date"/>
 
+<jstl:choose>
+<jstl:when test="${(article.newspaper.isPrivate == false && article.newspaper.publicationDate lt now) || (article.user.id == principal.id)}">
+						
 <table class="displayStyle" >
 
 
@@ -55,7 +59,7 @@
 <ul>
 <jstl:forEach items="${article.photosURL}" var="photoURL">
 	<jstl:if test="${not empty photoURL}">
-		<img src="${photoURL}"  width="auto" height="200"> &nbsp;
+		<img src=<jstl:out value="${photoURL}"/> alt= "${failed}" height="150" width=auto />
 	</jstl:if>
 </jstl:forEach>
 </ul> 
@@ -98,7 +102,7 @@
 <jstl:when test="${not empty article.followUps}"> 
 <ul>
 <jstl:forEach items="${article.followUps}" var="followUp">
-<li> <jstl:out value="${followUp.title}"/> &nbsp; (<a href="followUp${uri}/display.do?followUpId=${followUp.id}"> ${showFollowUp} </a>) </li>
+<li> <jstl:out value="${followUp.title}"/> &nbsp; (<a href="followUp/display.do?followUpId=${followUp.id}"> ${showFollowUp} </a>) </li>
 </jstl:forEach>
 </ul> 
 </jstl:when>
@@ -116,9 +120,16 @@
 </table>
 
 
+
 <jstl:if test="${advert != null}">
 	<spring:message code ="article.imageBannerNotFound" var = "imageBannerNotFound"></spring:message>
 	<a href="${advert.targetPageURL}">
 		<img src="${advert.bannerURL}" alt="${imageBanner}">
 	</a>
 </jstl:if>
+
+</jstl:when>
+<jstl:otherwise>
+<spring:message code="article.permission" />
+</jstl:otherwise>
+</jstl:choose>

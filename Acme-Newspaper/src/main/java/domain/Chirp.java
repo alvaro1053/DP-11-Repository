@@ -10,6 +10,7 @@ import javax.persistence.Index;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+
 @Entity
 @Access(AccessType.PROPERTY)
 @Table(indexes = {

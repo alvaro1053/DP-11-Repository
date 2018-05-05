@@ -48,9 +48,10 @@ public class UserArticleController extends AbstractController {
 		Collection<Article> articles;
 		final User principal = this.userService.findByPrincipal();
 		final String uri = "/user";
-
+		
 		articles = this.articleService.findByFilter(filter);
 		result = new ModelAndView("article/list");
+		
 		result.addObject("uri", uri);
 		result.addObject("articles", articles);
 		result.addObject("principal", principal);
@@ -85,6 +86,7 @@ public class UserArticleController extends AbstractController {
 
 		article = this.articleService.findOne(articleId);
 
+		
 		result = new ModelAndView("article/display");
 		result.addObject("article", article);
 		result.addObject("uri", uri);
