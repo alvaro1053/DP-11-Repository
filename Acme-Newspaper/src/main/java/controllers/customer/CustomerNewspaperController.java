@@ -57,7 +57,7 @@ public class CustomerNewspaperController extends AbstractController{
 		Collection<Subscription> subscritions;
 		final Customer principal = this.customerService.findByPrincipal();
 		Boolean suscrito = false;
-		final String uri = "/customer";
+		final String uri = "";
 		newspapers = this.newspaperService.findByFilter(filter);
 		subscritions = this.subscriptionService.findAll();
 

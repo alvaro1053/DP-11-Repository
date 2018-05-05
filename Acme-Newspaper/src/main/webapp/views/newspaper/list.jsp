@@ -123,8 +123,8 @@
 		<jstl:forEach items="${row.articles}" var="article"> 
 			 <li>
 			 <jstl:choose>
-				<jstl:when test="${suscrito == true || row.isPrivate == false}">
-					<a href="article/display.do?articleId=${article.id}">
+				<jstl:when test="${suscrito == true || row.isPrivate == false || article.user.id == principal.id}">
+					<a href="article${uri}/display.do?articleId=${article.id}">
 						<jstl:out value="${article.title}"/>
 					</a>
 				</jstl:when>
