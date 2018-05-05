@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
 
 @Entity
@@ -26,6 +27,7 @@ public class Advertisement extends DomainEntity {
 	private Boolean				tabooWords;
 
 	@NotBlank
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getTitle() {
 		return title;
 	}
@@ -35,6 +37,7 @@ public class Advertisement extends DomainEntity {
 	
 	@NotBlank
 	@URL
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getBannerURL() {
 		return this.bannerURL;
 	}
@@ -43,6 +46,7 @@ public class Advertisement extends DomainEntity {
 	}
 	@NotBlank
 	@URL
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getTargetPageURL() {
 		return this.targetPageURL;
 	}
