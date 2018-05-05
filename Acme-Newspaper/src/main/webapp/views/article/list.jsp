@@ -85,7 +85,7 @@
 	<display:column  title="${picture}"> 
 		<jstl:forEach var="picture" items="${row.photosURL}">
 			<jstl:if test="${not empty picture}">
-				<img src="${picture}" alt= "${failed}" height="150" width=auto />
+				<img src=<jstl:out value="${picture}"/> alt= "${failed}" height="150" width=auto />
 			</jstl:if> 
 		</jstl:forEach>	
 	</display:column>
