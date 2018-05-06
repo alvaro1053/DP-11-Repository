@@ -23,7 +23,7 @@
 <jsp:useBean id="now" class="java.util.Date"/>
 
 <jstl:choose>
-<jstl:when test="${article.newspaper.publicationDate lt now}">
+<jstl:when test="${(article.newspaper.isPrivate == false && article.newspaper.publicationDate lt now) || (article.user.id == principal.id)}">
 						
 <table class="displayStyle" >
 
@@ -59,7 +59,7 @@
 <ul>
 <jstl:forEach items="${article.photosURL}" var="photoURL">
 	<jstl:if test="${not empty photoURL}">
-		<img src="${photoURL}"  width="auto" height="200"> &nbsp;
+		<img src=<jstl:out value="${photoURL}"/> alt= "${failed}" height="150" width=auto />
 	</jstl:if>
 </jstl:forEach>
 </ul> 

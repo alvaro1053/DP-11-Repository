@@ -138,8 +138,12 @@
 			
 
 
-		<security:authorize access="isAnonymous() || hasRole('USER') || hasRole('CUSTOMER')">
+		<security:authorize access="isAnonymous() || hasRole('CUSTOMER')">
 			<li><a class="fNiv" href="article/list.do"><spring:message code="master.page.articles" /></a></li>
+		</security:authorize>
+		
+		<security:authorize access="hasRole('USER')">
+			<li><a class="fNiv" href="article/user/list.do"><spring:message code="master.page.articles" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">

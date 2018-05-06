@@ -72,7 +72,7 @@ public class UserArticleController extends AbstractController {
 
 		result = this.createEditModelAndView(articleForm);
 		result.addObject("newspapers", newspapers);
-
+		result.addObject("articleForm", articleForm);
 		return result;
 	}
 
@@ -106,6 +106,7 @@ public class UserArticleController extends AbstractController {
 			Assert.isTrue(article.getUser().equals(principal));
 			articleForm = this.articleService.reconstructForm(article);
 			result = this.createEditModelAndView(articleForm);
+			result.addObject("article", article);
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/article/list.do");
 			redir.addFlashAttribute("message", "article.permision");

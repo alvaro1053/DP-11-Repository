@@ -26,7 +26,7 @@ public class AdvertisementForm extends DomainEntity {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getBannerURL() {
 		return bannerURL;
 	}
@@ -34,7 +34,7 @@ public class AdvertisementForm extends DomainEntity {
 		this.bannerURL = bannerURL;
 	}
 	
-
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getTargetPageURL() {
 		return targetPageURL;
 	}

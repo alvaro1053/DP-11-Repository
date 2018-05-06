@@ -20,6 +20,9 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
+<jstl:choose>
+<jstl:when test="${article.isDraft == true || articleForm.isDraft == true}">
+
 	<form:form action="article/user/edit.do" modelAttribute="articleForm">
 	<form:hidden path="id" />
 	<form:hidden path="version" /> 
@@ -101,3 +104,9 @@
         $("#list1").dynamiclist();
     });
  </script>
+ 
+ </jstl:when>
+<jstl:otherwise>
+<spring:message code="article.permission" />
+</jstl:otherwise>
+</jstl:choose>

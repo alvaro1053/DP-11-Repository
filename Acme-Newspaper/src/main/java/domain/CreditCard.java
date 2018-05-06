@@ -49,6 +49,7 @@ public class CreditCard {
 
 	@NotBlank
 	@CreditCardNumber
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getNumber() {
 		return this.number;
 	}

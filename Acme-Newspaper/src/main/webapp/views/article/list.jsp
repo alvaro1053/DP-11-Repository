@@ -65,8 +65,8 @@
 	<jsp:useBean id="now" class="java.util.Date"/>
 		
 		<jstl:choose>
-			<jstl:when test="${row.newspaper.isPrivate == false && row.newspaper.publicationDate lt now}">
-				<a href="article/display.do?articleId=${row.id}"><jstl:out value="${row.title}"></jstl:out></a>
+			<jstl:when test="${(row.newspaper.isPrivate == false && row.newspaper.publicationDate lt now) || (row.user.id == principal.id)}">
+				<a href="article${uri}/display.do?articleId=${row.id}"><jstl:out value="${row.title}"></jstl:out></a>
 			</jstl:when>
 			<jstl:otherwise>
 			<jstl:out value="${row.title}"/>
@@ -86,7 +86,7 @@
 	<display:column  title="${picture}"> 
 		<jstl:forEach var="picture" items="${row.photosURL}">
 			<jstl:if test="${not empty picture}">
-				<img src="${picture}" alt= "${failed}" height="150" width=auto />
+				<img src=<jstl:out value="${picture}"/> alt= "${failed}" height="150" width=auto />
 			</jstl:if> 
 		</jstl:forEach>	
 	</display:column>
