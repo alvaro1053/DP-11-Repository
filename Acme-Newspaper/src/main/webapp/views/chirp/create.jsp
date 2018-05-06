@@ -21,7 +21,7 @@
 	<acme:textbox code="chirp.title" path="title"/>
 	<br />
 	
-	<acme:textbox code="chirp.description" path="description"/>
+	<acme:textarea code="chirp.description" path="description"/>
 	<br />
 	
 	<input type="submit" name="save" id="save"

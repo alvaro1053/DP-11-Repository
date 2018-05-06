@@ -10,6 +10,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.SafeHtml;
 
 @Embeddable
 @Access(AccessType.PROPERTY)
@@ -25,6 +26,7 @@ public class CreditCard {
 	@NotBlank
 	@Pattern(regexp = "^[a-zA-Z ]*$")
 	@Size(min = 1, max = 70)
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getHolderName() {
 		return this.holderName;
 	}
@@ -36,6 +38,7 @@ public class CreditCard {
 	@NotBlank
 	@Pattern(regexp = "^[a-zA-Z ]*$")
 	@Size(min = 1, max = 50)
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getBrandName() {
 		return this.brandName;
 	}

@@ -128,8 +128,6 @@
 		<property name="folders">
 	<list>
 	<ref bean="folder1"/>
-	<ref bean="folder9"/>
-	<ref bean="folder10"/>
 	<ref bean="folder11"/>
 	<ref bean="folder19"/>
 	<ref bean="folder27"/>

@@ -8,7 +8,6 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
-
 @Entity
 @Access(AccessType.PROPERTY)
 public class Customisation extends DomainEntity {

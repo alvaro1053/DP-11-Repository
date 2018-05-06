@@ -25,9 +25,9 @@
 	<form:hidden path="version" /> 
 	
 	
-	<acme:textarea code="newspaper.title" path="title"/>
+	<acme:textbox code="newspaper.title" path="title"/>
 	
-	<acme:textbox code="newspaper.description" path="description"/>
+	<acme:textarea code="newspaper.description" path="description"/>
 	
 	<acme:textbox code="newspaper.pictureURL" path="pictureURL"/>
 	

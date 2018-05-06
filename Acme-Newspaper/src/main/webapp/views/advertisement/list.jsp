@@ -31,7 +31,7 @@
 		<display:column>
 			<spring:message code ="advertisement.delete" var="delete"/>
 			<spring:message code ="advertisement.confirmdelete" var="confirmDelete"/>
-			<a href="admin/admin/deleteAdvert.do?advertisementId=${row.id}" onclick="return confirm('${confirmDelete}')"><jstl:out value="delete"/></a>
+			<a href="admin/admin/deleteAdvert.do?advertisementId=${row.id}" onclick="return confirm('${confirmDelete}')"><jstl:out value="${delete}"/></a>
 		</display:column>
 	</security:authorize>
 	
@@ -58,7 +58,14 @@
 	
 	
 	<spring:message code="advertisement.agent" var="agentHeader" />
-	<display:column title="${agentHeader}"><jstl:out value="${row.agent.userAccount.username}"></jstl:out></display:column>
+	<display:column title="${agentHeader}">
+		<ul>
+			<li>
+				<jstl:out value="${row.agent.userAccount.username}">
+				</jstl:out>
+			</li>
+		</ul>
+	</display:column>
 	
 </display:table>
 

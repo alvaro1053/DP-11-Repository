@@ -16,6 +16,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Future;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -34,6 +36,8 @@ public class FollowUp extends DomainEntity {
 	private Article			article;
 
 
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
+	@NotBlank
 	public String getTitle() {
 		return this.title;
 	}
@@ -51,6 +55,8 @@ public class FollowUp extends DomainEntity {
 		this.publicationDate = publicationDate;
 	}
 
+	@NotBlank
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getSummary() {
 		return this.summary;
 	}
@@ -58,6 +64,8 @@ public class FollowUp extends DomainEntity {
 		this.summary = summary;
 	}
 
+	@NotBlank
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getText() {
 		return this.text;
 	}
