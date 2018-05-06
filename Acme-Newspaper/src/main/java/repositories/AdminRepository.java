@@ -74,8 +74,8 @@ public interface AdminRepository extends JpaRepository<Admin, Integer> {
 	@Query("select 1.0*count(s)/(select count(c) from Customer c) from Subscription s where s.newspaper.isPrivate = TRUE")
 	Double ratioPublicVersusPrivatePerPublisher();	
 	//1.5 (A) The average ratio of private versus public newspapers per publisher.
-	@Query("select count(n)/(select count(n) from n) from User u join u.newspapers n where n.isPrivate = TRUE")
-	Collection<Long> AverageRatioOfPrivateVersusPublicNewspapers();
+	@Query("select 1.0*count(n)/(select count(n) from n) from User u join u.newspapers n where n.isPrivate = TRUE")
+	Collection<Double> AverageRatioOfPrivateVersusPublicNewspapers();
 	
 	//===============//Querys Newspaper 2.0 C===========================
 	

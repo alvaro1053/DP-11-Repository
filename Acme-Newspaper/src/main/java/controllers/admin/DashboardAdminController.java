@@ -42,7 +42,7 @@ public class DashboardAdminController extends AbstractController {
 		AverageFollowUpPerArticleTwoWeek, AverageChirpsPerUser, StandardDesviationChirpsPerUser, RatioUsersWithMoreAvgChirps, RatioPublicVersusPrivate, 
 		AverageArticlesPerPrivateNewspaper, AverageArticlesPerPublicNewspaper, ratioPublicVersusPrivatePerPublisher, ratioNewspapersWithOneAdvertisementVersusAny,ratioAdvertisementTabooWords
 		,AverageNewspapersPerVolume, ratioSubscriptionsVolumesVersusNewspapers;
-		Long AverageRatioOfPrivateVersusPublicNewspapers;
+		Double AverageRatioOfPrivateVersusPublicNewspapers;
 		
 		Collection<Newspaper> NewspapersWithMoreArticlesThanAverage, NewspapersWithLessArticlesThanAverage;
 		

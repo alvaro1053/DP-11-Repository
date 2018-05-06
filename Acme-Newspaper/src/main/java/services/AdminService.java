@@ -214,16 +214,16 @@ public class AdminService {
 		return result;
 	}
 	//1.5
-	public Long AverageRatioOfPrivateVersusPublicNewspapers(){
+	public Double AverageRatioOfPrivateVersusPublicNewspapers(){
 		Admin principal = this.findByPrincipal();
 		Assert.notNull(principal);
-		Long res = new Long(0);
-		Long sumas = new Long(0);
-		Collection<Long> ratios = this.adminRepository.AverageRatioOfPrivateVersusPublicNewspapers();
-		for (Long d : ratios){
+		Double res = 0.;
+		Double sumas = 0.;
+		Collection<Double> ratios = this.adminRepository.AverageRatioOfPrivateVersusPublicNewspapers();
+		for (Double d : ratios){
 			sumas +=d;
 		}
-		res = sumas/ratios.size();
+		res = (sumas/ratios.size());
 		return res;
 	}
 	
