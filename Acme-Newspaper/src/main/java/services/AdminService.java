@@ -256,5 +256,26 @@ public class AdminService {
 		
 		return result;
 	}
+	
+	//11.1
+	public Double AverageNewspapersPerVolume(){
+		Double result;
+		Admin principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		
+		result = this.adminRepository.AverageNewspapersPerVolume();
+			
+		return result;
+	}
+	//11.2
+	public Double ratioSubscriptionsVolumesVersusNewspapers(){
+		Double result;
+		Admin principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		
+		result = this.adminRepository.ratioSubscriptionsVolumesVersusNewspapers();
+			
+		return result;
+	}
 
 }

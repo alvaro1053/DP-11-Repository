@@ -85,4 +85,11 @@ public interface AdminRepository extends JpaRepository<Admin, Integer> {
 	//5.3 (C Acme Newspaper 2.0) The ratio of advertisements that have taboo words
 	@Query("select 1.0*count(a)/(select count(ad) from Advertisement ad) from Advertisement a where a.tabooWords = TRUE")
 	Double RatioAdvertisementTabooWords();
+	//11.1(B Acme Newspaper 2.0)The average number of newspapers per volume.
+	@Query("select avg (v.newspapers.size) from Volume v")
+	Double AverageNewspapersPerVolume();
+	//11.1(B Acme Newspaper 2.0)The ratio of subscriptions to volumes versus subscriptions to newspapers.
+	@Query("select 1.0*count(vS)/(select count(s) from Customer cu join cu.subscriptions s) from Customer c join c.volumesSubscribed vS")
+	Double ratioSubscriptionsVolumesVersusNewspapers();
+
 }
