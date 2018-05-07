@@ -13,8 +13,8 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <%-- Formulario para la creación de mensajes nuevos, (escritura de un mensaje a un actor) --%>
-<jstl:if test="${mensaje.id==0}">
-<form:form action="${requestURI}" modelAttribute="mensaje">
+<jstl:if test="${mailMessage.id==0}">
+<form:form action="${requestURI}" modelAttribute="mailMessage">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
@@ -68,7 +68,7 @@
 	<br>
 	<br>
 	
-	<jstl:if test="${mensaje.id==0}">
+	<jstl:if test="${mailMessage.id==0}">
 	<input type="submit" name="save"
 		value="<spring:message code="message.send" />" />&nbsp; 
 	</jstl:if>
@@ -89,8 +89,8 @@
 <jstl:if test="${permission }">
 
 <%-- Formulario para la edición de mensajes que incluye: borrar un mensaje y moverlo a una carpeta diferente --%>
-<jstl:if test="${mensaje.id!=0}">
-<form:form action="message/actor/edit.do" modelAttribute="mensaje">
+<jstl:if test="${mailMessage.id!=0}">
+<form:form action="message/actor/edit.do" modelAttribute="mailMessage">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
@@ -109,7 +109,7 @@
 	<form:label path="sender">
 		<spring:message code="message.sender.userAccount" />:
 	</form:label>
-	<input type="text"  value="${mensaje.sender.userAccount.username}"  disabled />
+	<input type="text"  value="${mailMessage.sender.userAccount.username}"  disabled />
 	<br>
 	<br>
 	
@@ -118,7 +118,7 @@
 	<form:label path="recipient">
 		<spring:message code="message.recipient.userAccount" />:
 	</form:label>
-	<input type="text" value="${mensaje.recipient.userAccount.username}" disabled />
+	<input type="text" value="${mailMessage.recipient.userAccount.username}" disabled />
 	<br>
 	<br>
 	
@@ -126,21 +126,21 @@
 	<form:label path="moment">
 	<spring:message code="message.moment" />:
 	</form:label>
-	<input type="text" value="${mensaje.moment}"  disabled />
+	<input type="text" value="${mailMessage.moment}"  disabled />
 	<br>
 	<br>
 	
 	<form:label path="subject">
 		<spring:message code="message.subject" />:
 	</form:label>
-	<input type="text" value="${mensaje.subject }" disabled />
+	<input type="text" value="${mailMessage.subject }" disabled />
 	<br>
 	<br>
 	
 	<form:label path="body">
 		<spring:message code="message.body" />:
 	</form:label>
-	<input type="text"  value="${mensaje.body}" disabled />
+	<input type="text"  value="${mailMessage.body}" disabled />
 	<br>
 	<br>
 

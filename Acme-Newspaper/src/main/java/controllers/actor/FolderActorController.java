@@ -18,7 +18,7 @@ import services.FolderService;
 import controllers.AbstractController;
 import domain.Actor;
 import domain.Folder;
-import domain.Message;
+import domain.MailMessage;
 
 @Controller
 @RequestMapping("/folder/actor")
@@ -61,7 +61,7 @@ public class FolderActorController extends AbstractController {
 	public ModelAndView list(@RequestParam final int folderId) {
 		final ModelAndView result;
 		Folder currentFolder;
-		Collection<Message> messages;
+		Collection<MailMessage> messages;
 		final Collection<Folder> folders;
 
 		currentFolder = this.folderService.findOne(folderId);
@@ -125,7 +125,18 @@ public class FolderActorController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid final Folder folder, final BindingResult binding) {
 		ModelAndView result;
-
+		Actor principal;
+		
+		principal = this.actorService.findByPrincipal();
+		
+		for (Folder fold : principal.getFolders()){
+			if(fold.getName().equals(folder.getName())){
+				binding.rejectValue("name", "folder.name.exists");
+				result = this.createEditModelAndView(folder);
+				return result;
+			}
+		}
+		
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(folder);
 		else
@@ -164,7 +175,7 @@ public class FolderActorController extends AbstractController {
 
 	protected ModelAndView createEditModelAndView(final Folder folder, final String messageCode) {
 		ModelAndView result;
-		Collection<Message> messages;
+		Collection<MailMessage> messages;
 		Folder parentFolder;
 		Collection<Folder> childFolders;
 		String name;

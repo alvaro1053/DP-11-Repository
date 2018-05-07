@@ -17,11 +17,11 @@ public interface NewspaperRepository extends JpaRepository<Newspaper, Integer> {
 	@Query("select n from Newspaper n where n.publicationDate > CURRENT_TIMESTAMP")
 	Collection<Newspaper> notPublishedNewspapers();
 	
-	@Query("select n from Newspaper n where n.title LIKE %?1% or n.description LIKE %?1% and (n.publicationDate < CURRENT_TIMESTAMP)")
+	@Query("select n from Newspaper n where (n.title LIKE %?1% or n.description LIKE %?1%) and (n.publicationDate < CURRENT_TIMESTAMP)")
 	Collection<Newspaper> findByFilterPublished(String filter);
 	
-	@Query("select n from Newspaper n where n.title LIKE %?1% or n.description LIKE %?1%")
-	Collection<Newspaper> findByFilter(String filter);
+	@Query("select n from Newspaper n where (n.title LIKE %?1% or n.description LIKE %?1%) and n.user.id = ?2")
+	Collection<Newspaper> findByFilter(String filter, int userId);
 
 	@Query("select n from Newspaper n where n.tabooWords = true")
 	Collection<Newspaper> findNewspapersWithTabooWords();

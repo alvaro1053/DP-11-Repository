@@ -13,7 +13,7 @@ import org.springframework.validation.Validator;
 
 import domain.Advertisement;
 import domain.Agent;
-import domain.Message;
+import domain.MailMessage;
 import forms.ActorForm;
 
 import repositories.AgentRepository;
@@ -45,8 +45,8 @@ public class AgentService {
 		
 		
 		result.setAdvertisements(new ArrayList<Advertisement>());
-		result.setReceivedMessages(new ArrayList<Message>());
-		result.setSentMessages(new ArrayList<Message>());
+		result.setReceivedMessages(new ArrayList<MailMessage>());
+		result.setSentMessages(new ArrayList<MailMessage>());
 		result.setFolders(this.folderService.createSystemFolders());
 		
 		
