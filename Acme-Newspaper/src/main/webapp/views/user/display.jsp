@@ -105,3 +105,4 @@
 	<spring:message code = "user.chirp.format" var = "format" />
 	<display:column property = "moment" format="${format}" title ="${momentHeader}" sortable="true"/>
 </display:table>
+

@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 #./src/main/resources/Entities.map
-<<<<<<< HEAD
-#Mon May 07 18:13:05 CEST 2018
-=======
-#Mon May 07 16:32:55 CEST 2018
->>>>>>> 138d33b6a296139b433c5ae6ae2ee89e613a5334
+#Mon May 07 18:49:11 CEST 2018
 user3=90
 user2=89
 user1=88
@@ -83,85 +78,3 @@ userAccount4=82
 userAccount3=81
 userAccount2=80
 userAccount1=79
-=======
-#./src/main/resources/Entities.map
-#Mon May 07 13:49:48 CEST 2018
-user3=90
-user2=89
-user1=88
-folder42=156
-folder41=155
-folder40=154
-folder39=153
-folder38=152
-followUp3=100
-folder37=151
-followUp2=99
-folder36=150
-followUp1=97
-folder35=149
-folder34=148
-folder33=147
-folder32=146
-folder31=145
-folder30=144
-folder29=143
-folder28=142
-folder27=141
-folder9=123
-folder26=140
-folder8=122
-folder25=139
-folder7=121
-folder24=138
-folder6=120
-folder23=137
-folder5=119
-folder22=136
-folder4=118
-folder21=135
-folder3=117
-folder20=134
-folder2=116
-folder1=115
-chirp3=109
-chirp2=108
-chirp1=107
-folder19=133
-folder18=132
-folder17=131
-folder16=130
-folder15=129
-folder14=128
-customer2=92
-folder13=127
-customer1=91
-folder12=126
-folder11=125
-folder10=124
-customisation=110
-advertisement3=113
-advertisement2=112
-advertisement1=111
-newspaper3=103
-admin1=87
-newspaper2=101
-newspaper1=95
-subscription1=114
-article4=104
-article3=102
-article2=98
-article1=96
-agent2=94
-agent1=93
-volume2=106
-volume1=105
-userAccount8=86
-userAccount7=85
-userAccount6=84
-userAccount5=83
-userAccount4=82
-userAccount3=81
-userAccount2=80
-userAccount1=79
->>>>>>> 9bcb8b73d1e9a8a54ef6d08117e3d87277d14318

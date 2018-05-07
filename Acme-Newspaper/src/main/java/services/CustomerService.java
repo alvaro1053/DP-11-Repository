@@ -21,6 +21,7 @@ import domain.MailMessage;
 import domain.Subscription;
 import domain.Volume;
 import forms.ActorForm;
+import forms.EditActorForm;
 
 @Service
 @Transactional
@@ -131,6 +132,40 @@ public class CustomerService {
 			binding.rejectValue("confirmPassword", "user.passwordMiss");
 		if ((actorForm.getCheck() == false))
 			binding.rejectValue("check", "user.uncheck");
+		return customer;
+	}
+
+	public EditActorForm construct(Customer customer, EditActorForm editActorForm) {
+				
+		editActorForm.setId(customer.getId());
+		editActorForm.setVersion(customer.getVersion());
+		editActorForm.setName(customer.getName());
+		editActorForm.setSurname(customer.getSurname());
+		editActorForm.setEmail(customer.getEmail());
+		editActorForm.setPhone(customer.getPhone());
+		editActorForm.setAddress(customer.getPostalAddress());
+
+
+		
+		return editActorForm;
+	}
+
+	public Customer reconstruct(EditActorForm editActorForm, BindingResult binding) {
+		Customer customer;
+		
+		customer = this.findByPrincipal();
+		
+		customer.setName(editActorForm.getName());
+		customer.setSurname(editActorForm.getSurname());
+		customer.setEmail(editActorForm.getEmail());
+		customer.setId(editActorForm.getId());
+		customer.setPostalAddress(editActorForm.getAddress());
+		customer.setVersion(editActorForm.getVersion());
+		customer.setPhone(editActorForm.getPhone());
+	
+		
+		this.validator.validate(editActorForm, binding);
+
 		return customer;
 	}
 }

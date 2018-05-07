@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +18,7 @@ import controllers.AbstractController;
 import domain.Article;
 import domain.Chirp;
 import domain.User;
+import forms.EditActorForm;
 
 @Controller
 @RequestMapping("/user/user")
@@ -113,6 +115,45 @@ public class UserUserController extends AbstractController {
 
 		return result;
 	}
+	
+	@RequestMapping(value = "/editProfile", method = RequestMethod.GET)
+	public ModelAndView showEditPersonalProfile(){
+		ModelAndView result;
+		User user;
+		EditActorForm editActorForm;
+		editActorForm = new EditActorForm();
+		
+		user = this.userService.findByPrincipal();
+		
+		editActorForm = this.userService.construct(user, editActorForm);
+		
+		result = this.createEditModelAndView(editActorForm);
+		
+		return result;
+	}
+	
+
+
+	@RequestMapping(value = "/editProfile", method = RequestMethod.POST, params = "save")
+	public ModelAndView edit(final EditActorForm editActorForm, BindingResult binding){
+		ModelAndView result;
+		User user;
+		
+		user = this.userService.reconstruct(editActorForm, binding);
+		
+		if(binding.hasErrors()){
+			result = this.createEditModelAndView(editActorForm);
+		}else{
+			try{
+				this.userService.save(user);
+				result = new ModelAndView("redirect:/user/user/displayUserProfile.do");
+			}catch (Throwable oops){
+				result = this.createEditModelAndView(editActorForm);
+			}
+		}
+		
+		return result;
+	}
 
 	@RequestMapping(value = "/follow", method = RequestMethod.GET)
 	public ModelAndView follow(@RequestParam final int userId, RedirectAttributes redir) {
@@ -202,6 +243,31 @@ public class UserUserController extends AbstractController {
 		result.addObject("uri", uri);
 		result.addObject("followersTitle", followersTitle);
 
+		return result;
+	}
+	
+	
+	//Ancillary
+	
+	protected ModelAndView createEditModelAndView(EditActorForm editActorForm) {
+		ModelAndView result;
+		
+		result = this.createEditModelAndView(editActorForm, null);
+		
+		return result;
+	}
+
+	protected ModelAndView createEditModelAndView(EditActorForm editActorForm, String message) {
+		ModelAndView result;
+		String requestURI;
+		
+		requestURI = "user/user/editProfile.do";
+		
+		result = new ModelAndView("user/edit");
+		result.addObject("editActorForm", editActorForm);
+		result.addObject("message", message);
+		result.addObject("requestURI", requestURI);
+		
 		return result;
 	}
 

@@ -22,6 +22,7 @@ import domain.MailMessage;
 import domain.Newspaper;
 import domain.User;
 import forms.ActorForm;
+import forms.EditActorForm;
 
 @Service
 @Transactional
@@ -185,5 +186,39 @@ public class UserService {
 			userToBeUnfollowed.setFollowers(usersToBeUnfollowed);
 		}
 
+	}
+
+	public EditActorForm construct(User user, EditActorForm editActorForm) {
+				
+		editActorForm.setId(user.getId());
+		editActorForm.setVersion(user.getVersion());
+		editActorForm.setName(user.getName());
+		editActorForm.setSurname(user.getSurname());
+		editActorForm.setEmail(user.getEmail());
+		editActorForm.setPhone(user.getPhone());
+		editActorForm.setAddress(user.getPostalAddress());
+
+
+		
+		return editActorForm;
+	}
+
+	public User reconstruct(EditActorForm editActorForm, BindingResult binding) {
+		User user;
+		
+		user = this.findByPrincipal();
+		
+		user.setName(editActorForm.getName());
+		user.setSurname(editActorForm.getSurname());
+		user.setEmail(editActorForm.getEmail());
+		user.setId(editActorForm.getId());
+		user.setPostalAddress(editActorForm.getAddress());
+		user.setVersion(editActorForm.getVersion());
+		user.setPhone(editActorForm.getPhone());
+	
+		
+		this.validator.validate(editActorForm, binding);
+
+		return user;
 	}
 }

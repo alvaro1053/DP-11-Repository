@@ -155,9 +155,26 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
-					<security:authorize access="hasRole('USER')">
-						<li><a href="user/user/displayUserProfile.do"><spring:message code="master.page.chirp.displayUserProfile" /> </a></li>
-					</security:authorize>
+					
+						<security:authorize access="hasRole('CUSTOMER')">
+							<li><a href="customer/customer/displayProfile.do"><spring:message code="master.page.displayProfile" /> </a></li>
+							<li><a href="customer/customer/editProfile.do"><spring:message code="master.page.editUserProfile" /> </a></li>
+						</security:authorize>
+						
+						<security:authorize access="hasRole('AGENT')">
+							<li><a href="agent/agent/displayProfile.do"><spring:message code="master.page.displayProfile" /> </a></li>
+							<li><a href="agent/agent/editProfile.do"><spring:message code="master.page.editUserProfile" /> </a></li>
+						</security:authorize>
+						
+						<security:authorize access="hasRole('ADMIN')">
+							<li><a href="admin/admin/displayProfile.do"><spring:message code="master.page.displayProfile" /> </a></li>
+							<li><a href="admin/admin/editProfile.do"><spring:message code="master.page.editUserProfile" /> </a></li>
+						</security:authorize>
+						
+						<security:authorize access="hasRole('USER')">
+							<li><a href="user/user/displayUserProfile.do"><spring:message code="master.page.chirp.displayUserProfile" /> </a></li>
+							<li><a href="user/user/editProfile.do"><spring:message code="master.page.editUserProfile" /> </a></li>
+						</security:authorize>
 				</ul>
 			</li>
 		</security:authorize>

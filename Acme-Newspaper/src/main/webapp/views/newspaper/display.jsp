@@ -106,3 +106,10 @@
 
 
 </table>
+
+<jstl:if test="${advert != null}">
+	<spring:message code ="newspaper.imageBannerNotFound" var = "imageBannerNotFound"></spring:message>
+	<a href="${advert.targetPageURL}">
+		<img src="${advert.bannerURL}" alt="${imageBanner}">
+	</a>
+</jstl:if>

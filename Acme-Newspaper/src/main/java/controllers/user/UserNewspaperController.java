@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import controllers.AbstractController;
 
+import domain.Advertisement;
 import domain.Article;
 import domain.Newspaper;
 import domain.User;
@@ -85,8 +86,15 @@ public class UserNewspaperController extends AbstractController{
 			Collection<Article> articles;
 			final User principal = this.userService.findByPrincipal();
 			final String uri = "/user";
+			
+			Advertisement advertChoosen = null;
+			
+			
 
 			newspaper = this.newspaperService.findOne(newspaperId);
+			
+			advertChoosen = this.newspaperService.findRandomAdvert(newspaper);
+			
 			articles = this.articleService.articlesOfNewspaper(newspaperId);
 
 
@@ -95,6 +103,8 @@ public class UserNewspaperController extends AbstractController{
 			result.addObject("newspaper", newspaper);
 			result.addObject("uri", uri);
 			result.addObject("principal", principal);
+			result.addObject("advert", advertChoosen);
+			
 			return result;
 
 		}

@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
 
 import javax.transaction.Transactional;
 
@@ -281,6 +283,23 @@ public class NewspaperService {
 		Collection<Newspaper> res = this.newspaperRepository.selectSubscribedNewspapers(principal.getId());
 		return res;
 		
+	}
+
+	public Advertisement findRandomAdvert(Newspaper newspaper) {
+		Advertisement result = null;
+		List<Advertisement> adverts = new ArrayList<Advertisement>();
+		adverts = (List<Advertisement>) newspaper.getAdverts();
+
+		if (adverts.size() >= 2) {
+			int selectedOne;
+			final int limit = adverts.size();
+			final Random rand = new Random();
+			selectedOne = rand.nextInt(limit);
+			result = adverts.get(selectedOne);
+		} else if (adverts.size() == 1)
+			result = adverts.get(0);
+
+		return result;
 	}
 
 }

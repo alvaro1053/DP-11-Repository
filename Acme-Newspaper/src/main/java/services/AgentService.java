@@ -15,6 +15,7 @@ import domain.Advertisement;
 import domain.Agent;
 import domain.MailMessage;
 import forms.ActorForm;
+import forms.EditActorForm;
 
 import repositories.AgentRepository;
 import security.Authority;
@@ -119,6 +120,38 @@ public class AgentService {
 	public Agent findOne(int agentId) {
 		return this.agentRepository.findOne(agentId);
 	}
+
+	public Agent reconstruct(EditActorForm editActorForm, BindingResult binding) {
+		Agent agent;
+		agent = this.findByPrincipal();
+		
+		agent.setName(editActorForm.getName());
+		agent.setSurname(editActorForm.getSurname());
+		agent.setEmail(editActorForm.getEmail());
+		agent.setId(editActorForm.getId());
+		agent.setPostalAddress(editActorForm.getAddress());
+		agent.setVersion(editActorForm.getVersion());
+		agent.setPhone(editActorForm.getPhone());
+	
+		
+		this.validator.validate(editActorForm, binding);
+
+		return agent;
+	}
+
+	public EditActorForm construct(Agent agent, EditActorForm editActorForm) {
+		editActorForm.setId(agent.getId());
+		editActorForm.setVersion(agent.getVersion());
+		editActorForm.setName(agent.getName());
+		editActorForm.setSurname(agent.getSurname());
+		editActorForm.setEmail(agent.getEmail());
+		editActorForm.setPhone(agent.getPhone());
+		editActorForm.setAddress(agent.getPostalAddress());
+
+		return editActorForm;
+	}
+	
+	
 	
 	
 }

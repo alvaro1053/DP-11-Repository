@@ -30,5 +30,10 @@
 		<put-attribute name="title" value="Display user" />
 		<put-attribute name="body" value="/views/user/display.jsp" />
 	</definition>
+	
+	<definition name="user/edit" extends="master.page">	
+		<put-attribute name="title" value="Edit personal profile" />
+		<put-attribute name="body" value="/views/user/edit.jsp" />
+	</definition>
 		
 </tiles-definitions>
