@@ -92,7 +92,7 @@
 		<security:intercept-url pattern="/user/user/list.do" access="hasRole('USER')" /> 
 		<security:intercept-url pattern="/user/display.do" access="permitAll" /> 
 		<security:intercept-url pattern="/user/user/display.do" access="hasRole('USER')" /> 
-		
+		<security:intercept-url pattern="/user/customer/display.do" access="hasRole('CUSTOMER')" /> 
 		
 		<!-- article -->
 		<security:intercept-url pattern="/article/display.do" access="permitAll" /> 

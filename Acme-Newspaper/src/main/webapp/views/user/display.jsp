@@ -76,7 +76,7 @@
 <jstl:when test="${not empty articles}"> 
 <ul>
 <jstl:forEach items="${articles}" var="article">
-<li> <jstl:out value="${article.title}"/> &nbsp; (<a href="${uri}?articleId=${article.id}"> ${showArticle} </a>) </li>
+<li> <jstl:out value="${article.title}"/> &nbsp; (<a href="article${uri}/display.do?articleId=${article.id}"> ${showArticle} </a>) </li>
 </jstl:forEach>
 </ul> 
 </jstl:when>
