@@ -13,7 +13,7 @@ import org.springframework.util.Assert;
 import repositories.FolderRepository;
 import domain.Actor;
 import domain.Folder;
-import domain.Message;
+import domain.MailMessage;
 
 @Service
 @Transactional
@@ -40,10 +40,10 @@ public class FolderService {
 	public Folder create() {
 		Folder result;
 		Actor principal;
-		Collection<Message> messages;
+		Collection<MailMessage> messages;
 		Collection<Folder> childFolders;
 
-		messages = new ArrayList<Message>();
+		messages = new ArrayList<MailMessage>();
 		childFolders = new ArrayList<Folder>();
 
 		principal = this.actorService.findByPrincipal();
@@ -61,7 +61,7 @@ public class FolderService {
 	public Folder save(final Folder folder) {
 		Folder result;
 		Actor principal;
-		Collection<Message> messages;
+		Collection<MailMessage> messages;
 		Collection<Folder> childFolders;
 
 		principal = this.actorService.findByPrincipal();
@@ -71,7 +71,7 @@ public class FolderService {
 			
 			Assert.isTrue(folder.getName() != "");
 			folder.setIsSystem(false);
-			messages = new ArrayList<Message>();
+			messages = new ArrayList<MailMessage>();
 			folder.setMessages(messages);
 			childFolders = new ArrayList<Folder>();
 			folder.setChildFolders(childFolders);
@@ -145,7 +145,7 @@ public class FolderService {
 		List<Folder> result;
 		List<String> names;
 		Collection<Folder> childFolders;
-		Collection<Message> messages;
+		Collection<MailMessage> messages;
 		Folder saved;
 
 		names = new ArrayList<String>();
@@ -163,7 +163,7 @@ public class FolderService {
 			folder.setParentFolder(null);
 			childFolders = new ArrayList<Folder>();
 			folder.setChildFolders(childFolders);
-			messages = new ArrayList<Message>();
+			messages = new ArrayList<MailMessage>();
 			folder.setMessages(messages);
 			saved = this.folderRepository.save(folder);
 			Assert.notNull(saved);

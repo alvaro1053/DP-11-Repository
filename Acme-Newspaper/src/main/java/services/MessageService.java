@@ -12,7 +12,7 @@ import repositories.MessageRepository;
 import domain.Actor;
 import domain.Admin;
 import domain.Folder;
-import domain.Message;
+import domain.MailMessage;
 
 @Service
 @Transactional
@@ -42,14 +42,14 @@ public class MessageService {
 	}
 
 	// Simple CRUD methods
-	public Message create() {
-		Message result;
+	public MailMessage create() {
+		MailMessage result;
 		Actor principal;
 
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
 
-		result = new Message();
+		result = new MailMessage();
 		result.setSender(principal);
 		result.setFolder(this.folderService.findOutBoxFolderActor(principal));
 		result.setMoment(new Date(System.currentTimeMillis() - 1));
@@ -58,14 +58,14 @@ public class MessageService {
 	}
 
 	// An actor who is authenticated must be able to exchange messages with other actors
-	public Message save(final Message message) {
-		Message result;
+	public MailMessage save(final MailMessage message) {
+		MailMessage result;
 		Actor principal;
 		Date moment;
 		boolean isSpam;
 		Collection<String> spamWords;
 		Folder folder;
-		Message copy;
+		MailMessage copy;
 
 		Assert.notNull(message);
 
@@ -106,7 +106,7 @@ public class MessageService {
 		result = this.messageRepository.save(message);
 		Assert.notNull(result);
 
-		copy = new Message();
+		copy = new MailMessage();
 		copy.setSubject(message.getSubject());
 		copy.setBody(message.getBody());
 		copy.setMoment(message.getMoment());
@@ -135,7 +135,7 @@ public class MessageService {
 
 	}
 
-	public void delete(final Message message) {
+	public void delete(final MailMessage message) {
 		Actor principal;
 		Folder folder;
 		Folder trashBox;
@@ -162,13 +162,13 @@ public class MessageService {
 
 	// Other business methods
 
-	public void move(final Message message, final Folder destination) {
+	public void move(final MailMessage message, final Folder destination) {
 
 		Actor principal;
 		Folder origin;
-		Collection<Message> updatedOriginFolder;
-		Collection<Message> updatedDestinationFolder;
-		Message m;
+		Collection<MailMessage> updatedOriginFolder;
+		Collection<MailMessage> updatedDestinationFolder;
+		MailMessage m;
 
 		Assert.notNull(message);
 		Assert.notNull(destination);
@@ -199,13 +199,13 @@ public class MessageService {
 
 	}
 
-	public void broadcast(final Message m) {
+	public void broadcast(final MailMessage m) {
 		Admin principle;
 		String subject, body, priority;
 		Collection<Actor> actors;
 		boolean isSpam;
 		Date currentMoment;
-		Message outboxMessage;
+		MailMessage outboxMessage;
 
 		Assert.notNull(m);
 
@@ -222,7 +222,7 @@ public class MessageService {
 		actors = this.actorService.findAll();
 		for (final Actor actor : actors)
 			if (!(actor instanceof Admin || actor.getName().equals("DELETED/BORRADO"))) {
-				final Message message = new Message();
+				final MailMessage message = new MailMessage();
 				message.setSubject(subject);
 				message.setBody(body);
 				message.setPriority(priority);
@@ -235,7 +235,7 @@ public class MessageService {
 			}
 
 		//mensaje guardado en el out box del admin que realizó el broadcast:
-		outboxMessage = new Message();
+		outboxMessage = new MailMessage();
 		outboxMessage.setSubject(subject);
 		outboxMessage.setBody(body);
 		outboxMessage.setPriority(priority);
@@ -249,8 +249,8 @@ public class MessageService {
 		this.messageRepository.save(outboxMessage);
 	}
 
-	public Message findOne(final int messageId) {
-		Message result;
+	public MailMessage findOne(final int messageId) {
+		MailMessage result;
 
 		result = this.messageRepository.findOne(messageId);
 		Assert.notNull(result);
@@ -258,10 +258,10 @@ public class MessageService {
 		return result;
 	}
 
-	public Message createAndSaveNotificationStatusApplicationChanged(final Actor actor, final String body, final Date moment) {
-		Message result;
+	public MailMessage createAndSaveNotificationStatusApplicationChanged(final Actor actor, final String body, final Date moment) {
+		MailMessage result;
 
-		result = new Message();
+		result = new MailMessage();
 		result.setSender(actor);
 		result.setRecipient(actor);
 		result.setPriority("NORMAL");

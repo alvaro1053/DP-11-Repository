@@ -118,19 +118,20 @@ public class ArticleService {
 	}
 
 	public void save(final Article article) {
+		Article result;
 		final Date momentNow = new Date(System.currentTimeMillis());
 
 		final User principal = this.userService.findByPrincipal();
 		Assert.notNull(principal);
-		
+
 		article.setMoment(new Date(System.currentTimeMillis() - 1));
-				
+
 		Assert.isTrue(article.getNewspaper().getPublicationDate().after(momentNow));
-		
-		this.articleRepository.save(article);
+
+		result = this.articleRepository.save(article);
 
 		final Collection<Article> update = new HashSet<>(principal.getArticles());
-		update.add(article);
+		update.add(result);
 		principal.setArticles(update);
 
 	}
@@ -161,6 +162,9 @@ public class ArticleService {
 			final User user = (User) principal;
 			articles = new HashSet<Article>(this.articleRepository.articlesPublished());
 			articles.addAll(user.getArticles());
+		}else if ((principal instanceof User) && (filter != "" || filter != null)){
+			articles = new HashSet<Article>(articles = this.articleRepository.findByFilter(filter));
+			articles.addAll(this.articleRepository.findByFilterByUser(filter, principal.getId()));		
 		} else if ((principal instanceof Admin) && (filter == "" || filter == null))
 			articles = this.articleRepository.findAll();
 		else if ((principal instanceof Customer || principal == null) && (filter == "" || filter == null))
@@ -181,15 +185,13 @@ public class ArticleService {
 	}
 
 	public Article reconstruct(final ArticleForm articleForm, final BindingResult binding) {
-		final Article result = create();
+		final Article result = this.create();
 		User principal;
 		List<String> photos;
 		Collection<String> tabooWords;
 
-
 		principal = this.userService.findByPrincipal();
-		photos = articleForm.getPhotosURL();
-		if (photos == null)
+		if (articleForm.getPhotosURL() == null)
 			photos = new ArrayList<>();
 		else
 			photos = new ArrayList<>(articleForm.getPhotosURL());
@@ -206,7 +208,7 @@ public class ArticleService {
 		result.setTabooWords(false);
 		result.setFollowUps(new ArrayList<FollowUp>());
 		result.setUser(principal);
-		
+
 		tabooWords = this.customisationService.findCustomisation().getTabooWords();
 		for (final String word : tabooWords) {
 			if (result.getTitle().toLowerCase().contains(word))
@@ -234,8 +236,10 @@ public class ArticleService {
 
 	public ArticleForm reconstructForm(final Article article) {
 		ArticleForm result;
+		List<String> photos;
 
-		result = createForm();
+		result = this.createForm();
+		photos = new ArrayList<>(article.getPhotosURL());
 
 		result.setId(article.getId());
 		result.setVersion(article.getVersion());
@@ -243,7 +247,7 @@ public class ArticleService {
 		result.setSummary(article.getSummary());
 		result.setBody(article.getBody());
 		result.setMoment(article.getMoment());
-		result.setPhotosURL(article.getPhotosURL());
+		result.setPhotosURL(photos);
 		result.setIsDraft(article.getIsDraft());
 		result.setNewspaper(article.getNewspaper());
 

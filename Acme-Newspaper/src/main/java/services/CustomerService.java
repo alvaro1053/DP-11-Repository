@@ -17,7 +17,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Customer;
-import domain.Message;
+import domain.MailMessage;
 import domain.Subscription;
 import domain.Volume;
 import forms.ActorForm;
@@ -49,8 +49,8 @@ public class CustomerService {
 		result = new Customer();
 		
 		result.setSubscriptions(new ArrayList<Subscription>());
-		result.setReceivedMessages(new ArrayList<Message>());
-		result.setSentMessages(new ArrayList<Message>());
+		result.setReceivedMessages(new ArrayList<MailMessage>());
+		result.setSentMessages(new ArrayList<MailMessage>());
 		result.setFolders(this.folderService.createSystemFolders());
 		result.setVolumesSubscribed(new ArrayList<Volume>());
 		
