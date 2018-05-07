@@ -125,7 +125,18 @@ public class FolderActorController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid final Folder folder, final BindingResult binding) {
 		ModelAndView result;
-
+		Actor principal;
+		
+		principal = this.actorService.findByPrincipal();
+		
+		for (Folder fold : principal.getFolders()){
+			if(fold.getName().equals(folder.getName())){
+				binding.rejectValue("name", "folder.name.exists");
+				result = this.createEditModelAndView(folder);
+				return result;
+			}
+		}
+		
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(folder);
 		else

@@ -270,4 +270,12 @@ public class ArticleService {
 
 		return result;
 	}
+	
+	public Collection<Article> articlesPublished(){
+		Collection<Article> result;
+		
+		result = this.articleRepository.articlesPublished();
+		
+		return result;
+	}
 }
