@@ -142,7 +142,7 @@
 	<spring:message code="newspaper.user"
 		var="userHeader" />
 	<display:column title="${userHeader}"  > 
-		<a href="user${uri}/display.do?userId=${row.user.id}">
+		<a href="user/display.do?userId=${row.user.id}">
 			<jstl:out value="${row.user.name} ${row.user.surname}"/>
 		</a>
 	</display:column>

@@ -49,7 +49,7 @@
 	<ul>
 		<jstl:forEach items="${row.newspapers}" var="newspaper"> 
 			 <li>
-				<a href="newspaper/display.do?newspaperId=${newspaper.id}">
+				<a href="newspaper${uri}/display.do?newspaperId=${newspaper.id}">
 					<jstl:out value="${newspaper.title}"/>
 				</a>
 			 </li>
@@ -62,7 +62,7 @@
 	<spring:message code="volume.user"
 		var="userHeader" />
 	<display:column title="${userHeader}"  > 
-		<a href="user${uri}/display.do?userId=${row.user.id}">
+		<a href="user/display.do?userId=${row.user.id}">
 			<jstl:out value="${row.user.name} ${row.user.surname}"/>
 		</a>
 	</display:column>

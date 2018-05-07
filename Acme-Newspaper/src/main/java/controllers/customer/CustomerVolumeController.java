@@ -14,30 +14,21 @@ import org.springframework.web.servlet.ModelAndView;
 
 import controllers.AbstractController;
 
-import domain.Article;
 import domain.Customer;
 import domain.Newspaper;
-import domain.Subscription;
+import domain.Volume;
 
-import services.ArticleService;
 import services.CustomerService;
-import services.NewspaperService;
-import services.SubscriptionService;
+import services.VolumeService;
 
 @Controller
-@RequestMapping("/newspaper/customer")
-public class CustomerNewspaperController extends AbstractController{
+@RequestMapping("/volume/customer")
+public class CustomerVolumeController extends AbstractController{
 
 	// Services
 
 	@Autowired
-	private NewspaperService	newspaperService;
-	
-	@Autowired
-	private ArticleService	articleService;
-	
-	@Autowired
-	private SubscriptionService	subscriptionService;
+	private VolumeService	volumeService;
 	
 	@Autowired
 	private CustomerService	customerService;
@@ -45,7 +36,7 @@ public class CustomerNewspaperController extends AbstractController{
 
 	// Constructors
 
-	public CustomerNewspaperController() {
+	public CustomerVolumeController() {
 		super();
 	}
 
@@ -53,25 +44,22 @@ public class CustomerNewspaperController extends AbstractController{
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(final String filter) {
 		ModelAndView result;
-		Collection<Newspaper> newspapers;
-		Collection<Subscription> subscritions;
+		Collection<Volume> volumes;
 		final Customer principal = this.customerService.findByPrincipal();
 		Boolean suscrito = false;
 		final String uri = "/customer";
-		newspapers = this.newspaperService.findByFilter(filter);
-		subscritions = this.subscriptionService.findAll();
-
+		volumes = this.volumeService.findAll();
 		
-		for(Subscription subs: subscritions){
-			if(principal.getSubscriptions().contains(subs)){
+		for(Volume vol: volumes){
+			if(principal.getVolumesSubscribed().contains(vol)){
 				suscrito = true;
 			}else{
 				suscrito = false;
 			}
 		}
 		
-		result = new ModelAndView("newspaper/list");
-		result.addObject("newspapers", newspapers);
+		result = new ModelAndView("volume/list");
+		result.addObject("volumes", volumes);
 		result.addObject("suscrito", suscrito);
 		result.addObject("principal",principal);
 		result.addObject("uri", uri);
@@ -80,34 +68,29 @@ public class CustomerNewspaperController extends AbstractController{
 
 	//Display
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int newspaperId) {
+	public ModelAndView display(@RequestParam final int volumeId) {
 		final ModelAndView result;
-		Newspaper newspaper;
-		Collection<Subscription> subscritions;
-		Collection<Article>articles;
+		Volume volume;
+		Collection<Newspaper>newspapers;
 		Boolean suscrito = false;
 		final Customer principal = this.customerService.findByPrincipal();
 		final String uri = "/customer";
 
-		newspaper = this.newspaperService.findOne(newspaperId);
-		articles = this.articleService.articlesOfNewspaper(newspaperId);
-		subscritions = this.subscriptionService.findAll();
+		volume = this.volumeService.findOne(volumeId);
+		newspapers = volume.getNewspapers();		
 		
-		
-		for(Subscription subs: subscritions){
-			if(principal.getSubscriptions().contains(subs)){
-				suscrito = true;
-			}else{
-				suscrito = false;
-			}
+		if(principal.getVolumesSubscribed().contains(volume)){
+			suscrito = true;
+		}else{
+			suscrito = false;
 		}
 		
 
 
-		result = new ModelAndView("newspaper/display");
-		result.addObject("articles", articles);
+		result = new ModelAndView("volume/display");
+		result.addObject("newspapers", newspapers);
 		result.addObject("suscrito", suscrito);
-		result.addObject("newspaper", newspaper);
+		result.addObject("volume", volume);
 		result.addObject("uri", uri);
 		result.addObject("principal", principal);
 		return result;

@@ -56,7 +56,7 @@
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="volume/list.do"><spring:message code="master.page.volume" /></a></li>
 		</security:authorize>
-		<security:authorize access="isAuthenticated()">
+		<security:authorize access="hasRole('USER') || hasRole('AGENT') || hasRole('ADMIN')">
 			<li><a class="fNiv" href="volume/list.do"><spring:message code="master.page.volume" /></a></li>
 		</security:authorize>
 		
@@ -76,6 +76,13 @@
 			<li><a class="fNiv" href="newspaper/customer/list.do"><spring:message code="master.page.newspaper" /></a></li>
 		</security:authorize>
 		
+		<security:authorize access="hasRole('CUSTOMER')">
+			<li><a class="fNiv" href="article/customer/list.do"><spring:message code="master.page.articles" /></a></li>
+		</security:authorize>
+		
+		<security:authorize access="hasRole('CUSTOMER')">
+			<li><a class="fNiv" href="volume/customer/list.do"><spring:message code="master.page.volume" /></a></li>
+		</security:authorize>
 		
 		<security:authorize access="hasRole('USER')">
 			<li><a href="chirp/user/create.do"><spring:message code="master.page.chirp.create" /> </a></li>
@@ -138,7 +145,7 @@
 			
 
 
-		<security:authorize access="isAnonymous() || hasRole('CUSTOMER')">
+		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="article/list.do"><spring:message code="master.page.articles" /></a></li>
 		</security:authorize>
 		

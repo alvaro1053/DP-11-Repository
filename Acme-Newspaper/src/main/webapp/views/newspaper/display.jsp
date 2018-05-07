@@ -20,6 +20,9 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<jsp:useBean id="now" class="java.util.Date"/>
+<jstl:choose>
+<jstl:when test="${newspaper.publicationDate < now}">
 
 <table class="displayStyle" >
 
@@ -67,7 +70,7 @@
 	<display:column title="${titleHeader}" sortable="true" >
 	<jstl:choose>
 		<jstl:when test="${suscrito == true || newspaper.isPrivate == false}">
-		<a href="article/display.do?articleId=${row.id}">
+		<a href="article${uri}/display.do?articleId=${row.id}">
 			<jstl:out value="${row.title}"/>
 		</a>
 		</jstl:when>
@@ -106,3 +109,9 @@
 
 
 </table>
+
+ </jstl:when>
+<jstl:otherwise>
+<spring:message code="newspaper.notPublished" />
+</jstl:otherwise>
+</jstl:choose>

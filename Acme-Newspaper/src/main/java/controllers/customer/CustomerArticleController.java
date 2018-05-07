@@ -16,23 +16,18 @@ import controllers.AbstractController;
 
 import domain.Article;
 import domain.Customer;
-import domain.Newspaper;
 import domain.Subscription;
 
 import services.ArticleService;
 import services.CustomerService;
-import services.NewspaperService;
 import services.SubscriptionService;
 
 @Controller
-@RequestMapping("/newspaper/customer")
-public class CustomerNewspaperController extends AbstractController{
+@RequestMapping("/article/customer")
+public class CustomerArticleController extends AbstractController{
 
 	// Services
 
-	@Autowired
-	private NewspaperService	newspaperService;
-	
 	@Autowired
 	private ArticleService	articleService;
 	
@@ -45,23 +40,23 @@ public class CustomerNewspaperController extends AbstractController{
 
 	// Constructors
 
-	public CustomerNewspaperController() {
+	public CustomerArticleController() {
 		super();
 	}
-
+	
 	// Listing
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(final String filter) {
 		ModelAndView result;
-		Collection<Newspaper> newspapers;
+		Collection<Article> articles;
 		Collection<Subscription> subscritions;
 		final Customer principal = this.customerService.findByPrincipal();
 		Boolean suscrito = false;
 		final String uri = "/customer";
-		newspapers = this.newspaperService.findByFilter(filter);
+		articles = this.articleService.findByFilter(filter);
 		subscritions = this.subscriptionService.findAll();
 
-		
+			
 		for(Subscription subs: subscritions){
 			if(principal.getSubscriptions().contains(subs)){
 				suscrito = true;
@@ -69,28 +64,26 @@ public class CustomerNewspaperController extends AbstractController{
 				suscrito = false;
 			}
 		}
-		
-		result = new ModelAndView("newspaper/list");
-		result.addObject("newspapers", newspapers);
-		result.addObject("suscrito", suscrito);
-		result.addObject("principal",principal);
-		result.addObject("uri", uri);
-		return result;
-	}	
+			
+			result = new ModelAndView("article/list");
+			result.addObject("articles", articles);
+			result.addObject("suscrito", suscrito);
+			result.addObject("principal",principal);
+			result.addObject("uri", uri);
+			return result;
+		}	
 
 	//Display
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int newspaperId) {
+	public ModelAndView display(@RequestParam final int articleId) {
 		final ModelAndView result;
-		Newspaper newspaper;
 		Collection<Subscription> subscritions;
-		Collection<Article>articles;
+		Article article;
 		Boolean suscrito = false;
 		final Customer principal = this.customerService.findByPrincipal();
 		final String uri = "/customer";
 
-		newspaper = this.newspaperService.findOne(newspaperId);
-		articles = this.articleService.articlesOfNewspaper(newspaperId);
+		article = this.articleService.findOne(articleId);
 		subscritions = this.subscriptionService.findAll();
 		
 		
@@ -101,13 +94,10 @@ public class CustomerNewspaperController extends AbstractController{
 				suscrito = false;
 			}
 		}
-		
 
-
-		result = new ModelAndView("newspaper/display");
-		result.addObject("articles", articles);
+		result = new ModelAndView("article/display");
+		result.addObject("article", article);
 		result.addObject("suscrito", suscrito);
-		result.addObject("newspaper", newspaper);
 		result.addObject("uri", uri);
 		result.addObject("principal", principal);
 		return result;

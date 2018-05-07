@@ -101,6 +101,8 @@
 		<security:intercept-url pattern="/article/user/display.do" access="hasRole('USER')" /> 
 		<security:intercept-url pattern="/article/user/edit.do" access="hasRole('USER')" /> 
 		<security:intercept-url pattern="/article/user/create.do" access="hasRole('USER')" /> 
+		<security:intercept-url pattern="/article/customer/list.do" access="hasRole('CUSTOMER')" /> 
+		<security:intercept-url pattern="/article/customer/display.do" access="hasRole('CUSTOMER')" /> 
 		<security:intercept-url pattern="/article/admin/list.do" access="hasRole('ADMIN')" /> 
 		<security:intercept-url pattern="/article/admin/display.do" access="hasRole('ADMIN')" /> 
 		<security:intercept-url pattern="/article/admin/delete.do" access="hasRole('ADMIN')" /> 
@@ -127,7 +129,8 @@
 		<security:intercept-url pattern="/volume/user/create.do" access="hasRole('USER')" /> 
 		<security:intercept-url pattern="/volume/user/edit.do" access="hasRole('USER')" /> 
 		<security:intercept-url pattern="/volume/user/display.do" access="hasRole('USER')" /> 
-		
+		<security:intercept-url pattern="/volume/customer/list.do" access="hasRole('CUSTOMER')" /> 
+		<security:intercept-url pattern="/volume/customer/display.do" access="hasRole('CUSTOMER')" /> 
 		
 		<!-- Advertisement -->
 		<security:intercept-url pattern="/advertisement/agent/**" access="hasRole('AGENT')" />

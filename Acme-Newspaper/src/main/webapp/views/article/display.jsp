@@ -23,7 +23,7 @@
 <jsp:useBean id="now" class="java.util.Date"/>
 
 <jstl:choose>
-<jstl:when test="${(article.newspaper.isPrivate == false && article.newspaper.publicationDate lt now) || (article.user.id == principal.id)}">
+<jstl:when test="${suscrito || article.newspaper.isPrivate == false || article.user.id == principal.id}">
 						
 <table class="displayStyle" >
 
