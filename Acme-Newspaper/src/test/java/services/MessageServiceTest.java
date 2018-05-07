@@ -8,7 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import domain.Actor;
 import domain.Folder;
-import domain.Message;
+import domain.MailMessage;
 
 import utilities.AbstractTest;
 
@@ -64,13 +64,13 @@ public class MessageServiceTest extends AbstractTest {
 			super.authenticate(username);
 			
 			Actor recipent = this.actorService.findOne(recipentId);
-			Message message = this.messageService.create();
+			MailMessage message = this.messageService.create();
 			message.setRecipient(recipent);
 			message.setSubject(messageSubject);
 			message.setBody(messageBody);
 			message.setPriority("NORMAL");
 			
-			Message result = this.messageService.save(message);
+			MailMessage result = this.messageService.save(message);
 			this.messageService.flush();
 			super.unauthenticate();
 			
@@ -124,7 +124,7 @@ public class MessageServiceTest extends AbstractTest {
 			super.authenticate(username);
 			
 			this.actorService.findByPrincipal();
-			Message message = this.messageService.create();
+			MailMessage message = this.messageService.create();
 			message.setSubject(messageSubject);
 			message.setBody(messageBody);
 			

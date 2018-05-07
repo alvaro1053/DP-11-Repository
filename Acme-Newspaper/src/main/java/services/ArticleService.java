@@ -161,6 +161,9 @@ public class ArticleService {
 			final User user = (User) principal;
 			articles = new HashSet<Article>(this.articleRepository.articlesPublished());
 			articles.addAll(user.getArticles());
+		}else if ((principal instanceof User) && (filter != "" || filter != null)){
+			articles = new HashSet<Article>(articles = this.articleRepository.findByFilter(filter));
+			articles.addAll(this.articleRepository.findByFilterByUser(filter, principal.getId()));		
 		} else if ((principal instanceof Admin) && (filter == "" || filter == null))
 			articles = this.articleRepository.findAll();
 		else if ((principal instanceof Customer || principal == null) && (filter == "" || filter == null))

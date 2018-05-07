@@ -18,7 +18,7 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Article;
 import domain.Chirp;
-import domain.Message;
+import domain.MailMessage;
 import domain.Newspaper;
 import domain.User;
 import forms.ActorForm;
@@ -56,8 +56,8 @@ public class UserService {
 		result.setFollowers(new ArrayList<User>());
 		result.setFollows(new ArrayList<User>());
 		result.setNewspapers(new ArrayList<Newspaper>());
-		result.setReceivedMessages(new ArrayList<Message>());
-		result.setSentMessages(new ArrayList<Message>());
+		result.setReceivedMessages(new ArrayList<MailMessage>());
+		result.setSentMessages(new ArrayList<MailMessage>());
 		result.setFolders(this.folderService.createSystemFolders());
 		
 		return result;

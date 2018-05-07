@@ -3,6 +3,7 @@ package services;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
@@ -78,14 +79,22 @@ public class NewspaperService {
 	
 	public Collection<Newspaper> findByFilter(final String filter) {
 		Actor actor = this.actorService.findByPrincipal();
-		Collection<Newspaper> newspapers = new ArrayList<Newspaper>();
+		Collection<Newspaper> newspapers = new HashSet<Newspaper>();
 		if(actor == null && filter == ""|| filter== null){
 			newspapers = this.newspaperRepository.publishedNewspapers();
 		}else if(actor instanceof Admin && filter == ""|| filter== null){
 			newspapers = this.newspaperRepository.findAll();
-		}else if(actor instanceof User && filter == ""|| filter== null){
-			newspapers = this.newspaperRepository.findByFilter(filter);
-		}else if(actor instanceof Customer && filter == ""|| filter== null){
+		}else if(actor instanceof User && (filter != ""|| filter!= null)){
+			User user = (User) actor;
+			newspapers = this.newspaperRepository.findByFilter(filter, user.getId());
+			newspapers.addAll(this.newspaperRepository.findByFilterPublished(filter));
+		}
+		else if(actor instanceof User && filter == ""|| filter == null){
+			User user = (User) actor;
+			newspapers = this.newspaperRepository.findByFilterPublished(filter);
+			newspapers.addAll(user.getNewspapers());
+		}
+		else if(actor instanceof Customer && filter == ""|| filter== null){
 			newspapers = this.newspaperRepository.publishedNewspapers();
 		}else{
 			newspapers = this.newspaperRepository.findByFilterPublished(filter);

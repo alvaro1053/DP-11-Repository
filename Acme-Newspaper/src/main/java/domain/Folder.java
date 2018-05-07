@@ -19,7 +19,7 @@ public class Folder extends DomainEntity {
 
 	private String				name;
 	private boolean				isSystem;
-	private Collection<Message>	messages;
+	private Collection<MailMessage>	messages;
 	private Folder				parentFolder;
 	private Collection<Folder>	childFolders;
 	
@@ -43,10 +43,10 @@ public class Folder extends DomainEntity {
 
 	@NotNull
 	@OneToMany(mappedBy = "folder")
-	public Collection<Message> getMessages() {
+	public Collection<MailMessage> getMessages() {
 		return this.messages;
 	}
-	public void setMessages(final Collection<Message> messages) {
+	public void setMessages(final Collection<MailMessage> messages) {
 		this.messages = messages;
 	}
 

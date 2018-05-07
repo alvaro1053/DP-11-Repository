@@ -30,8 +30,8 @@ public class Actor extends DomainEntity {
 	private String		phone;
 	private String		postalAddress;
 	private UserAccount	userAccount;
-	private Collection<Message>			sentMessages;
-	private Collection<Message>			receivedMessages;
+	private Collection<MailMessage>			sentMessages;
+	private Collection<MailMessage>			receivedMessages;
 	private Collection<Folder>			folders;
 
 
@@ -93,21 +93,21 @@ public class Actor extends DomainEntity {
 	
 	@NotNull
 	@OneToMany(mappedBy = "sender")
-	public Collection<Message> getSentMessages() {
+	public Collection<MailMessage> getSentMessages() {
 		return this.sentMessages;
 	}
 
-	public void setSentMessages(final Collection<Message> sentMessages) {
+	public void setSentMessages(final Collection<MailMessage> sentMessages) {
 		this.sentMessages = sentMessages;
 	}
 
 	@NotNull
 	@OneToMany(mappedBy = "recipient")
-	public Collection<Message> getReceivedMessages() {
+	public Collection<MailMessage> getReceivedMessages() {
 		return this.receivedMessages;
 	}
 
-	public void setReceivedMessages(final Collection<Message> receivedMessages) {
+	public void setReceivedMessages(final Collection<MailMessage> receivedMessages) {
 		this.receivedMessages = receivedMessages;
 	}
 	

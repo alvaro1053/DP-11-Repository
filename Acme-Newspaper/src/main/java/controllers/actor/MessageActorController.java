@@ -20,7 +20,7 @@ import services.MessageService;
 import controllers.AbstractController;
 import domain.Actor;
 import domain.Folder;
-import domain.Message;
+import domain.MailMessage;
 
 @Controller
 @RequestMapping("/message/actor")
@@ -51,11 +51,11 @@ public class MessageActorController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		final ModelAndView result;
-		Message mensaje;
+		MailMessage mailMessage;
 
-		mensaje = this.messageService.create();
+		mailMessage = this.messageService.create();
 
-		result = this.createEditModelAndView(mensaje);
+		result = this.createEditModelAndView(mailMessage);
 
 		return result;
 
@@ -66,65 +66,65 @@ public class MessageActorController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int messageId) {
 		ModelAndView result;
-		Message message;
+		MailMessage mailMessage;
 
-		message = this.messageService.findOne(messageId);
-		Assert.notNull(message);
-		result = this.createEditModelAndView(message);
+		mailMessage = this.messageService.findOne(messageId);
+		Assert.notNull(mailMessage);
+		result = this.createEditModelAndView(mailMessage);
 
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Message mensaje, final BindingResult binding) {
+	public ModelAndView save(@Valid final MailMessage mailMessage, final BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors())
-			result = this.createEditModelAndView(mensaje);
+			result = this.createEditModelAndView(mailMessage);
 		else
 			try {
-				this.messageService.save(mensaje);
+				this.messageService.save(mailMessage);
 				result = new ModelAndView("redirect:/folder/actor/list.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(mensaje, "message.commit.error");
+				result = this.createEditModelAndView(mailMessage, "message.commit.error");
 			}
 
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "move")
-	public ModelAndView move(@Valid final Message mensaje, final BindingResult binding) {
+	public ModelAndView move(@Valid final MailMessage mailMessage, final BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors())
-			result = this.createEditModelAndView(mensaje);
+			result = this.createEditModelAndView(mailMessage);
 		else
 			try {
-				this.messageService.move(mensaje, mensaje.getFolder());
+				this.messageService.move(mailMessage, mailMessage.getFolder());
 				result = new ModelAndView("redirect:/folder/actor/list.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(mensaje, "message.commit.error");
+				result = this.createEditModelAndView(mailMessage, "message.commit.error");
 			}
 
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(final Message mensaje, final BindingResult binding) {
+	public ModelAndView delete(final MailMessage mailMessage, final BindingResult binding) {
 		ModelAndView result;
 
 		try {
-			this.messageService.delete(mensaje);
+			this.messageService.delete(mailMessage);
 			result = new ModelAndView("redirect:/folder/actor/list.do");
 		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(mensaje, "message.commit.error");
+			result = this.createEditModelAndView(mailMessage, "message.commit.error");
 		}
 
 		return result;
 	}
 
 	//Ancillary methods
-	protected ModelAndView createEditModelAndView(final Message mensaje) {
+	protected ModelAndView createEditModelAndView(final MailMessage mensaje) {
 		ModelAndView result;
 
 		result = this.createEditModelAndView(mensaje, null);
@@ -132,7 +132,7 @@ public class MessageActorController extends AbstractController {
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final Message mensaje, final String messageCode) {
+	protected ModelAndView createEditModelAndView(final MailMessage mailMessage, final String messageCode) {
 		final ModelAndView result;
 		Date moment;
 		Folder folder;
@@ -144,25 +144,25 @@ public class MessageActorController extends AbstractController {
 
 		principal = this.actorService.findByPrincipal();
 
-		if (mensaje.getId() == 0)
+		if (mailMessage.getId() == 0)
 			permission = true;
 		else {
-			for (final Message mens : principal.getReceivedMessages())
-				if (mens.getId() == mensaje.getId()) {
+			for (final MailMessage mens : principal.getReceivedMessages())
+				if (mens.getId() == mailMessage.getId()) {
 					permission = true;
 					break;
 				}
 			if (!permission)
-				for (final Message mens : principal.getSentMessages())
-					if (mens.getId() == mensaje.getId()) {
+				for (final MailMessage mens : principal.getSentMessages())
+					if (mens.getId() == mailMessage.getId()) {
 						permission = true;
 						break;
 					}
 		}
 
-		moment = mensaje.getMoment();
-		folder = mensaje.getFolder();
-		sender = mensaje.getSender();
+		moment = mailMessage.getMoment();
+		folder = mailMessage.getFolder();
+		sender = mailMessage.getSender();
 		recipients = this.actorService.findAllMinusPrincipal();
 		folders = this.folderService.findAllByPrincipal();
 
@@ -170,7 +170,7 @@ public class MessageActorController extends AbstractController {
 		result.addObject("moment", moment);
 		result.addObject("folder", folder);
 		result.addObject("sender", sender);
-		result.addObject("mensaje", mensaje);
+		result.addObject("mailMessage", mailMessage);
 		result.addObject("recipients", recipients);
 		result.addObject("folders", folders);
 		result.addObject("requestURI", "message/actor/edit.do");
