@@ -211,6 +211,7 @@ public class NewspaperService {
 	}
 	
 	public Newspaper reconstruct (NewspaperForm newspaperForm, BindingResult binding){
+		final Date momentNow = new Date(System.currentTimeMillis());
 		Newspaper newspaper = this.create();
 		
 		newspaper.setTitle(newspaperForm.getTitle());
@@ -223,6 +224,8 @@ public class NewspaperService {
 		newspaper.setTabooWords(false);
 		
 		validator.validate(newspaperForm, binding);
+		if ((newspaperForm.getPublicationDate().before(momentNow)))
+			binding.rejectValue("publicationDate", "newspaper.pastPublicationDate");
 		return newspaper;
 	}
 

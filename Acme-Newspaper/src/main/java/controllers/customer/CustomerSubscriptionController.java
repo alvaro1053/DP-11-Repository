@@ -70,7 +70,7 @@ public class CustomerSubscriptionController extends AbstractController{
 		
 		result = createEditModelAndView(subscription);
 		}catch(Throwable oops){
-			result = new ModelAndView("redirect:../../newspaper/list.do");
+			result = new ModelAndView("redirect:../../newspaper/customer/list.do");
 			redir.addFlashAttribute("message", "newspaper.permision");
 		}
 		
@@ -93,7 +93,7 @@ public class CustomerSubscriptionController extends AbstractController{
 			
 			result = createEditModelAndViewOfVolume(subscription);
 			}catch(Throwable oops){
-				result = new ModelAndView("redirect:../../volume/list.do");
+				result = new ModelAndView("redirect:../../volume/customer/list.do");
 				redir.addFlashAttribute("message", "volume.permision");
 			}
 			
@@ -113,7 +113,7 @@ public class CustomerSubscriptionController extends AbstractController{
 		} else
 			try {
 				this.subscriptionService.save(subscription);
-				result = new ModelAndView("redirect:../../newspaper/list.do");
+				result = new ModelAndView("redirect:../../newspaper/customer/list.do");
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(subscriptionForm, "v.commit.error");
 			}
@@ -135,7 +135,7 @@ public class CustomerSubscriptionController extends AbstractController{
 				Volume volume = subscriptionForm.getVolume();
 				CreditCard creditCard = subscriptionForm.getCreditCard();
 				this.volumeService.subscribe(volume, creditCard);
-				result = new ModelAndView("redirect:../../volume/list.do");
+				result = new ModelAndView("redirect:../../volume/customer/list.do");
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndViewOfVolume(subscriptionForm,
 						"volume.commit.error");

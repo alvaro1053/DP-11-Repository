@@ -11,7 +11,7 @@ import domain.Article;
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Integer> {
 
-	@Query("select a from User u join u.newspapers n join n.articles a where n.publicationDate < CURRENT_TIMESTAMP and u.id=?1")
+	@Query("select a from User u join u.newspapers n join n.articles a where n.publicationDate < CURRENT_TIMESTAMP and a.user.id=?1")
 	Collection<Article> articlesPublishedByUser(int userId);
 	
 	@Query("select a from User u join u.newspapers n join n.articles a where n.publicationDate > CURRENT_TIMESTAMP and u.id=?1")

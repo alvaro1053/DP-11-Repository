@@ -64,7 +64,7 @@
 	<jsp:useBean id="now" class="java.util.Date"/>
 		
 		<jstl:choose>
-			<jstl:when test="${(row.newspaper.isPrivate == false && row.newspaper.publicationDate lt now) || (row.user.id == principal.id)}">
+			<jstl:when test="${suscrito ||(row.newspaper.isPrivate == false && row.newspaper.publicationDate lt now) || (row.user.id == principal.id)}">
 				<a href="article${uri}/display.do?articleId=${row.id}"><jstl:out value="${row.title}"></jstl:out></a>
 			</jstl:when>
 			<jstl:otherwise>

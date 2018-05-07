@@ -1,5 +1,5 @@
 
-package controllers;
+package controllers.customer;
 
 import java.util.Collection;
 
@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import controllers.AbstractController;
+
 import services.ArticleService;
 import services.UserService;
 import domain.Article;
@@ -17,8 +19,8 @@ import domain.Chirp;
 import domain.User;
 
 @Controller
-@RequestMapping("/user")
-public class UserController extends AbstractController {
+@RequestMapping("/user/customer")
+public class CustomerUserController extends AbstractController {
 
 	//Autowired
 	@Autowired
@@ -29,26 +31,8 @@ public class UserController extends AbstractController {
 
 
 	//Constructor
-	public UserController() {
+	public CustomerUserController() {
 		super();
-	}
-
-	//list
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list() {
-		final String uri = "";
-		ModelAndView result;
-		Collection<User> users;
-	
-
-		users = this.userService.findAll();
-
-		result = new ModelAndView("user/list");
-		result.addObject("users", users);
-		result.addObject("uri", uri);
-
-		
-		return result;
 	}
 
 	//Display
@@ -56,7 +40,7 @@ public class UserController extends AbstractController {
 	public ModelAndView display(@RequestParam final int userId) {
 		final ModelAndView result;
 		User user;
-		final String uri = "";
+		final String uri = "/customer";
 		final String requestURI = "user/display.do";
 		Collection<Article> articles;
 		Collection<Chirp> chirps;

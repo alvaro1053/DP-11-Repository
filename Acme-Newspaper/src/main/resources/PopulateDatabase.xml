@@ -270,7 +270,7 @@
 	
 	<property name="articles">
 	<list>
-	<ref bean="article2"/>
+	<ref bean="article3"/>
 	</list>
 	</property>
 	</bean>

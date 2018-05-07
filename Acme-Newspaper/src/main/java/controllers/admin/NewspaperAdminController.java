@@ -55,7 +55,6 @@ public class NewspaperAdminController extends AbstractController{
 			ModelAndView result;
 			Collection<Newspaper> newspapers = new ArrayList<Newspaper>();
 			final Admin principal = this.adminService.findByPrincipal();
-			final String uri = "/admin";
 			
 			if(filter== "" || filter ==null){
 				newspapers = this.newspaperService.findAll();
@@ -66,7 +65,6 @@ public class NewspaperAdminController extends AbstractController{
 			result = new ModelAndView("newspaper/list");
 			result.addObject("newspapers", newspapers);
 			result.addObject("principal",principal);
-			result.addObject("uri", uri);
 			return result;
 		}	
 		

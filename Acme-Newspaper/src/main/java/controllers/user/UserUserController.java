@@ -63,7 +63,7 @@ public class UserUserController extends AbstractController {
 		final User principal = this.userService.findByPrincipal();
 		User user;
 		String requestURI = "user/user/display.do";
-		String uri = "article/user/display.do";
+		String uri = "/user";
 		Collection<Article> articles;
 		Collection<Chirp> chirps;
 
@@ -98,7 +98,7 @@ public class UserUserController extends AbstractController {
 		String requestURI;
 		
 		requestURI = "user/user/displayUserProfile.do";
-		uri = "article/user/display.do";
+		uri = "/user";
 
 		principal = this.userService.findByPrincipal();
 
