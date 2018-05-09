@@ -2,11 +2,11 @@
 package forms;
 
 
+
+
+
 import javax.validation.constraints.Pattern;
 
-
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 
 
@@ -25,7 +25,7 @@ public class EditActorForm extends DomainEntity {
 
 
 
-	@NotBlank
+
 	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getName() {
 		return this.name;
@@ -34,7 +34,7 @@ public class EditActorForm extends DomainEntity {
 	public void setName(final String name) {
 		this.name = name;
 	}
-	@NotBlank
+
 	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getSurname() {
 		return this.surname;
@@ -44,8 +44,7 @@ public class EditActorForm extends DomainEntity {
 		this.surname = surname;
 	}
 
-	@NotBlank
-	@Email
+
 	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getEmail() {
 		return this.email;
@@ -60,7 +59,8 @@ public class EditActorForm extends DomainEntity {
 	public String getPhone() {
 		return this.phone;
 	}
-
+	
+	
 	public void setPhone(final String phones) {
 		this.phone = phones;
 	}

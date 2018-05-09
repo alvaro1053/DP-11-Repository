@@ -88,6 +88,10 @@
 			<li><a href="chirp/user/create.do"><spring:message code="master.page.chirp.create" /> </a></li>
 		</security:authorize>
 		
+		<security:authorize access="hasRole('USER')">
+			<li><a href="http://localhost:8080/chat"><spring:message code="master.page.chat" /> </a></li>
+		</security:authorize>
+		
 		<security:authorize access="hasRole('ADMIN')">
 		
 			<li><a class="fNiv"><spring:message	code="master.page.article" /></a>

@@ -139,8 +139,15 @@ public class UserUserController extends AbstractController {
 		ModelAndView result;
 		User user;
 		
-		user = this.userService.reconstruct(editActorForm, binding);
-		
+		if(!editActorForm.getName().isEmpty() && !editActorForm.getSurname().isEmpty() && !editActorForm.getEmail().isEmpty())
+			user = this.userService.reconstruct(editActorForm, binding);
+		else{
+			result = this.createEditModelAndView(editActorForm, "user.commit.error");
+			return result;
+		}
+			
+			
+			
 		if(binding.hasErrors()){
 			result = this.createEditModelAndView(editActorForm);
 		}else{

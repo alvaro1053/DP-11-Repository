@@ -59,6 +59,14 @@ public class AgentAgentController {
 			ModelAndView result;
 			Agent agent;
 			
+			if(!editActorForm.getName().isEmpty() && !editActorForm.getSurname().isEmpty() && !editActorForm.getEmail().isEmpty())
+				agent = this.agentService.reconstruct(editActorForm, binding);
+			else{
+				result = this.createEditModelAndView(editActorForm, "agent.commit.error");
+				return result;
+			}
+				
+			
 			agent = this.agentService.reconstruct(editActorForm, binding);
 			
 			if(binding.hasErrors()){

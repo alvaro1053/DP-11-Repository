@@ -62,7 +62,16 @@ public class CustomerCustomerController {
 		ModelAndView result;
 		Customer customer;
 		
+		if(!editActorForm.getName().isEmpty() && !editActorForm.getSurname().isEmpty() && !editActorForm.getEmail().isEmpty())
+			customer = this.customerService.reconstruct(editActorForm, binding);
+		else{
+			result = this.createEditModelAndView(editActorForm, "customer.commit.error");
+			return result;
+		}
+			
+		
 		customer = this.customerService.reconstruct(editActorForm, binding);
+		
 		
 		if(binding.hasErrors()){
 			result = this.createEditModelAndView(editActorForm);
