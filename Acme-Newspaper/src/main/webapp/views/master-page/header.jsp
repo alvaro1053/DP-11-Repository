@@ -15,7 +15,7 @@
 
 
 <div>
-	<a href="/Acme-Newspaper"><img src="https://i.imgur.com/Gonrz7s.png"  class="center" alt="Sample Co., Inc." /></a>
+	<a href="/Acme-Newspaper"><img src="https://i.imgur.com/Gonrz7s.png"  class="center" alt="Acme Newspaper Co., Inc." /></a>
 </div>
 
 <div>
