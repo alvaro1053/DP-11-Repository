@@ -56,18 +56,23 @@ public class AdminArticleController extends AbstractController {
 
 	//Display
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int articleId) {
-		final ModelAndView result;
+	public ModelAndView display(@RequestParam final int articleId, RedirectAttributes redir) {
+		ModelAndView result;
 		Article article;
 		Admin principal = this.adminService.findByPrincipal();
 		final String uri = "/admin";
 
+		try{
 		article = this.articleService.findOne(articleId);
 
 		result = new ModelAndView("article/display");
 		result.addObject("article", article);
 		result.addObject("uri", uri);
 		result.addObject("principal", principal);
+		} catch (Throwable oops){
+			result = new ModelAndView("redirect:/article/admin/list.do");	
+			redir.addFlashAttribute("message", "article.permission");
+		}
 		return result;
 
 	}

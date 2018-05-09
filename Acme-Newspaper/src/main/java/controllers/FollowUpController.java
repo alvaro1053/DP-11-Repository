@@ -27,6 +27,8 @@ public class FollowUpController {
 		ModelAndView result;
 		FollowUp followUp;
 		Date now;
+		
+		try{
 		followUp = this.followUpService.findOne(followUpId);
 		now = new Date();
 	
@@ -38,7 +40,10 @@ public class FollowUpController {
 			result = new ModelAndView("redirect:../article/list.do");
 			red.addFlashAttribute("message", "master.page.followUp.restricted");
 		}
-		
+		} catch (Throwable oops){
+			result = new ModelAndView("redirect:/article/list.do");	
+			red.addFlashAttribute("message", "article.permission");
+			}
 		return result;
 	}
 

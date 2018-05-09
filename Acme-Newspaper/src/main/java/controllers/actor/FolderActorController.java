@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import services.ActorService;
 import services.FolderService;
@@ -58,12 +59,13 @@ public class FolderActorController extends AbstractController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET, params = {
 		"folderId"
 	})
-	public ModelAndView list(@RequestParam final int folderId) {
-		final ModelAndView result;
+	public ModelAndView list(@RequestParam final int folderId, RedirectAttributes redir) {
+		ModelAndView result;
 		Folder currentFolder;
 		Collection<MailMessage> messages;
 		final Collection<Folder> folders;
 
+		try{
 		currentFolder = this.folderService.findOne(folderId);
 
 		folders = currentFolder.getChildFolders();
@@ -74,6 +76,10 @@ public class FolderActorController extends AbstractController {
 		result.addObject("currentFolder", currentFolder);
 		result.addObject("messages", messages);
 
+		} catch (Throwable oops){
+			result = new ModelAndView("redirect:/folder/actor/list.do");	
+			redir.addFlashAttribute("message", "article.permission");
+		}
 		return result;
 
 	}

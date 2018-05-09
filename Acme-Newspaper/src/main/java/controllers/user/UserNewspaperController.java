@@ -80,8 +80,8 @@ public class UserNewspaperController extends AbstractController{
 	
 	//Display
 		@RequestMapping(value = "/display", method = RequestMethod.GET)
-		public ModelAndView display(@RequestParam final int newspaperId) {
-			final ModelAndView result;
+		public ModelAndView display(@RequestParam final int newspaperId, RedirectAttributes redir) {
+			ModelAndView result;
 			Newspaper newspaper;
 			Collection<Article> articles;
 			final User principal = this.userService.findByPrincipal();
@@ -90,7 +90,7 @@ public class UserNewspaperController extends AbstractController{
 			Advertisement advertChoosen = null;
 			
 			
-
+			try{
 			newspaper = this.newspaperService.findOne(newspaperId);
 			
 			advertChoosen = this.newspaperService.findRandomAdvert(newspaper);
@@ -104,7 +104,10 @@ public class UserNewspaperController extends AbstractController{
 			result.addObject("uri", uri);
 			result.addObject("principal", principal);
 			result.addObject("advert", advertChoosen);
-			
+			} catch (Throwable oops){
+				result = new ModelAndView("redirect:/newspaper/user/list.do");	
+				redir.addFlashAttribute("message", "article.permission");
+			}
 			return result;
 
 		}

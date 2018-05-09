@@ -78,12 +78,13 @@ public class UserArticleController extends AbstractController {
 
 	//Display
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int articleId) {
-		final ModelAndView result;
+	public ModelAndView display(@RequestParam final int articleId, RedirectAttributes redir) {
+		ModelAndView result;
 		Article article;
 		final User principal = this.userService.findByPrincipal();
 		final String uri = "/user";
 
+		try{
 		article = this.articleService.findOne(articleId);
 
 		
@@ -91,6 +92,10 @@ public class UserArticleController extends AbstractController {
 		result.addObject("article", article);
 		result.addObject("uri", uri);
 		result.addObject("principal", principal);
+		} catch (Throwable oops){
+			result = new ModelAndView("redirect:/article/list.do");	
+			redir.addFlashAttribute("message", "article.permission");
+		}
 		return result;
 
 	}

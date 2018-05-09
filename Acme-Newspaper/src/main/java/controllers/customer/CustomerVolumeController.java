@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import controllers.AbstractController;
 
@@ -68,14 +69,15 @@ public class CustomerVolumeController extends AbstractController{
 
 	//Display
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int volumeId) {
-		final ModelAndView result;
+	public ModelAndView display(@RequestParam final int volumeId, RedirectAttributes redir) {
+		ModelAndView result;
 		Volume volume;
 		Collection<Newspaper>newspapers;
 		Boolean suscrito = false;
 		final Customer principal = this.customerService.findByPrincipal();
 		final String uri = "/customer";
 
+		try{
 		volume = this.volumeService.findOne(volumeId);
 		newspapers = volume.getNewspapers();		
 		
@@ -93,6 +95,10 @@ public class CustomerVolumeController extends AbstractController{
 		result.addObject("volume", volume);
 		result.addObject("uri", uri);
 		result.addObject("principal", principal);
+		} catch (Throwable oops){
+			result = new ModelAndView("redirect:/volume/customer/list.do");	
+			redir.addFlashAttribute("message", "article.permission");
+		}
 		return result;
 
 	}

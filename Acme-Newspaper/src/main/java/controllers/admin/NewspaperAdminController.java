@@ -55,6 +55,7 @@ public class NewspaperAdminController extends AbstractController{
 			ModelAndView result;
 			Collection<Newspaper> newspapers = new ArrayList<Newspaper>();
 			final Admin principal = this.adminService.findByPrincipal();
+			final String uri = "/admin";
 			
 			if(filter== "" || filter ==null){
 				newspapers = this.newspaperService.findAll();
@@ -65,19 +66,21 @@ public class NewspaperAdminController extends AbstractController{
 			result = new ModelAndView("newspaper/list");
 			result.addObject("newspapers", newspapers);
 			result.addObject("principal",principal);
+			result.addObject("uri", uri);
 			return result;
 		}	
 		
 		//Display
 				@RequestMapping(value = "/display", method = RequestMethod.GET)
-				public ModelAndView display(@RequestParam final int newspaperId) {
-					final ModelAndView result;
+				public ModelAndView display(@RequestParam final int newspaperId, RedirectAttributes redir) {
+					ModelAndView result;
 					Newspaper newspaper;
 					Collection<Article> articles;
 					Advertisement advertChoosen;
 					final Admin principal = this.adminService.findByPrincipal();
 					final String uri = "/admin";
 
+					try{
 					newspaper = this.newspaperService.findOne(newspaperId);
 					articles = this.articleService.articlesOfNewspaper(newspaperId);
 					advertChoosen = this.newspaperService.findRandomAdvert(newspaper);
@@ -88,6 +91,10 @@ public class NewspaperAdminController extends AbstractController{
 					result.addObject("uri", uri);
 					result.addObject("principal", principal);
 					result.addObject("advert", advertChoosen);
+					} catch (Throwable oops){
+						result = new ModelAndView("redirect:/newspaper/admin/list.do");	
+						redir.addFlashAttribute("message", "article.permission");
+					}
 					return result;
 
 				}

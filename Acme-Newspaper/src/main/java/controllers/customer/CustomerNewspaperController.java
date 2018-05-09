@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import controllers.AbstractController;
 
@@ -81,8 +82,8 @@ public class CustomerNewspaperController extends AbstractController{
 
 	//Display
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int newspaperId) {
-		final ModelAndView result;
+	public ModelAndView display(@RequestParam final int newspaperId, RedirectAttributes redir) {
+		ModelAndView result;
 		Newspaper newspaper;
 		Collection<Subscription> subscritions;
 		Collection<Article>articles;
@@ -91,6 +92,7 @@ public class CustomerNewspaperController extends AbstractController{
 		final Customer principal = this.customerService.findByPrincipal();
 		final String uri = "/customer";
 
+		try{
 		newspaper = this.newspaperService.findOne(newspaperId);
 		articles = this.articleService.articlesOfNewspaper(newspaperId);
 		subscritions = this.subscriptionService.findAll();
@@ -113,6 +115,10 @@ public class CustomerNewspaperController extends AbstractController{
 		result.addObject("uri", uri);
 		result.addObject("principal", principal);
 		result.addObject("advert", advertChoosen);
+		} catch (Throwable oops){
+			result = new ModelAndView("redirect:/newspaper/customer/list.do");	
+			redir.addFlashAttribute("message", "article.permission");
+		}
 		
 		return result;
 

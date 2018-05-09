@@ -49,12 +49,13 @@ public class UserVolumeController extends AbstractController {
 
 	//Display
 		@RequestMapping(value = "/display", method = RequestMethod.GET)
-		public ModelAndView display(@RequestParam final int volumeId) {
-			final ModelAndView result;
+		public ModelAndView display(@RequestParam final int volumeId, RedirectAttributes redir) {
+			ModelAndView result;
 			Volume volume;
 			Collection<Newspaper> newspapers;
 			final String uri = "/user";
 
+			try{
 			volume = this.volumeService.findOne(volumeId);
 			newspapers = volume.getNewspapers();
 
@@ -63,6 +64,10 @@ public class UserVolumeController extends AbstractController {
 			result.addObject("newspapers", newspapers);
 			result.addObject("uri", uri);
 			result.addObject("principal", null);
+			} catch (Throwable oops){
+				result = new ModelAndView("redirect:/user/list.do");	
+				redir.addFlashAttribute("message", "article.permission");
+			}
 			return result;
 
 	}
