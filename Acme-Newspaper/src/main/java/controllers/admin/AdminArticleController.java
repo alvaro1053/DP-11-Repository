@@ -17,6 +17,7 @@ import controllers.AbstractController;
 import services.AdminService;
 import services.ArticleService;
 import domain.Admin;
+import domain.Advertisement;
 import domain.Article;
 
 @Controller
@@ -59,15 +60,23 @@ public class AdminArticleController extends AbstractController {
 	public ModelAndView display(@RequestParam final int articleId) {
 		final ModelAndView result;
 		Article article;
-		Admin principal = this.adminService.findByPrincipal();
-		final String uri = "/admin";
-
+		Admin principal;
+		Advertisement advertChoosen;
+		String uri;
+		
+		
+		principal = this.adminService.findByPrincipal();
+		uri = "/admin";
 		article = this.articleService.findOne(articleId);
 
+		advertChoosen = this.articleService.findRandomAdvert(article);
+		
+		
 		result = new ModelAndView("article/display");
 		result.addObject("article", article);
 		result.addObject("uri", uri);
 		result.addObject("principal", principal);
+		result.addObject("advert", advertChoosen);
 		return result;
 
 	}

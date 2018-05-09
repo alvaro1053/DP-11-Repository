@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+ * PopulateDatabase.xml
+ *
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- User accounts -->
+
+	<bean id="userAccount1" class="security.UserAccount">
+		<property name="username" value="admin" />
+		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+
+	<!-- Admin -->
+	
+	<bean class="domain.Admin" id="admin1">
+	<property name="name" value="Manuel" />
+	<property name="surname" value="Bartual Moreno" />
+	<property name="email" value="admintodopoderoso@email.com"/>
+	<property name="phone" value=""/>	
+	<property name="postalAddress" value=""/>
+	
+	<property name="userAccount" ref="userAccount1"/>
+	
+		<property name="folders">
+	<list>
+	<ref bean="folder1"/>
+	<ref bean="folder11"/>
+	<ref bean="folder19"/>
+	<ref bean="folder27"/>
+	<ref bean="folder35"/>
+	</list>
+	</property>
+	<property name="sentMessages">
+	<list>
+	</list>
+	</property>
+	<property name="receivedMessages">
+	<list>
+	</list>
+	</property>
+	
+	</bean>
+	
+
+<!-- Customisation -->
+	<bean class="domain.Customisation" id="customisation">
+	<property name="tabooWords" >
+	<list>
+	<value>sex</value>
+	<value>sexo</value>
+	<value>viagra</value>
+	<value>cialis</value>
+	</list>
+	</property>
+</bean>
+
+
+<!-- Folders -->
+
+<bean class="domain.Folder" id="folder1">
+<property name="name" value="in box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder11">
+<property name="name" value="out box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder19">
+<property name="name" value="notification box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder27">
+<property name="name" value="trash box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+
+<bean class="domain.Folder" id="folder35">
+<property name="name" value="spam box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+
+</beans>
