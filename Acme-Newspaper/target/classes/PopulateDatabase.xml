@@ -128,8 +128,6 @@
 		<property name="folders">
 	<list>
 	<ref bean="folder1"/>
-	<ref bean="folder9"/>
-	<ref bean="folder10"/>
 	<ref bean="folder11"/>
 	<ref bean="folder19"/>
 	<ref bean="folder27"/>
@@ -272,7 +270,7 @@
 	
 	<property name="articles">
 	<list>
-	<ref bean="article2"/>
+	<ref bean="article3"/>
 	</list>
 	</property>
 	</bean>
@@ -364,6 +362,12 @@
 	<ref bean="subscription1"/>
 	</list>
 	</property>
+	
+	<property name="volumesSubscribed">
+	<list>
+	<ref bean="volume1"/>
+	</list>
+	</property>
 
 </bean>
 
@@ -395,6 +399,11 @@
 	</property>
 	
 	<property name="subscriptions">
+	<list>
+	</list>
+	</property>
+	
+	<property name="volumesSubscribed">
 	<list>
 	</list>
 	</property>
@@ -431,6 +440,8 @@
 	
 	<property name="advertisements">
 	<list>
+		<ref bean = "advertisement1"></ref>
+		<ref bean = "advertisement3"></ref>
 	</list>
 	</property>
 	
@@ -465,8 +476,9 @@
 	</property>
 	
 	<property name="advertisements">
-	<list>
-	</list>
+		<list>
+				<ref bean = "advertisement2"></ref>
+		</list>
 	</property>
 
 
@@ -499,6 +511,12 @@
 	<ref bean="volume1"/>
 	</list>
 	</property>
+	<property name="adverts">
+		<list>
+			<ref bean = "advertisement1"/>
+			<ref bean = "advertisement3"/>
+		</list>
+	</property>
 
 </bean>
 
@@ -528,6 +546,12 @@
 	<list>
 	<ref bean="volume1"/>
 	</list>
+	</property>
+	
+		<property name="adverts">
+			<list>
+				<ref bean = "advertisement2"/>
+			</list>
 	</property>
 
 </bean>
@@ -559,6 +583,11 @@
 	</list>
 	</property>
 	
+	<property name="adverts">
+		<list>
+		</list>
+	</property>
+	
 </bean>
 
 <!-- VOLUME -->
@@ -574,6 +603,12 @@
 		<ref bean="newspaper2"/>
 	</list>
 	</property>
+	
+	<property name="customersSubscribed">
+	<list>
+		<ref bean="customer1"/>
+	</list>
+	</property>
 
 </bean>
 
@@ -586,6 +621,11 @@
 	<property name="newspapers">
 	<list>
 		<ref bean="newspaper3"/>
+	</list>
+	</property>
+	
+	<property name="customersSubscribed">
+	<list>
 	</list>
 	</property>
 
@@ -714,7 +754,7 @@
 	
 	<bean class="domain.FollowUp" id="followUp3">
 	<property name="title" value="Se ha vuelto a romper" />
-	<property name="publicationDate" value="2018/05/02 09:21"/>
+	<property name="publicationDate" value="2018/07/02 09:21"/>
 	<property name="summary" value="La mesa de messi se le ha vuelto a romper"/>
 	<property name="text" value="Cuando creíamos todos que la mesa estaba arreglada al parecer la pobre..."/>
 <property name="photosURL">
@@ -778,7 +818,40 @@
 	<property name="targetPageURL" value="https://www.telepizza.es/productos/pizzas"/>
 	<property name="creditCard" ref="creditCard1"/>
 	<property name="agent" ref="agent1"/>
-	
+	<property name="newspapers">
+		<list>
+			<ref bean="newspaper1"/>
+		</list>
+	</property>
+	<property name="tabooWords" value="false"/>
+</bean>
+
+<bean class="domain.Advertisement" id="advertisement2">
+	<property name="title" value="anuncio2 sex" />
+	<property name="bannerURL" value="https://cdn.adguard.com/public/Adguard/En/Articles/fake-popup.png"/>
+	<property name="targetPageURL" value="https://adguard.com/en/article/popups-blocker.html"/>
+	<property name="creditCard" ref="creditCard2"/>
+	<property name="agent" ref="agent2"/>
+	<property name="newspapers">
+		<list>
+			<ref bean="newspaper2"/>
+		</list>
+	</property>
+	<property name="tabooWords" value="true"/>
+</bean>
+
+<bean class="domain.Advertisement" id="advertisement3">
+	<property name="title" value="anuncio3" />
+	<property name="bannerURL" value="http://www.nyx.net/~cmeador/public/snakesonmyplane.jpg"/>
+	<property name="targetPageURL" value="https://www.reddit.com/r/fakebadads/"/>
+	<property name="creditCard" ref="creditCard1"/>
+	<property name="agent" ref="agent1"/>
+	<property name="newspapers">
+		<list>
+			<ref bean="newspaper1"/>
+		</list>
+	</property>
+	<property name="tabooWords" value="false"/>
 </bean>
 
 

@@ -12,6 +12,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -29,15 +30,9 @@ public class NewspaperForm extends DomainEntity {
 	private Boolean				isPrivate;
 	private Date				publicationDate;
 	
-	public NewspaperForm (Newspaper n){
-		this.title = n.getTitle();
-		this.description = n.getDescription();
-		this.pictureURL = n.getPictureURL();
-		this.isPrivate = n.getIsPrivate();
-	}
-	
 	
 	public NewspaperForm() {
+		super();
 	}
 
 
@@ -52,6 +47,7 @@ public class NewspaperForm extends DomainEntity {
 	}
 	
 	@NotBlank
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getTitle() {
 		return title;
 	}
@@ -60,6 +56,7 @@ public class NewspaperForm extends DomainEntity {
 	}
 	
 	@NotBlank
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getDescription() {
 		return description;
 	}

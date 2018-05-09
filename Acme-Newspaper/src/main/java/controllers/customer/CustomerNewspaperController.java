@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import controllers.AbstractController;
 
+import domain.Advertisement;
 import domain.Article;
 import domain.Customer;
 import domain.Newspaper;
@@ -86,6 +87,7 @@ public class CustomerNewspaperController extends AbstractController{
 		Collection<Subscription> subscritions;
 		Collection<Article>articles;
 		Boolean suscrito = false;
+		Advertisement advertChoosen;
 		final Customer principal = this.customerService.findByPrincipal();
 		final String uri = "/customer";
 
@@ -102,7 +104,7 @@ public class CustomerNewspaperController extends AbstractController{
 			}
 		}
 		
-
+		advertChoosen = this.newspaperService.findRandomAdvert(newspaper);
 
 		result = new ModelAndView("newspaper/display");
 		result.addObject("articles", articles);
@@ -110,6 +112,8 @@ public class CustomerNewspaperController extends AbstractController{
 		result.addObject("newspaper", newspaper);
 		result.addObject("uri", uri);
 		result.addObject("principal", principal);
+		result.addObject("advert", advertChoosen);
+		
 		return result;
 
 	}

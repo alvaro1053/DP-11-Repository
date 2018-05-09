@@ -6,8 +6,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.validation.Valid;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import controllers.AbstractController;
 
+import domain.Advertisement;
 import domain.Article;
 import domain.Newspaper;
 import domain.User;
@@ -87,8 +86,15 @@ public class UserNewspaperController extends AbstractController{
 			Collection<Article> articles;
 			final User principal = this.userService.findByPrincipal();
 			final String uri = "/user";
+			
+			Advertisement advertChoosen = null;
+			
+			
 
 			newspaper = this.newspaperService.findOne(newspaperId);
+			
+			advertChoosen = this.newspaperService.findRandomAdvert(newspaper);
+			
 			articles = this.articleService.articlesOfNewspaper(newspaperId);
 
 
@@ -97,6 +103,8 @@ public class UserNewspaperController extends AbstractController{
 			result.addObject("newspaper", newspaper);
 			result.addObject("uri", uri);
 			result.addObject("principal", principal);
+			result.addObject("advert", advertChoosen);
+			
 			return result;
 
 		}
@@ -116,7 +124,7 @@ public class UserNewspaperController extends AbstractController{
 	// Edition ----------------------------------------------------------------
 
 		@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-		public ModelAndView save(@Valid final NewspaperForm newspaperForm, final BindingResult binding) {
+		public ModelAndView save(final NewspaperForm newspaperForm, final BindingResult binding) {
 			ModelAndView result;
 			Newspaper newspaper = this.newspaperService.reconstruct(newspaperForm,binding);
 			if (binding.hasErrors())
@@ -186,7 +194,7 @@ public class UserNewspaperController extends AbstractController{
 			ModelAndView result;
 
 			result = new ModelAndView("newspaper/edit");
-			result.addObject("newspaper", newspaper);
+			result.addObject("newspaperForm", newspaper);
 			result.addObject("message", message);
 
 			return result;

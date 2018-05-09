@@ -56,7 +56,7 @@
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="volume/list.do"><spring:message code="master.page.volume" /></a></li>
 		</security:authorize>
-		<security:authorize access="isAuthenticated()">
+		<security:authorize access="hasRole('USER') || hasRole('AGENT') || hasRole('ADMIN')">
 			<li><a class="fNiv" href="volume/list.do"><spring:message code="master.page.volume" /></a></li>
 		</security:authorize>
 		
@@ -76,6 +76,13 @@
 			<li><a class="fNiv" href="newspaper/customer/list.do"><spring:message code="master.page.newspaper" /></a></li>
 		</security:authorize>
 		
+		<security:authorize access="hasRole('CUSTOMER')">
+			<li><a class="fNiv" href="article/customer/list.do"><spring:message code="master.page.articles" /></a></li>
+		</security:authorize>
+		
+		<security:authorize access="hasRole('CUSTOMER')">
+			<li><a class="fNiv" href="volume/customer/list.do"><spring:message code="master.page.volume" /></a></li>
+		</security:authorize>
 		
 		<security:authorize access="hasRole('USER')">
 			<li><a href="chirp/user/create.do"><spring:message code="master.page.chirp.create" /> </a></li>
@@ -117,7 +124,18 @@
 					<li><a href="admin/admin/listArticles.do"><spring:message code="master.page.articlesTaboo" /></a></li>
 					<li><a href="admin/admin/listNewspapers.do"><spring:message code="master.page.newspapersWithTaboo" /></a></li>
 					<li><a href="admin/admin/listChirps.do"><spring:message code="master.page.chirpsWithTaboo" /></a></li>
+					<li><a href="admin/admin/listAdverts.do"><spring:message code="master.page.AdvertsWithTaboo" /></a></li>
 			</ul>
+		</li>
+		</security:authorize>
+		
+		<security:authorize access="hasRole('AGENT')">
+		<li><a class = "fNiv"><spring:message code = "master.page.advertisement"/></a>
+			<ul>
+				<li class="arrow"></li>
+					<li><a href="advertisement/agent/listPlacedAds.do"><spring:message code="master.page.advertisement.listPlacedAds" /></a></li>
+					<li><a href="advertisement/agent/listNotPlacedAds.do"><spring:message code="master.page.advertisement.listNotPlacedAds" /></a></li>
+			</ul>	
 		</li>
 		</security:authorize>
 
@@ -127,8 +145,12 @@
 			
 
 
-		<security:authorize access="isAnonymous() || hasRole('USER') || hasRole('CUSTOMER')">
+		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="article/list.do"><spring:message code="master.page.articles" /></a></li>
+		</security:authorize>
+		
+		<security:authorize access="hasRole('USER')">
+			<li><a class="fNiv" href="article/user/list.do"><spring:message code="master.page.articles" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
@@ -140,9 +162,26 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
-					<security:authorize access="hasRole('USER')">
-						<li><a href="user/user/displayUserProfile.do"><spring:message code="master.page.chirp.displayUserProfile" /> </a></li>
-					</security:authorize>
+					
+						<security:authorize access="hasRole('CUSTOMER')">
+							<li><a href="customer/customer/displayProfile.do"><spring:message code="master.page.displayProfile" /> </a></li>
+							<li><a href="customer/customer/editProfile.do"><spring:message code="master.page.editUserProfile" /> </a></li>
+						</security:authorize>
+						
+						<security:authorize access="hasRole('AGENT')">
+							<li><a href="agent/agent/displayProfile.do"><spring:message code="master.page.displayProfile" /> </a></li>
+							<li><a href="agent/agent/editProfile.do"><spring:message code="master.page.editUserProfile" /> </a></li>
+						</security:authorize>
+						
+						<security:authorize access="hasRole('ADMIN')">
+							<li><a href="admin/admin/displayProfile.do"><spring:message code="master.page.displayProfile" /> </a></li>
+							<li><a href="admin/admin/editProfile.do"><spring:message code="master.page.editUserProfile" /> </a></li>
+						</security:authorize>
+						
+						<security:authorize access="hasRole('USER')">
+							<li><a href="user/user/displayUserProfile.do"><spring:message code="master.page.chirp.displayUserProfile" /> </a></li>
+							<li><a href="user/user/editProfile.do"><spring:message code="master.page.editUserProfile" /> </a></li>
+						</security:authorize>
 				</ul>
 			</li>
 		</security:authorize>

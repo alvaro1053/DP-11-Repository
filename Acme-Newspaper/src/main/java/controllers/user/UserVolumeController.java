@@ -4,8 +4,6 @@ package controllers.user;
 import java.util.Calendar;
 import java.util.Collection;
 
-import javax.validation.Valid;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -110,7 +108,7 @@ public class UserVolumeController extends AbstractController {
 		}
 		
 		@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-		public ModelAndView save(@Valid final VolumeForm volumeForm, final BindingResult binding) {
+		public ModelAndView save(final VolumeForm volumeForm, final BindingResult binding) {
 			ModelAndView result;
 			Volume volume = this.volumeService.reconstruct(volumeForm,binding);
 			if (binding.hasErrors())
@@ -139,7 +137,7 @@ public class UserVolumeController extends AbstractController {
 			ModelAndView result;
 			Collection<Newspaper> newspapers;
 			
-			newspapers = this.newspaperService.publishedNewspapers();
+			newspapers = this.newspaperService.findAll();
 
 
 			result = new ModelAndView("volume/edit");

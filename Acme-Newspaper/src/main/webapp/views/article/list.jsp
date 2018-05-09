@@ -43,11 +43,11 @@
 
 
 	<security:authorize access="hasRole('USER')">
-		<display:column>
-			<jstl:if test="${row.isDraft == true}">
-				<a href="article/user/edit.do?articleId=${row.id}"><spring:message code ="article.edit"/></a>
-			</jstl:if>
-		</display:column>
+				<display:column>
+				<jstl:if test="${row.isDraft == true}">
+					<a href="article/user/edit.do?articleId=${row.id}"><spring:message code ="article.edit"/></a>
+				</jstl:if>
+				</display:column>
 	</security:authorize>
 	
 	
@@ -58,17 +58,20 @@
 		</display:column>
 	</security:authorize>
 	
-	<security:authorize access="hasRole('USER')">
-		<jstl:if test="">
-			<display:column>
-				<a href="article/user/edit.do?articleId=${row.id}" ><spring:message code ="article.edit" /></a>
-			</display:column>
-		</jstl:if>
-	</security:authorize>
-	
 	
 	<spring:message code="article.title" var="titleHeader" />
-	<display:column title="${titleHeader}"><a href="article/display.do?articleId=${row.id}"><jstl:out value="${row.title}"></jstl:out></a></display:column>
+	<display:column title="${titleHeader}">
+	<jsp:useBean id="now" class="java.util.Date"/>
+		
+		<jstl:choose>
+			<jstl:when test="${suscrito ||(row.newspaper.isPrivate == false && row.newspaper.publicationDate lt now) || (row.user.id == principal.id)}">
+				<a href="article${uri}/display.do?articleId=${row.id}"><jstl:out value="${row.title}"></jstl:out></a>
+			</jstl:when>
+			<jstl:otherwise>
+			<jstl:out value="${row.title}"/>
+			</jstl:otherwise>
+			</jstl:choose>
+	</display:column>
 	
 	<spring:message code="article.summary" var="summary" />
 	<display:column property="summary" title="${summary}"/>
@@ -79,7 +82,13 @@
 	
 	<spring:message code="article.photosURL.failed" var="failed" />
 	<spring:message code="article.photosURL" var="picture" />
-	<display:column  title="${picture}"> <jstl:forEach var="picture" items="${row.photosURL}"><img src="${picture}" alt= "${failed}" height="150" width=auto /> </jstl:forEach></display:column>
+	<display:column  title="${picture}"> 
+		<jstl:forEach var="picture" items="${row.photosURL}">
+			<jstl:if test="${not empty picture}">
+				<img src=<jstl:out value="${picture}"/> alt= "${failed}" height="150" width=auto />
+			</jstl:if> 
+		</jstl:forEach>	
+	</display:column>
 
 
 </display:table>

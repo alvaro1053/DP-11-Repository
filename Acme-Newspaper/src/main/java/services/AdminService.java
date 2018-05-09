@@ -9,12 +9,15 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.AdminRepository;
 import security.LoginService;
 import security.UserAccount;
 import domain.Admin;
 import domain.Newspaper;
+import forms.EditActorForm;
 
 @Service
 @Transactional
@@ -23,6 +26,9 @@ public class AdminService {
 	// Managed Repository
 	@Autowired
 	private AdminRepository	adminRepository;
+	
+	@Autowired
+	Validator	validator;
 
 
 	// Supporting services
@@ -214,17 +220,98 @@ public class AdminService {
 		return result;
 	}
 	//1.5
-	public Long AverageRatioOfPrivateVersusPublicNewspapers(){
+	public Double AverageRatioOfPrivateVersusPublicNewspapers(){
 		Admin principal = this.findByPrincipal();
 		Assert.notNull(principal);
-		Long res = new Long(0);
-		Long sumas = new Long(0);
-		Collection<Long> ratios = this.adminRepository.AverageRatioOfPrivateVersusPublicNewspapers();
-		for (Long d : ratios){
+		Double res = 0.;
+		Double sumas = 0.;
+		Collection<Double> ratios = this.adminRepository.AverageRatioOfPrivateVersusPublicNewspapers();
+		for (Double d : ratios){
 			sumas +=d;
 		}
-		res = sumas/ratios.size();
+		res = (sumas/ratios.size());
 		return res;
+	}
+	
+	//5.3
+	public Double ratioNewspaperOneAdvertisementOrAny(){
+		Double result;
+		Admin principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		
+		result = this.adminRepository.RatioNewspaperOneAdvertisementVersusAny();
+		
+		if(result == null){
+			result = 0.0;
+		}
+		
+		return result;
+	}
+	
+	//5.3
+	public Double ratioAdvertisementTabooWords(){
+		Double result;
+		Admin principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		
+		result = this.adminRepository.RatioAdvertisementTabooWords();
+		
+		if(result == null){
+			result = 0.0;
+		}
+		
+		return result;
+	}
+	
+	//11.1
+	public Double AverageNewspapersPerVolume(){
+		Double result;
+		Admin principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		
+		result = this.adminRepository.AverageNewspapersPerVolume();
+			
+		return result;
+	}
+	//11.2
+	public Double ratioSubscriptionsVolumesVersusNewspapers(){
+		Double result;
+		Admin principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		
+		result = this.adminRepository.ratioSubscriptionsVolumesVersusNewspapers();
+			
+		return result;
+	}
+
+	public Admin reconstruct(EditActorForm editActorForm, BindingResult binding) {
+		Admin admin;
+		admin = this.findByPrincipal();
+		
+		admin.setName(editActorForm.getName());
+		admin.setSurname(editActorForm.getSurname());
+		admin.setEmail(editActorForm.getEmail());
+		admin.setId(editActorForm.getId());
+		admin.setPostalAddress(editActorForm.getAddress());
+		admin.setVersion(editActorForm.getVersion());
+		admin.setPhone(editActorForm.getPhone());
+	
+		
+		this.validator.validate(editActorForm, binding);
+
+		return admin;
+	}
+
+	public EditActorForm construct(Admin admin, EditActorForm editActorForm) {
+		editActorForm.setId(admin.getId());
+		editActorForm.setVersion(admin.getVersion());
+		editActorForm.setName(admin.getName());
+		editActorForm.setSurname(admin.getSurname());
+		editActorForm.setEmail(admin.getEmail());
+		editActorForm.setPhone(admin.getPhone());
+		editActorForm.setAddress(admin.getPostalAddress());
+
+		return editActorForm;
 	}
 
 }

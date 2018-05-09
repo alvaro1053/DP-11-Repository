@@ -56,10 +56,8 @@ public class UserFollowUpController {
 		ModelAndView result;
 		FollowUp followUp;
 		Collection<Article> articles;
-		User principal;
-		
-		principal = this.userService.findByPrincipal();
-		articles = this.articleService.articlesPublishedByUser(principal.getId());
+
+		articles = this.articleService.articlesPublished();
 		followUp = this.followUpService.create();
 		
 		result = this.createEditModelAndView(followUp);

@@ -40,8 +40,9 @@ public class DashboardAdminController extends AbstractController {
 		Double AverageNewspapersPerUser,StandardDesviationNewspapersPerUser, AverageArticlesPerUser, StandardDesviationArticlesPerUser, AverageArticlesPerNewspaper,
 		StandardDesviationArticlesPerNewspaper,RatioUsersWithAtLeast1Newspaper, RatioUsersWithAtLeast1Article, AverageFollowsUpPerArticle, AverageFollowUpPerArticleOneWeek,
 		AverageFollowUpPerArticleTwoWeek, AverageChirpsPerUser, StandardDesviationChirpsPerUser, RatioUsersWithMoreAvgChirps, RatioPublicVersusPrivate, 
-		AverageArticlesPerPrivateNewspaper, AverageArticlesPerPublicNewspaper, ratioPublicVersusPrivatePerPublisher;
-		Long AverageRatioOfPrivateVersusPublicNewspapers;
+		AverageArticlesPerPrivateNewspaper, AverageArticlesPerPublicNewspaper, ratioPublicVersusPrivatePerPublisher, ratioNewspapersWithOneAdvertisementVersusAny,ratioAdvertisementTabooWords
+		,AverageNewspapersPerVolume, ratioSubscriptionsVolumesVersusNewspapers;
+		Double AverageRatioOfPrivateVersusPublicNewspapers;
 		
 		Collection<Newspaper> NewspapersWithMoreArticlesThanAverage, NewspapersWithLessArticlesThanAverage;
 		
@@ -81,6 +82,12 @@ public class DashboardAdminController extends AbstractController {
 		NewspapersWithMoreArticlesThanAverage = this.adminService.NewspapersWithMoreArticlesThanAverage();
 		NewspapersWithLessArticlesThanAverage = this.adminService.NewspapersWithLessArticlesThanAverage();
 		
+		//Querys Newspaper 2.0 C
+		ratioNewspapersWithOneAdvertisementVersusAny = this.adminService.ratioNewspaperOneAdvertisementOrAny();
+		ratioAdvertisementTabooWords = this.adminService.ratioAdvertisementTabooWords();
+		//Querys Newspaper 2.0 B
+		AverageNewspapersPerVolume = this.adminService.AverageNewspapersPerVolume();
+		ratioSubscriptionsVolumesVersusNewspapers = this.adminService.ratioSubscriptionsVolumesVersusNewspapers();
 
 		result = new ModelAndView("admin/dashboard");
 
@@ -103,9 +110,12 @@ public class DashboardAdminController extends AbstractController {
 		result.addObject("AverageArticlesPerPublicNewspaper", AverageArticlesPerPublicNewspaper);
 		result.addObject("ratioPublicVersusPrivatePerPublisher", ratioPublicVersusPrivatePerPublisher);
 		result.addObject("AverageRatioOfPrivateVersusPublicNewspapers",AverageRatioOfPrivateVersusPublicNewspapers);
-		
 		result.addObject("NewspapersWithMoreArticlesThanAverage",NewspapersWithMoreArticlesThanAverage);
 		result.addObject("NewspapersWithLessArticlesThanAverage",NewspapersWithLessArticlesThanAverage);
+		result.addObject("RatioNewspapersWithOneAdvertisementVersusAny",ratioNewspapersWithOneAdvertisementVersusAny);
+		result.addObject("RatioAdvertisementTabooWords", ratioAdvertisementTabooWords);
+		result.addObject("AverageNewspapersPerVolume", AverageNewspapersPerVolume);
+		result.addObject("ratioSubscriptionsVolumesVersusNewspapers", ratioSubscriptionsVolumesVersusNewspapers);
 
 		return result;
 	}

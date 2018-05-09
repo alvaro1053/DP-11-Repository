@@ -20,19 +20,19 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-	<form:form action="newspaper/user/edit.do" modelAttribute="newspaper">
+	<form:form action="newspaper/user/edit.do" modelAttribute="newspaperForm">
 	<form:hidden path="id" />
 	<form:hidden path="version" /> 
 	
 	
-	<acme:textarea code="newspaper.title" path="title"/>
+	<acme:textbox code="newspaper.title" path="title"/>
 	
-	<acme:textbox code="newspaper.description" path="description"/>
+	<acme:textarea code="newspaper.description" path="description"/>
 	
 	<acme:textbox code="newspaper.pictureURL" path="pictureURL"/>
 	
 	<spring:message code="newspaper.publicationDate" var="publicationDate"/>
-	<form:label path="publicationDate">${moment}</form:label>
+	<form:label path="publicationDate">${publicationDate}</form:label>
 	<form:input path="publicationDate" placeholder="dd/mm/yyyy"/>
 	<form:errors cssClass="error" path="publicationDate"/>
 	<br />

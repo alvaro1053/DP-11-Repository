@@ -20,6 +20,9 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
+<jstl:choose>
+<jstl:when test="${article.isDraft == true || articleForm.isDraft == true}">
+
 	<form:form action="article/user/edit.do" modelAttribute="articleForm">
 	<form:hidden path="id" />
 	<form:hidden path="version" /> 
@@ -53,14 +56,14 @@
 			
 			<jstl:choose> 
 			<jstl:when test="${empty articleForm.photosURL}">
-			<tr class="list-item">
-			
-			
-			
-			<td>  	<form:input path="photosURL[0]" /> <form:errors cssClass="error" path="photosURL[0]" /></td>
-			<td>	<a href="#" onclick="event.preventDefault();"
-					class="list-remove"> <spring:message code="article.photosURL.remove" /> </a> </td>
-			</tr>
+				<jstl:forEach begin="0" end="0" var="photoURL" varStatus="i" step="1">
+	   			 <tr class="list-item">
+				<td> <form:input path="photosURL[${i.index}]" /></td>
+	     		<td>	<a href="#" onclick="event.preventDefault();"
+						class="list-remove"> <spring:message code="article.photosURL.remove" /> </a> </td>
+			    </tr>
+		            <br />
+		        </jstl:forEach>
 			
 			</jstl:when>
 			<jstl:otherwise>
@@ -101,3 +104,9 @@
         $("#list1").dynamiclist();
     });
  </script>
+ 
+ </jstl:when>
+<jstl:otherwise>
+<spring:message code="article.permission" />
+</jstl:otherwise>
+</jstl:choose>

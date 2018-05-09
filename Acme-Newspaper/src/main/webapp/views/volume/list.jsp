@@ -49,7 +49,7 @@
 	<ul>
 		<jstl:forEach items="${row.newspapers}" var="newspaper"> 
 			 <li>
-				<a href="newspaper/display.do?newspaperId=${newspaper.id}">
+				<a href="newspaper${uri}/display.do?newspaperId=${newspaper.id}">
 					<jstl:out value="${newspaper.title}"/>
 				</a>
 			 </li>
@@ -62,7 +62,7 @@
 	<spring:message code="volume.user"
 		var="userHeader" />
 	<display:column title="${userHeader}"  > 
-		<a href="user${uri}/display.do?userId=${row.user.id}">
+		<a href="user/display.do?userId=${row.user.id}">
 			<jstl:out value="${row.user.name} ${row.user.surname}"/>
 		</a>
 	</display:column>
@@ -77,17 +77,8 @@
 
 <security:authorize access="hasRole('CUSTOMER')">
 
-<jstl:set var="subscrito" value="${true}"/>
-<jstl:forEach var="newspaper" items="${row.newspapers}">
-<jstl:forEach var="subscription" items="${principal.subscriptions}">
-<jstl:if test="${newspaper.id != subscription.newspaper.id and newspaper.isPrivate == true }">
-<jstl:set var="subscrito" value="${false}"/>
-</jstl:if>
-</jstl:forEach>
-</jstl:forEach>
-
 		<display:column>
-		<jstl:if test="${(subscrito == false)}">
+		<jstl:if test="${not row.customersSubscribed.contains(principal)}">
 		<a href="subscription/customer/createVolume.do?volumeId=${row.id}"> <spring:message
 			code="article.subscribe" />
 		</a>

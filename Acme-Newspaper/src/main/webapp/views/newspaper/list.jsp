@@ -13,7 +13,11 @@
 
 
 
+<jstl:if test="${location != null}">
+	<h3><spring:message code="${location}"></spring:message></h3>
+</jstl:if>
 
+<br>
 <form action="newspaper${uri}/list.do" method="get">
 	<spring:message code="newspaper.search.placeholder" var="placeholder" />
 	<input name="filter" placeholder="${placeholder}"/>
@@ -26,13 +30,18 @@
 <br>
 
 
-
-
-
 <display:table class="displaytag" 
 	name="newspapers" requestURI="newspaper${uri}/list.do" id="row">
 	
 
+	
+	<security:authorize access="hasRole('ADMIN')">
+		<spring:message code="newspaper.confirm" var="confirmNewspaper"  />
+		<display:column>
+		<a href="newspaper/admin/delete.do?newspaperId=${row.id}" onclick="return confirm('${confirmNewspaper}')"> <spring:message
+			code="master.page.delete" /> </a>
+		</display:column>
+	</security:authorize>
 	
 	<!-- title -->
 	<spring:message code="newspaper.title"
@@ -114,8 +123,8 @@
 		<jstl:forEach items="${row.articles}" var="article"> 
 			 <li>
 			 <jstl:choose>
-				<jstl:when test="${suscrito == true || row.isPrivate == false}">
-					<a href="article/display.do?articleId=${article.id}">
+				<jstl:when test="${suscrito == true || row.isPrivate == false || article.user.id == principal.id}">
+					<a href="article${uri}/display.do?articleId=${article.id}">
 						<jstl:out value="${article.title}"/>
 					</a>
 				</jstl:when>
@@ -149,22 +158,13 @@
 <security:authorize access="hasRole('USER')">
 		<display:column>
 		<jsp:useBean id="now" class="java.util.Date"/>
-			<jstl:if test="${principal.newspapers.contains(row) && row.publicationDate > now}">
+			<jstl:if test="${principal.newspapers.contains(row) && row.publicationDate gt now}">
 		<a href="newspaper/user/publish.do?newspaperId=${row.id}"> <spring:message
 			code="newspaper.publish" />
 		</a>
 		</jstl:if>
 	</display:column>
 </security:authorize>
-	
-<security:authorize access="hasRole('ADMIN')">
-		<display:column>
-		<a href="newspaper/admin/delete.do?newspaperId=${row.id}"> <spring:message
-			code="master.page.delete" />
-		</a>
-	</display:column>
-</security:authorize>
-
 
 <security:authorize access="hasRole('CUSTOMER')">
 
@@ -175,21 +175,38 @@
 </jstl:if>
 </jstl:forEach>
 
-		<jsp:useBean id="now" class="java.util.Date"/>
-		<jstl:if test="${!(subscrito == true) and (row.isPrivate == true) and (row.publicationDate < now)}">
+		
 		<display:column>
+		<jsp:useBean id="now2" class="java.util.Date"/>
+		<jstl:if test="${(subscrito == false) and (row.isPrivate == true) and (row.publicationDate lt now2)}">
 		<a href="subscription/customer/create.do?newspaperId=${row.id}"> <spring:message
 			code="article.subscribe" />
 		</a>
-		</display:column>
 		</jstl:if>
+		</display:column>
+		
 	
 </security:authorize>
 		
 </display:table>
 
+<security:authorize access="hasRole('AGENT')">
+		<h3>
+			<a href="advertisement/agent/create.do">
+				<spring:message code="advertisement.create" />
+			</a>
+		</h3>
+</security:authorize>
+
+<security:authorize access="hasRole('USER')">
+<a href="newspaper/user/create.do"> <spring:message
+			code="newspaper.create" /> </a>
+</security:authorize>
+
+
 <spring:message code="datatables.locale.lang" var="tableLang"/>
 <spring:message code="datatables.date.format" var="tableFormatDate"/>
+
 <script>
 $(document).ready( function () {	
 	$.fn.dataTable.moment('${tableFormatDate}');
@@ -204,9 +221,6 @@ $(document).ready( function () {
 } );
 </script>
 
-<security:authorize access="hasRole('USER')">
-<a href="newspaper/user/create.do"> <spring:message
-			code="newspaper.create" /> </a>
-</security:authorize>
+
 
 

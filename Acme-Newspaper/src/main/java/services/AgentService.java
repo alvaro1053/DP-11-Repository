@@ -13,8 +13,9 @@ import org.springframework.validation.Validator;
 
 import domain.Advertisement;
 import domain.Agent;
-import domain.Message;
+import domain.MailMessage;
 import forms.ActorForm;
+import forms.EditActorForm;
 
 import repositories.AgentRepository;
 import security.Authority;
@@ -45,8 +46,8 @@ public class AgentService {
 		
 		
 		result.setAdvertisements(new ArrayList<Advertisement>());
-		result.setReceivedMessages(new ArrayList<Message>());
-		result.setSentMessages(new ArrayList<Message>());
+		result.setReceivedMessages(new ArrayList<MailMessage>());
+		result.setSentMessages(new ArrayList<MailMessage>());
 		result.setFolders(this.folderService.createSystemFolders());
 		
 		
@@ -63,6 +64,8 @@ public class AgentService {
 		}
 		
 		saved = this.agentRepository.save(agent);
+		
+		Assert.isTrue(this.agentRepository.findAll().contains(saved));
 		
 		return saved;
 	}
@@ -113,6 +116,42 @@ public class AgentService {
 		
 		return result;
 	}
+
+	public Agent findOne(int agentId) {
+		return this.agentRepository.findOne(agentId);
+	}
+
+	public Agent reconstruct(EditActorForm editActorForm, BindingResult binding) {
+		Agent agent;
+		agent = this.findByPrincipal();
+		
+		agent.setName(editActorForm.getName());
+		agent.setSurname(editActorForm.getSurname());
+		agent.setEmail(editActorForm.getEmail());
+		agent.setId(editActorForm.getId());
+		agent.setPostalAddress(editActorForm.getAddress());
+		agent.setVersion(editActorForm.getVersion());
+		agent.setPhone(editActorForm.getPhone());
+	
+		
+		this.validator.validate(editActorForm, binding);
+
+		return agent;
+	}
+
+	public EditActorForm construct(Agent agent, EditActorForm editActorForm) {
+		editActorForm.setId(agent.getId());
+		editActorForm.setVersion(agent.getVersion());
+		editActorForm.setName(agent.getName());
+		editActorForm.setSurname(agent.getSurname());
+		editActorForm.setEmail(agent.getEmail());
+		editActorForm.setPhone(agent.getPhone());
+		editActorForm.setAddress(agent.getPostalAddress());
+
+		return editActorForm;
+	}
+	
+	
 	
 	
 }

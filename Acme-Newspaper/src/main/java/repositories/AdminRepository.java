@@ -71,9 +71,25 @@ public interface AdminRepository extends JpaRepository<Admin, Integer> {
 	@Query("select avg(n.articles.size) from Newspaper n where n.isPrivate = FALSE")
 	Double AverageArticlesPerPublicNewspaper();
 	//1.4 (A) The ratio of subscribers per private newspaper versus the total number of customers.
-	@Query("select count(s)/(select count(c) from Customer c) from Subscription s where s.newspaper.isPrivate = TRUE")
+	@Query("select 1.0*count(s)/(select count(c) from Customer c) from Subscription s where s.newspaper.isPrivate = TRUE")
 	Double ratioPublicVersusPrivatePerPublisher();	
 	//1.5 (A) The average ratio of private versus public newspapers per publisher.
-	@Query("select count(n)/(select count(n) from n) from User u join u.newspapers n where n.isPrivate = TRUE")
-	Collection<Long> AverageRatioOfPrivateVersusPublicNewspapers();
+	@Query("select 1.0*count(n)/(select count(n) from n) from User u join u.newspapers n where n.isPrivate = TRUE")
+	Collection<Double> AverageRatioOfPrivateVersusPublicNewspapers();
+	
+	//===============//Querys Newspaper 2.0 C===========================
+	
+	//5.3 (C Acme Newspaper 2.0) The ratio of newspapers that have at least one advertisement versus the newspapers that haven’t any.
+	@Query("select 1.0*count(n1)/(select count(n2) from Newspaper n2 where n2.adverts.size = 0) from Newspaper n1 where n1.adverts.size >= 1")
+	Double RatioNewspaperOneAdvertisementVersusAny();
+	//5.3 (C Acme Newspaper 2.0) The ratio of advertisements that have taboo words
+	@Query("select 1.0*count(a)/(select count(ad) from Advertisement ad) from Advertisement a where a.tabooWords = TRUE")
+	Double RatioAdvertisementTabooWords();
+	//11.1(B Acme Newspaper 2.0)The average number of newspapers per volume.
+	@Query("select avg (v.newspapers.size) from Volume v")
+	Double AverageNewspapersPerVolume();
+	//11.1(B Acme Newspaper 2.0)The ratio of subscriptions to volumes versus subscriptions to newspapers.
+	@Query("select 1.0*count(vS)/(select count(s) from Customer cu join cu.subscriptions s) from Customer c join c.volumesSubscribed vS")
+	Double ratioSubscriptionsVolumesVersusNewspapers();
+
 }

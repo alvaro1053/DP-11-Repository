@@ -17,7 +17,7 @@ import services.MessageService;
 import controllers.AbstractController;
 import domain.Actor;
 import domain.Folder;
-import domain.Message;
+import domain.MailMessage;
 
 @Controller
 @RequestMapping("/message/admin")
@@ -45,11 +45,11 @@ public class MessageAdministratorController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		final ModelAndView result;
-		Message mensaje;
+		MailMessage mailMessage;
 
-		mensaje = this.messageService.create();
+		mailMessage = this.messageService.create();
 
-		result = this.createEditModelAndView(mensaje);
+		result = this.createEditModelAndView(mailMessage);
 
 		return result;
 
@@ -57,53 +57,53 @@ public class MessageAdministratorController extends AbstractController {
 
 	// Edition
 	@RequestMapping(value = "/broadcast", method = RequestMethod.POST, params = "save")
-	public ModelAndView broadcast(@Valid final Message mensaje, final BindingResult binding) {
+	public ModelAndView broadcast(@Valid final MailMessage mailMessage, final BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors())
-			result = this.createEditModelAndView(mensaje);
+			result = this.createEditModelAndView(mailMessage);
 		else
 			try {
-				this.messageService.broadcast(mensaje);
+				this.messageService.broadcast(mailMessage);
 				result = new ModelAndView("redirect:/folder/actor/list.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(mensaje, "message.commit.error");
+				result = this.createEditModelAndView(mailMessage, "message.commit.error");
 			}
 
 		return result;
 	}
 
 	//Ancillary methods
-	protected ModelAndView createEditModelAndView(final Message mensaje) {
+	protected ModelAndView createEditModelAndView(final MailMessage mailMessage) {
 		ModelAndView result;
 
-		result = this.createEditModelAndView(mensaje, null);
+		result = this.createEditModelAndView(mailMessage, null);
 
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final Message mensaje, final String messageCode) {
+	protected ModelAndView createEditModelAndView(final MailMessage mailMessage, final String messageCode) {
 		final ModelAndView result;
 		Date moment;
 		Folder folder;
 		Actor sender;
 
-		moment = mensaje.getMoment();
-		folder = mensaje.getFolder();
-		sender = mensaje.getSender();
+		moment = mailMessage.getMoment();
+		folder = mailMessage.getFolder();
+		sender = mailMessage.getSender();
 
 		result = new ModelAndView("message/edit");
 		result.addObject("moment", moment);
 		result.addObject("folder", folder);
 		result.addObject("sender", sender);
-		result.addObject("mensaje", mensaje);
+		result.addObject("mailMessage", mailMessage);
 		//En la siguiente línea estamos indicando que el receptor del mensaje es el mismo administrador que lo está enviando,
 		// esto es incorrecto, pero hará que el pase el @valid del método broadcast,
 		// el servicio correspondiente se encargará de entregar el mensaje a todos los actores del sistema
 		result.addObject("recipient", this.actorService.findByPrincipal());
 		result.addObject("broadcast", true);
 		result.addObject("permission", true);
-		result.addObject("requestURI", "/Acme-Newspaper/message/admin/broadcast.do");
+		result.addObject("requestURI", "message/admin/broadcast.do");
 
 		result.addObject("message", messageCode);
 

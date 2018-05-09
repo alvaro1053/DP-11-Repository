@@ -20,6 +20,9 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<jsp:useBean id="now" class="java.util.Date"/>
+<jstl:choose>
+<jstl:when test="${newspaper.publicationDate < now}">
 
 <table class="displayStyle" >
 
@@ -66,8 +69,8 @@
 	<spring:message code="newspaper.article.title" var="titleHeader" />
 	<display:column title="${titleHeader}" sortable="true" >
 	<jstl:choose>
-		<jstl:when test="${suscrito == true}">
-		<a href="article/display.do?articleId=${row.id}">
+		<jstl:when test="${suscrito == true || newspaper.isPrivate == false}">
+		<a href="article${uri}/display.do?articleId=${row.id}">
 			<jstl:out value="${row.title}"/>
 		</a>
 		</jstl:when>
@@ -81,7 +84,7 @@
 	<spring:message code="article.user" var="userHeader" />
 	<display:column title="${userHeader}" sortable="true" >
 	<jstl:choose>
-		<jstl:when test="${suscrito == true}">
+		<jstl:when test="${suscrito == true || newspaper.isPrivate == false}">
 		<a href="user/display.do?userId=${row.user.id}">
 			<jstl:out value="${row.user.name}"/>
 		</a>
@@ -106,3 +109,17 @@
 
 
 </table>
+
+<jstl:if test="${advert != null}">
+	<spring:message code ="newspaper.imageBannerNotFound" var = "imageBannerNotFound"></spring:message>
+	<a href="${advert.targetPageURL}">
+		<img src="${advert.bannerURL}" alt="${imageBanner}">
+	</a>
+</jstl:if>
+
+ </jstl:when>
+<jstl:otherwise>
+<spring:message code="newspaper.notPublished" />
+</jstl:otherwise>
+</jstl:choose>
+

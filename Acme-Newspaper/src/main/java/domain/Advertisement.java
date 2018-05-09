@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
 
 @Entity
@@ -23,9 +24,10 @@ public class Advertisement extends DomainEntity {
 	private CreditCard			creditCard;
 	private Agent				agent;
 	private Collection<Newspaper>	newspapers;
-
+	private Boolean				tabooWords;
 
 	@NotBlank
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getTitle() {
 		return title;
 	}
@@ -35,6 +37,7 @@ public class Advertisement extends DomainEntity {
 	
 	@NotBlank
 	@URL
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getBannerURL() {
 		return this.bannerURL;
 	}
@@ -43,6 +46,7 @@ public class Advertisement extends DomainEntity {
 	}
 	@NotBlank
 	@URL
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getTargetPageURL() {
 		return this.targetPageURL;
 	}
@@ -57,6 +61,13 @@ public class Advertisement extends DomainEntity {
 	}
 	public void setCreditCard(final CreditCard creditCard) {
 		this.creditCard = creditCard;
+	}
+	
+	public Boolean getTabooWords() {
+		return tabooWords;
+	}
+	public void setTabooWords(Boolean tabooWords) {
+		this.tabooWords = tabooWords;
 	}
 	
 	// Relationships
@@ -74,6 +85,7 @@ public class Advertisement extends DomainEntity {
 	
 	
 	@ManyToMany
+	@NotNull
 	public Collection<Newspaper> getNewspapers() {
 		return this.newspapers;
 	}

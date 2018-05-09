@@ -56,7 +56,7 @@ public class UserController extends AbstractController {
 	public ModelAndView display(@RequestParam final int userId) {
 		final ModelAndView result;
 		User user;
-		final String uri = "article/display.do";
+		final String uri = "";
 		final String requestURI = "user/display.do";
 		Collection<Article> articles;
 		Collection<Chirp> chirps;

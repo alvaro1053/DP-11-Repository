@@ -16,19 +16,19 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import repositories.MessageRepository;
-import domain.Message;
+import domain.MailMessage;
 
 @Component
 @Transactional
-public class StringToMessageConverter implements Converter<String, Message> {
+public class StringToMessageConverter implements Converter<String, MailMessage> {
 
 	@Autowired
 	MessageRepository	messageRepository;
 
 
 	@Override
-	public Message convert(final String text) {
-		Message result;
+	public MailMessage convert(final String text) {
+		MailMessage result;
 		int id;
 
 		try {

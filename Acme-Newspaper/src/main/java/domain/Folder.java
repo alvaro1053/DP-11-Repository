@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -18,13 +19,14 @@ public class Folder extends DomainEntity {
 
 	private String				name;
 	private boolean				isSystem;
-	private Collection<Message>	messages;
+	private Collection<MailMessage>	messages;
 	private Folder				parentFolder;
 	private Collection<Folder>	childFolders;
 	
 
 
 	@NotBlank
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getName() {
 		return this.name;
 	}
@@ -41,10 +43,10 @@ public class Folder extends DomainEntity {
 
 	@NotNull
 	@OneToMany(mappedBy = "folder")
-	public Collection<Message> getMessages() {
+	public Collection<MailMessage> getMessages() {
 		return this.messages;
 	}
-	public void setMessages(final Collection<Message> messages) {
+	public void setMessages(final Collection<MailMessage> messages) {
 		this.messages = messages;
 	}
 

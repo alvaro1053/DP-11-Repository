@@ -19,6 +19,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -41,6 +42,7 @@ public class Article extends DomainEntity {
 
 
 	@NotBlank
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getTitle() {
 		return this.title;
 	}
@@ -58,6 +60,7 @@ public class Article extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getSummary() {
 		return this.summary;
 	}
@@ -66,6 +69,7 @@ public class Article extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getBody() {
 		return this.body;
 	}
@@ -74,6 +78,7 @@ public class Article extends DomainEntity {
 	}
 
 	@ElementCollection
+	@NotNull
 	public List<String> getPhotosURL() {
 		return this.photosURL;
 	}
@@ -96,7 +101,8 @@ public class Article extends DomainEntity {
 	}
 
 	//Relationships	
-
+	
+	@NotNull
 	@ManyToOne(optional = true)
 	public Newspaper getNewspaper() {
 		return this.newspaper;

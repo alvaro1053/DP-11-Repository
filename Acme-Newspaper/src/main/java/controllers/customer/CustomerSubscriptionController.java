@@ -3,7 +3,6 @@ package controllers.customer;
 
 
 
-import java.sql.Date;
 
 import javax.validation.Valid;
 
@@ -11,7 +10,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,8 +35,8 @@ import services.VolumeService;
 @RequestMapping("/subscription/customer")
 public class CustomerSubscriptionController extends AbstractController{
 
+
 	// Services
-	
 	@Autowired
 	private NewspaperService	newspaperService;
 
@@ -51,12 +49,10 @@ public class CustomerSubscriptionController extends AbstractController{
 	
 	@Autowired
 	private SubscriptionService	subscriptionService;
-	@Autowired
-	private Validator	validator;
 
 
-	// Constructors
 
+	//Constructors
 	public CustomerSubscriptionController() {
 		super();
 	}
@@ -74,7 +70,7 @@ public class CustomerSubscriptionController extends AbstractController{
 		
 		result = createEditModelAndView(subscription);
 		}catch(Throwable oops){
-			result = new ModelAndView("redirect:../../newspaper/list.do");
+			result = new ModelAndView("redirect:../../newspaper/customer/list.do");
 			redir.addFlashAttribute("message", "newspaper.permision");
 		}
 		
@@ -97,7 +93,7 @@ public class CustomerSubscriptionController extends AbstractController{
 			
 			result = createEditModelAndViewOfVolume(subscription);
 			}catch(Throwable oops){
-				result = new ModelAndView("redirect:../../volume/list.do");
+				result = new ModelAndView("redirect:../../volume/customer/list.do");
 				redir.addFlashAttribute("message", "volume.permision");
 			}
 			
@@ -109,7 +105,7 @@ public class CustomerSubscriptionController extends AbstractController{
 		//Edit
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final SubscriptionForm subscriptionForm, final BindingResult binding) {
+	public ModelAndView save(final SubscriptionForm subscriptionForm, final BindingResult binding) {
 		ModelAndView result;
 		Subscription subscription = this.subscriptionService.reconstruct(subscriptionForm, binding);
 		if (binding.hasErrors()) {
@@ -117,7 +113,7 @@ public class CustomerSubscriptionController extends AbstractController{
 		} else
 			try {
 				this.subscriptionService.save(subscription);
-				result = new ModelAndView("redirect:../../newspaper/list.do");
+				result = new ModelAndView("redirect:../../newspaper/customer/list.do");
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(subscriptionForm, "v.commit.error");
 			}
@@ -139,7 +135,7 @@ public class CustomerSubscriptionController extends AbstractController{
 				Volume volume = subscriptionForm.getVolume();
 				CreditCard creditCard = subscriptionForm.getCreditCard();
 				this.volumeService.subscribe(volume, creditCard);
-				result = new ModelAndView("redirect:../../volume/list.do");
+				result = new ModelAndView("redirect:../../volume/customer/list.do");
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndViewOfVolume(subscriptionForm,
 						"volume.commit.error");
@@ -183,7 +179,7 @@ public class CustomerSubscriptionController extends AbstractController{
 			ModelAndView result;
 
 			result = new ModelAndView("subscription/subscribeVolume");
-			result.addObject("subscriptionForm", subscription);
+			result.addObject("subscriptionVolumeForm", subscription);
 			result.addObject("message", message);
 
 			return result;

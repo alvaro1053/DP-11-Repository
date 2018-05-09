@@ -1,10 +1,12 @@
+
 package services;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-
+import java.util.List;
+import java.util.Random;
 
 import javax.transaction.Transactional;
 
@@ -17,10 +19,11 @@ import org.springframework.validation.Validator;
 import repositories.ArticleRepository;
 import domain.Actor;
 import domain.Admin;
+import domain.Advertisement;
 import domain.Article;
 import domain.Customer;
+import domain.FollowUp;
 import domain.Newspaper;
-
 import domain.User;
 import forms.ArticleForm;
 
@@ -30,24 +33,23 @@ public class ArticleService {
 
 	//Managed Repository ----
 	@Autowired
-	private ArticleRepository	articleRepository;
+	private ArticleRepository		articleRepository;
 	//Services
 	@Autowired
-	private UserService userService;
-	
+	private UserService				userService;
+
 	@Autowired
-	private AdminService adminService;
-	
+	private AdminService			adminService;
+
 	@Autowired
-	private ActorService actorService;
-	
+	private ActorService			actorService;
+
 	@Autowired
-	private Validator			validator;
-	
+	private Validator				validator;
+
 	@Autowired
-	private CustomisationService customisationService;
-	
-	
+	private CustomisationService	customisationService;
+
 
 	//Constructors
 	public ArticleService() {
@@ -57,20 +59,20 @@ public class ArticleService {
 	public Article create() {
 		User principal;
 		Article article;
-		
+
 		Date moment;
 
-		principal = userService.findByPrincipal();
+		principal = this.userService.findByPrincipal();
 		Assert.notNull(principal);
 
 		moment = new Date(System.currentTimeMillis() - 1);
-		
+
 		article = new Article();
 		article.setMoment(moment);
-	
+
 		return article;
 	}
-	
+
 	public ArticleForm createForm() {
 		User principal;
 		ArticleForm articleForm;
@@ -82,7 +84,7 @@ public class ArticleService {
 
 		return articleForm;
 	}
-	
+
 	public Collection<Article> findAll() {
 		Collection<Article> result;
 
@@ -95,7 +97,7 @@ public class ArticleService {
 		Admin admin;
 		Collection<Article> updated, updated2;
 		Assert.notNull(article);
-		
+
 		admin = this.adminService.findByPrincipal();
 		Assert.notNull(admin);
 
@@ -111,68 +113,27 @@ public class ArticleService {
 		updated2.remove(article);
 		user.setArticles(updated2);
 
-		
-		this.articleRepository.delete(article);
-
-	}
-	
-	public void deleteUpdate(final Article article) {
-		Collection<Article> updated, updated2;
-		Assert.notNull(article);
-
-		final Newspaper newspaper = article.getNewspaper();
-		final Collection<Article> article1 = newspaper.getArticles();
-		updated = new ArrayList<Article>(article1);
-		updated.remove(article);
-		newspaper.setArticles(updated);
-
-		final User user = article.getUser();
-		final Collection<Article> article2 = user.getArticles();
-		updated2 = new ArrayList<Article>(article2);
-		updated2.remove(article);
-		user.setArticles(updated2);
-
 		this.articleRepository.delete(article);
 
 	}
 
-	public void save(final Article article) {		
+	public void save(final Article article) {
 		Article result;
-        final Date momentNow = new Date(System.currentTimeMillis());
+		final Date momentNow = new Date(System.currentTimeMillis());
 
-		User principal = userService.findByPrincipal();
-		Collection<String> tabooWords;
+		final User principal = this.userService.findByPrincipal();
 		Assert.notNull(principal);
-		
+
 		article.setMoment(new Date(System.currentTimeMillis() - 1));
-			
-	
-		if(article.getId() != 0) { this.deleteUpdate(article); }
 
+		Assert.isTrue(article.getNewspaper().getPublicationDate().after(momentNow));
 
-		tabooWords = this.customisationService.findCustomisation().getTabooWords();
-		for (String word : tabooWords) {
-			if(article.getTitle().toLowerCase().contains(word))
-				article.setTabooWords(true);
-			if(article.getSummary().toLowerCase().contains(word))
-				article.setTabooWords(true);
-			if(article.getBody().toLowerCase().contains(word))
-				article.setTabooWords(true);
-		}
-		
 		result = this.articleRepository.save(article);
-		
-		final Collection<Article> update = principal.getArticles();
+
+		final Collection<Article> update = new HashSet<>(principal.getArticles());
 		update.add(result);
 		principal.setArticles(update);
 
-		final Newspaper newspaper = result.getNewspaper();
-		final Collection<Article> update2 = newspaper.getArticles();
-		update2.add(result);
-		newspaper.setArticles(update2);
-		
-		
-		Assert.isTrue(article.getNewspaper().getPublicationDate().after(momentNow));
 	}
 
 	public Article findOne(final int articleId) {
@@ -183,83 +144,102 @@ public class ArticleService {
 
 		return result;
 	}
-	
-	public Collection<Article> articlesPublishedByUser(final int userId){
+
+	public Collection<Article> articlesPublishedByUser(final int userId) {
 		Collection<Article> result;
-		
+
 		result = this.articleRepository.articlesPublishedByUser(userId);
 		Assert.notNull(result);
-		
+
 		return result;
 	}
 
 	public Collection<Article> findByFilter(final String filter) {
 
 		Collection<Article> articles = new HashSet<Article>();
-		Actor principal = this.actorService.findByPrincipal();
-		if((principal instanceof User) && (filter == ""|| filter== null)){
-			User user = (User) principal;
+		final Actor principal = this.actorService.findByPrincipal();
+		if ((principal instanceof User) && (filter == "" || filter == null)) {
+			final User user = (User) principal;
 			articles = new HashSet<Article>(this.articleRepository.articlesPublished());
 			articles.addAll(user.getArticles());
-		} else if ((principal instanceof Admin) && (filter == ""|| filter== null)){
-			articles = this.findAll();
-		} else if ((principal instanceof Customer || principal == null) && (filter == ""|| filter== null)){
+		}else if ((principal instanceof User) && (filter != "" || filter != null)){
+			articles = new HashSet<Article>(articles = this.articleRepository.findByFilter(filter));
+			articles.addAll(this.articleRepository.findByFilterByUser(filter, principal.getId()));		
+		} else if ((principal instanceof Admin) && (filter == "" || filter == null))
+			articles = this.articleRepository.findAll();
+		else if ((principal instanceof Customer || principal == null) && (filter == "" || filter == null))
 			articles = this.articleRepository.articlesPublished();
-		} else {
+		else
 			articles = this.articleRepository.findByFilter(filter);
-		}
-		
+
 		return articles;
 	}
-	
-	public Collection<Article> articlesOfNewspaper(int newspaperId){
+
+	public Collection<Article> articlesOfNewspaper(final int newspaperId) {
 		Collection<Article> result;
-		
+
 		result = this.articleRepository.articlesOfNewspaper(newspaperId);
 		Assert.notNull(result);
-		
+
 		return result;
 	}
-	
-	public Article reconstruct(ArticleForm articleForm, BindingResult binding) {
-		Article result = new Article();
+
+	public Article reconstruct(final ArticleForm articleForm, final BindingResult binding) {
+		final Article result = this.create();
 		User principal;
-		
+		List<String> photos;
+		Collection<String> tabooWords;
+
 		principal = this.userService.findByPrincipal();
-		
+		if (articleForm.getPhotosURL() == null)
+			photos = new ArrayList<>();
+		else
+			photos = new ArrayList<>(articleForm.getPhotosURL());
+
 		result.setId(articleForm.getId());
 		result.setVersion(articleForm.getVersion());
 		result.setTitle(articleForm.getTitle());
 		result.setMoment(articleForm.getMoment());
 		result.setSummary(articleForm.getSummary());
 		result.setBody(articleForm.getBody());
-		result.setPhotosURL(articleForm.getPhotosURL());
+		result.setPhotosURL(photos);
 		result.setIsDraft(articleForm.getIsDraft());
 		result.setNewspaper(articleForm.getNewspaper());
 		result.setTabooWords(false);
-		result.setFollowUps(null);		
+		result.setFollowUps(new ArrayList<FollowUp>());
 		result.setUser(principal);
-		
+
+		tabooWords = this.customisationService.findCustomisation().getTabooWords();
+		for (final String word : tabooWords) {
+			if (result.getTitle().toLowerCase().contains(word))
+				result.setTabooWords(true);
+			if (result.getSummary().toLowerCase().contains(word))
+				result.setTabooWords(true);
+			if (result.getBody().toLowerCase().contains(word))
+				result.setTabooWords(true);
+		}
+
 		this.validator.validate(result, binding);
-		
+
 		return result;
 	}
-		
-	public Collection<Article> findArticlesWithTabooWords(){
+	public Collection<Article> findArticlesWithTabooWords() {
 		Collection<Article> result;
-		Admin admin = this.adminService.findByPrincipal();
+		final Admin admin = this.adminService.findByPrincipal();
 		Assert.notNull(admin);
-		
+
 		result = this.articleRepository.findArticlesWithTabooWords();
 		Assert.notNull(result);
-		
+
 		return result;
 	}
-	
+
 	public ArticleForm reconstructForm(final Article article) {
 		ArticleForm result;
+		List<String> photos;
 
-		result = new ArticleForm();
+		result = this.createForm();
+		photos = new ArrayList<>(article.getPhotosURL());
 
 		result.setId(article.getId());
 		result.setVersion(article.getVersion());
@@ -267,7 +247,7 @@ public class ArticleService {
 		result.setSummary(article.getSummary());
 		result.setBody(article.getBody());
 		result.setMoment(article.getMoment());
-		result.setPhotosURL(article.getPhotosURL());
+		result.setPhotosURL(photos);
 		result.setIsDraft(article.getIsDraft());
 		result.setNewspaper(article.getNewspaper());
 
@@ -276,5 +256,30 @@ public class ArticleService {
 
 	public void flush() {
 		this.articleRepository.flush();
+	}
+
+	public Advertisement findRandomAdvert(final Article article) {
+		Advertisement result = null;
+		List<Advertisement> adverts = new ArrayList<Advertisement>();
+		adverts = (List<Advertisement>) article.getNewspaper().getAdverts();
+
+		if (adverts.size() >= 2) {
+			int selectedOne;
+			final int limit = adverts.size();
+			final Random rand = new Random();
+			selectedOne = rand.nextInt(limit);
+			result = adverts.get(selectedOne);
+		} else if (adverts.size() == 1)
+			result = adverts.get(0);
+
+		return result;
+	}
+	
+	public Collection<Article> articlesPublished(){
+		Collection<Article> result;
+		
+		result = this.articleRepository.articlesPublished();
+		
+		return result;
 	}
 }
