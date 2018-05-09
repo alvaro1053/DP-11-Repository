@@ -180,6 +180,14 @@ public class AdminAdminController {
 				ModelAndView result;
 				Admin admin;
 				
+				if(!editActorForm.getName().isEmpty() && !editActorForm.getSurname().isEmpty() && !editActorForm.getEmail().isEmpty())
+					admin = this.adminService.reconstruct(editActorForm, binding);
+				else{
+					result = this.createEditModelAndView(editActorForm, "admin.commit.error");
+					return result;
+				}
+					
+				
 				admin = this.adminService.reconstruct(editActorForm, binding);
 				
 				if(binding.hasErrors()){

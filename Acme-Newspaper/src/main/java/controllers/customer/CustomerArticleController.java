@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import controllers.AbstractController;
 
+import domain.Advertisement;
 import domain.Article;
 import domain.Customer;
 import domain.Subscription;
@@ -81,13 +82,14 @@ public class CustomerArticleController extends AbstractController{
 		Collection<Subscription> subscritions;
 		Article article;
 		Boolean suscrito = false;
+		Advertisement advertChoosen = null;
 		final Customer principal = this.customerService.findByPrincipal();
 		final String uri = "/customer";
 
 		try{
 		article = this.articleService.findOne(articleId);
 		subscritions = this.subscriptionService.findAll();
-		
+		advertChoosen = this.articleService.findRandomAdvert(article);
 		
 		for(Subscription subs: subscritions){
 			if(principal.getSubscriptions().contains(subs)){
@@ -102,6 +104,7 @@ public class CustomerArticleController extends AbstractController{
 		result.addObject("suscrito", suscrito);
 		result.addObject("uri", uri);
 		result.addObject("principal", principal);
+		result.addObject("advert", advertChoosen);
 		} catch (Throwable oops){
 			result = new ModelAndView("redirect:/article/customer/list.do");	
 			redir.addFlashAttribute("message", "article.permission");

@@ -1,5 +1,7 @@
 package controllers.admin;
 
+import java.util.ArrayList;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +54,11 @@ public class CustomisationAdminController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView edit(@Valid Customisation customisation, BindingResult binding){
 		ModelAndView result;
+		String empty = "";
+		
+		if(customisation.getTabooWords().get(0).equals(empty)){
+			customisation.setTabooWords(new ArrayList<String>());
+		}
 		
 		if(binding.hasErrors()){
 			result = this.createEditModelAndView(customisation);

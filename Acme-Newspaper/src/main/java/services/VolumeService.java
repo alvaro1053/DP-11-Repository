@@ -144,7 +144,6 @@ public class VolumeService {
 		
 		volume.setTitle(volumeForm.getTitle());
 		volume.setDescription(volumeForm.getDescription());
-
 		volume.setYear(volumeForm.getYear());
 		volume.setNewspapers(volumeForm.getNewspapers());
 		volume.setId(volumeForm.getId());

@@ -17,6 +17,7 @@ import services.ArticleService;
 import services.NewspaperService;
 import services.UserService;
 import controllers.AbstractController;
+import domain.Advertisement;
 import domain.Article;
 import domain.Newspaper;
 import domain.User;
@@ -82,20 +83,25 @@ public class UserArticleController extends AbstractController {
 		ModelAndView result;
 		Article article;
 		final User principal = this.userService.findByPrincipal();
+		Advertisement advertChoosen;
 		final String uri = "/user";
 
 		try{
 		article = this.articleService.findOne(articleId);
-
+		advertChoosen = this.articleService.findRandomAdvert(article);
+		
 		
 		result = new ModelAndView("article/display");
 		result.addObject("article", article);
 		result.addObject("uri", uri);
 		result.addObject("principal", principal);
+		result.addObject("advert", advertChoosen);
+
 		} catch (Throwable oops){
 			result = new ModelAndView("redirect:/article/list.do");	
 			redir.addFlashAttribute("message", "article.permission");
 		}
+
 		return result;
 
 	}

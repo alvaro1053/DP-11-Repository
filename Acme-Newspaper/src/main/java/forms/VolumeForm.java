@@ -21,7 +21,7 @@ public class VolumeForm extends DomainEntity {
 
 	private String	title;
 	private String	description;
-	private int	year;
+	private Integer	year;
 	private Collection<Newspaper>	newspapers;
 
 
@@ -47,11 +47,11 @@ public class VolumeForm extends DomainEntity {
 	
 	@NotNull
 	@Range(min = 1900, max = 3000)
-	public int getYear() {
+	public Integer getYear() {
 		return year;
 	}
 
-	public void setYear(int year) {
+	public void setYear(Integer year) {
 		this.year = year;
 	}
 

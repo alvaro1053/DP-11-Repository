@@ -17,6 +17,7 @@ import controllers.AbstractController;
 import services.AdminService;
 import services.ArticleService;
 import domain.Admin;
+import domain.Advertisement;
 import domain.Article;
 
 @Controller
@@ -59,16 +60,22 @@ public class AdminArticleController extends AbstractController {
 	public ModelAndView display(@RequestParam final int articleId, RedirectAttributes redir) {
 		ModelAndView result;
 		Article article;
+		Advertisement advertChoosen;
 		Admin principal = this.adminService.findByPrincipal();
 		final String uri = "/admin";
 
 		try{
 		article = this.articleService.findOne(articleId);
 
+		advertChoosen = this.articleService.findRandomAdvert(article);
+		
+		
 		result = new ModelAndView("article/display");
 		result.addObject("article", article);
 		result.addObject("uri", uri);
 		result.addObject("principal", principal);
+		result.addObject("advert", advertChoosen);
+
 		} catch (Throwable oops){
 			result = new ModelAndView("redirect:/article/admin/list.do");	
 			redir.addFlashAttribute("message", "article.permission");

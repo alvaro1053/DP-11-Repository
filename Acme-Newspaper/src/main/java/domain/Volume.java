@@ -20,7 +20,7 @@ public class Volume extends DomainEntity {
 
 	private String	title;
 	private String	description;
-	private int	year;
+	private Integer	year;
 	private User					user;
 	private Collection<Newspaper>	newspapers;
 	private Collection<Customer>	customersSubscribed;
@@ -46,11 +46,11 @@ public class Volume extends DomainEntity {
 	
 	@NotNull
 	@Range(min = 1900, max = 3000)
-	public int getYear() {
+	public Integer getYear() {
 		return year;
 	}
 
-	public void setYear(int year) {
+	public void setYear(Integer year) {
 		this.year = year;
 	}
 

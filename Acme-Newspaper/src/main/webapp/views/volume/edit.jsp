@@ -29,7 +29,11 @@
 	
 	<acme:textarea code="volume.description" path="description"/>
 	
-	<acme:textbox code="volume.year" path="year"/>
+	<form:label path="year">
+		<spring:message code="volume.year" />
+	</form:label>	
+	<form:input path="year" pattern="[0-9]{4}"/>	
+	<form:errors path="year" cssClass="error" />
 	
 	<acme:selectMultiple items="${newspapers}" itemLabel="title" code="volume.newspapers" path="newspapers"/>
 	
