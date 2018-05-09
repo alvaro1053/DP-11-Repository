@@ -1,4 +1,4 @@
-start transaction;
+﻿start transaction;
 
 	drop database if exists `acme-newspaper`;
 
@@ -19,9 +19,7 @@ start transaction;
 
 	grant select, insert, update, delete, create, drop, references, index, alter,
 	create temporary tables, lock tables, create view, create routine, alter routine, 
-		execute, trigger, show view on `acme-newspaper`.* to 'acme-manager'@'%';
-
-
+		execute, trigger, show view on `acme-newspaper`.* to 'acme-manager'@'%';
 
 -- MySQL dump 10.13  Distrib 5.5.29, for Win64 (x86)
 --
