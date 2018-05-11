@@ -1,0 +1,4 @@
+-Hemos solucionados varios errores encontrados respecto al anterior entregable. En primer lugar errores en cuanto a seguridad hacking get y xss).
+-En segundo lugar respecto a la privacidad, lo que se debe y no debe mostrar de los periódicos y artículos dependiendo de con qué actor estés logeado.
+-Otro error menor que hemos solucionado era que una query estaba funcionando mal no se veían los artículos que debían verse tanto en el perfil de un usuario como en la lista de los disponibles para hacer followups.
+-En el entregable pasado subimos unos comentarios al tests de UserService y no comprobamos que se subiese bien, lo que se derivó en un archivo en blanco/corrupto. En este está corregido.
